@@ -2,19 +2,17 @@ package portafolio.gpvh.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@RequestMapping("/login")
+//@RequestMapping("/")
 public class LoginController {
 
-    @GetMapping("login")
+    @GetMapping("/")
     public String login(){
-        return "login/login";
+        return "login";
     }
+
 
 
 }
