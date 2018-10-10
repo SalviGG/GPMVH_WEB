@@ -8,14 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MOTIVO")
-
+@Table(name="motivo")
 public class Motivo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MOTIVO_ID")
-	private Integer motivoId;
+	private int motivoId;
 	
 	private String nombre;
 	
@@ -28,10 +27,10 @@ public class Motivo {
 		
 	}
 	
-	public Integer getMotivoId() {
+	public int getMotivoId() {
 		return motivoId;
 	}
-	public void setMotivoId(Integer motivoId) {
+	public void setMotivoId(int motivoId) {
 		this.motivoId = motivoId;
 	}
 	public String getNombre() {

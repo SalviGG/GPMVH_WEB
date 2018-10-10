@@ -1,23 +1,22 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Funcionario")
 public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FUNCIONARIO_ID")
-	private Integer funcionarioId;
-	private Integer rut;
+	private int funcionarioId;
+	private int rut;
 	
 	@Column(name = "ROL_ID")
-	private Integer rolId;
+	private int rolId;
 	
 	@Column(name = "DEPARTAMENTO_ID")
-	private Integer departamentoId;
+	private int departamentoId;
 	private String firmaUrl;
 	
 	public Funcionario()
@@ -26,35 +25,35 @@ public class Funcionario {
 		
 	}
 
-	public Integer getFuncionarioId() {
+	public int getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(Integer funcionarioId) {
+	public void setFuncionarioId(int funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 
-	public Integer getRut() {
+	public int getRut() {
 		return rut;
 	}
 
-	public void setRut(Integer rut) {
+	public void setRut(int rut) {
 		this.rut = rut;
 	}
 
-	public Integer getRolId() {
+	public int getRolId() {
 		return rolId;
 	}
 
-	public void setRolId(Integer rolId) {
+	public void setRolId(int rolId) {
 		this.rolId = rolId;
 	}
 
-	public Integer getDepartamentoId() {
+	public int getDepartamentoId() {
 		return departamentoId;
 	}
 
-	public void setDepartamentoId(Integer departamentoId) {
+	public void setDepartamentoId(int departamentoId) {
 		this.departamentoId = departamentoId;
 	}
 

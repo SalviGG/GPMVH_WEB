@@ -8,25 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "tipo_documento")
 public class TipoDocumento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TIPO_DOCUMENTO_ID")
-	private Integer TipoDocumentoId;
+	private int tipoDocumentoId;
 	private String desc;
 	
 	public TipoDocumento() {
 		
 	}
 
-	public Integer getTipoDocumentoId() {
-		return TipoDocumentoId;
+	public int getTipoDocumentoId() {
+		return tipoDocumentoId;
 	}
 
-	public void setTipoDocumentoId(Integer tipoDocumentoId) {
-		TipoDocumentoId = tipoDocumentoId;
+	public void setTipoDocumentoId(int tipoDocumentoId) {
+		this.tipoDocumentoId = tipoDocumentoId;
 	}
 
 	public String getDesc() {

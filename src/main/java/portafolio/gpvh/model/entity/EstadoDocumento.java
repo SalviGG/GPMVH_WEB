@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "Estado_documento")
 public class EstadoDocumento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ESTADO_DOCUMENTO_ID")
-	private Integer estadoDocumentoId;
+	private int estadoDocumentoId;
 	private String desc;
 	private String grupoEstados;
 	
@@ -23,11 +23,11 @@ public class EstadoDocumento {
 		
 	}
 
-	public Integer getEstadoDocumentoId() {
+	public int getEstadoDocumentoId() {
 		return estadoDocumentoId;
 	}
 
-	public void setEstadoDocumentoId(Integer estadoDocumentoId) {
+	public void setEstadoDocumentoId(int estadoDocumentoId) {
 		this.estadoDocumentoId = estadoDocumentoId;
 	}
 

@@ -1,24 +1,29 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
-@Table
+@Table(name = "Funcion")
 public class Funcion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FUNCION_ID")
-	private Integer funcionId;
+	private int funcionId;
 	private String url;
 	private String desc;
 	private String nombre;
+
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(
+			name = "rol_funcion",
+			joinColumns = {@JoinColumn(name = "funcionId")},
+			inverseJoinColumns = {@JoinColumn(name = "rolId")}
+	)
+	Set<Rol> roles = new HashSet<>();
 	
 	
 	public Funcion() {
@@ -27,12 +32,12 @@ public class Funcion {
 	}
 
 
-	public Integer getFuncionId() {
+	public int getFuncionId() {
 		return funcionId;
 	}
 
 
-	public void setFuncionId(Integer funcionId) {
+	public void setFuncionId(int funcionId) {
 		this.funcionId = funcionId;
 	}
 
@@ -65,6 +70,7 @@ public class Funcion {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+
 	
 }

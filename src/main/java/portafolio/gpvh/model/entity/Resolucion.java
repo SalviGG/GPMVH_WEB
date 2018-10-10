@@ -2,23 +2,22 @@ package portafolio.gpvh.model.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Resolucion")
 public class Resolucion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "RESOLUCION_ID")
-	private Integer resolucionId;
+	private int resolucionId;
 	
 	@Column(name = "FUNCIONARIO_ID")
-	private Integer funcionarioId;
+	private int funcionarioId;
 	
 	@Column(name = "MOTIVO_ID")
-	private Integer motivoId;
+	private int motivoId;
 	
 	@Column(name = "FECHA_EMICION")
 	private Date fecha;
@@ -29,27 +28,27 @@ public class Resolucion {
 		
 	}
 
-	public Integer getResolucionId() {
+	public int getResolucionId() {
 		return resolucionId;
 	}
 
-	public void setResolucionId(Integer resolucionId) {
+	public void setResolucionId(int resolucionId) {
 		this.resolucionId = resolucionId;
 	}
 
-	public Integer getFuncionarioId() {
+	public int getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(Integer funcionarioId) {
+	public void setFuncionarioId(int funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 
-	public Integer getMotivoId() {
+	public int getMotivoId() {
 		return motivoId;
 	}
 
-	public void setMotivoId(Integer motivoId) {
+	public void setMotivoId(int motivoId) {
 		this.motivoId = motivoId;
 	}
 

@@ -2,35 +2,34 @@ package portafolio.gpvh.model.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Documento")
 public class Documento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "DOCUMENTO_ID")
-	private Integer documentoId;
+	private int documentoId;
 	
 	@Column(name = "FUNCIONARIO_ID")
-	private Integer funcionarioId;
+	private int funcionarioId;
 	
 	@Column(name = "RESOLUCION_ID")
-	private Integer resolucionId;
+	private int resolucionId;
 	
 	@Column(name = "MOTIVO_ID")
-	private Integer motivoId;
+	private int motivoId;
 	
 	@Column(name = "AFECTA_DOCUMENTO_ID")
-	private Integer afectaDocumentoId;
+	private int afectaDocumentoId;
 	
 	@Column(name = "TIPO_DOCUMENTO_ID")
-	private Integer tipoDocumentoId;
+	private int tipoDocumentoId;
 	
 	@Column(name = "ESTADO_DOCUMENTO_ID")
-	private Integer estadoDocumentoId;
+	private int estadoDocumentoId;
 	
 	@Column(name = "FECHA_SOLICITUD")
 	private Date fechaSolicitud;
@@ -52,59 +51,59 @@ public class Documento {
 		
 	}
 
-	public Integer getDocumentoId() {
+	public int getDocumentoId() {
 		return documentoId;
 	}
 
-	public void setDocumentoId(Integer documentoId) {
+	public void setDocumentoId(int documentoId) {
 		this.documentoId = documentoId;
 	}
 
-	public Integer getFuncionarioId() {
+	public int getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(Integer funcionarioId) {
+	public void setFuncionarioId(int funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 
-	public Integer getResolucionId() {
+	public int getResolucionId() {
 		return resolucionId;
 	}
 
-	public void setResolucionId(Integer resolucionId) {
+	public void setResolucionId(int resolucionId) {
 		this.resolucionId = resolucionId;
 	}
 
-	public Integer getMotivoId() {
+	public int getMotivoId() {
 		return motivoId;
 	}
 
-	public void setMotivoId(Integer motivoId) {
+	public void setMotivoId(int motivoId) {
 		this.motivoId = motivoId;
 	}
 
-	public Integer getAfectaDocumentoId() {
+	public int getAfectaDocumentoId() {
 		return afectaDocumentoId;
 	}
 
-	public void setAfectaDocumentoId(Integer afectaDocumentoId) {
+	public void setAfectaDocumentoId(int afectaDocumentoId) {
 		this.afectaDocumentoId = afectaDocumentoId;
 	}
 
-	public Integer getTipoDocumentoId() {
+	public int getTipoDocumentoId() {
 		return tipoDocumentoId;
 	}
 
-	public void setTipoDocumentoId(Integer tipoDocumentoId) {
+	public void setTipoDocumentoId(int tipoDocumentoId) {
 		this.tipoDocumentoId = tipoDocumentoId;
 	}
 
-	public Integer getEstadoDocumentoId() {
+	public int getEstadoDocumentoId() {
 		return estadoDocumentoId;
 	}
 
-	public void setEstadoDocumentoId(Integer estadoDocumentoId) {
+	public void setEstadoDocumentoId(int estadoDocumentoId) {
 		this.estadoDocumentoId = estadoDocumentoId;
 	}
 
