@@ -3,6 +3,8 @@ package portafolio.gpvh.model.entity;
 import java.sql.Date;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Resolucion")
@@ -14,18 +16,27 @@ public class Resolucion {
 	private int resolucionId;
 	
 	@Column(name = "FUNCIONARIO_ID")
-	private int funcionarioId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "FUNCIONARIO_ID")
+	private Funcionario funcionarioId;
 	
 	@Column(name = "MOTIVO_ID")
-	private int motivoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "motivo_id")
+	private Motivo motivoId;
 	
-	@Column(name = "FECHA_EMICION")
+	@Column(name = "FECHA_EMISION")
 	private Date fecha;
+
+	@Column(name = "TITULO")
 	private String titulo;
+
+	@OneToMany(mappedBy = "resolucion_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Documento> resolucionIdDocs;
 	
 	public Resolucion() 
 	{
-		
+		this.resolucionIdDocs = new ArrayList<Documento>();
 	}
 
 	public int getResolucionId() {
@@ -36,19 +47,19 @@ public class Resolucion {
 		this.resolucionId = resolucionId;
 	}
 
-	public int getFuncionarioId() {
+	public Funcionario getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(int funcionarioId) {
+	public void setFuncionarioId(Funcionario funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 
-	public int getMotivoId() {
+	public Motivo getMotivoId() {
 		return motivoId;
 	}
 
-	public void setMotivoId(int motivoId) {
+	public void setMotivoId(Motivo motivoId) {
 		this.motivoId = motivoId;
 	}
 

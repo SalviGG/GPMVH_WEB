@@ -1,8 +1,11 @@
 package portafolio.gpvh.model.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
+import javax.print.Doc;
 
 @Entity
 @Table(name = "Documento")
@@ -14,22 +17,34 @@ public class Documento {
 	private int documentoId;
 	
 	@Column(name = "FUNCIONARIO_ID")
-	private int funcionarioId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "funcionario_id")
+	private Funcionario funcionarioId;
 	
 	@Column(name = "RESOLUCION_ID")
-	private int resolucionId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "resolucion_id")
+	private Resolucion resolucionId;
 	
 	@Column(name = "MOTIVO_ID")
-	private int motivoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "motivo_id")
+	private Motivo motivoId;
 	
 	@Column(name = "AFECTA_DOCUMENTO_ID")
-	private int afectaDocumentoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "TIPO_DOCUMENTO_ID")
+	private Documento afectaDocumentoId;
 	
 	@Column(name = "TIPO_DOCUMENTO_ID")
-	private int tipoDocumentoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "tipo_documento_id")
+	private TipoDocumento tipoDocumentoId;
 	
 	@Column(name = "ESTADO_DOCUMENTO_ID")
-	private int estadoDocumentoId;
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinTable (name = "estado_documento_id")
+	private EstadoDocumento estadoDocumentoId;
 	
 	@Column(name = "FECHA_SOLICITUD")
 	private Date fechaSolicitud;
@@ -45,10 +60,13 @@ public class Documento {
 	
 	@Column(name = "FECHA_TERMINO")
 	private Date fechaTermino;
+
+	@OneToMany(mappedBy = "afecta_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Documento> afectaDocIds;
 	
 	public Documento() 
 	{
-		
+		this.afectaDocIds = new ArrayList<Documento>();
 	}
 
 	public int getDocumentoId() {
@@ -59,51 +77,51 @@ public class Documento {
 		this.documentoId = documentoId;
 	}
 
-	public int getFuncionarioId() {
+	public Funcionario getFuncionarioId() {
 		return funcionarioId;
 	}
 
-	public void setFuncionarioId(int funcionarioId) {
+	public void setFuncionarioId(Funcionario funcionarioId) {
 		this.funcionarioId = funcionarioId;
 	}
 
-	public int getResolucionId() {
+	public Resolucion getResolucionId() {
 		return resolucionId;
 	}
 
-	public void setResolucionId(int resolucionId) {
+	public void setResolucionId(Resolucion resolucionId) {
 		this.resolucionId = resolucionId;
 	}
 
-	public int getMotivoId() {
+	public Motivo getMotivoId() {
 		return motivoId;
 	}
 
-	public void setMotivoId(int motivoId) {
+	public void setMotivoId(Motivo motivoId) {
 		this.motivoId = motivoId;
 	}
 
-	public int getAfectaDocumentoId() {
+	public Documento getAfectaDocumentoId() {
 		return afectaDocumentoId;
 	}
 
-	public void setAfectaDocumentoId(int afectaDocumentoId) {
+	public void setAfectaDocumentoId(Documento afectaDocumentoId) {
 		this.afectaDocumentoId = afectaDocumentoId;
 	}
 
-	public int getTipoDocumentoId() {
+	public TipoDocumento getTipoDocumentoId() {
 		return tipoDocumentoId;
 	}
 
-	public void setTipoDocumentoId(int tipoDocumentoId) {
+	public void setTipoDocumentoId(TipoDocumento tipoDocumentoId) {
 		this.tipoDocumentoId = tipoDocumentoId;
 	}
 
-	public int getEstadoDocumentoId() {
+	public EstadoDocumento getEstadoDocumentoId() {
 		return estadoDocumentoId;
 	}
 
-	public void setEstadoDocumentoId(int estadoDocumentoId) {
+	public void setEstadoDocumentoId(EstadoDocumento estadoDocumentoId) {
 		this.estadoDocumentoId = estadoDocumentoId;
 	}
 

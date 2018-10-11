@@ -1,11 +1,8 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="motivo")
@@ -15,15 +12,25 @@ public class Motivo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MOTIVO_ID")
 	private int motivoId;
-	
+
+	@Column(name = "NOMBRE")
 	private String nombre;
 	
 	@Column(name = "REQUIERO_DOC_ADJUC")
 	private String requiere;
+
+	@OneToMany(mappedBy = "motivo_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Resolucion> motivoIdRes;
+
+	@OneToMany(mappedBy = "motivo_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Documento> motivoIdDocs;
+
+
 	
 	public Motivo()
 	{
-		
+		this.motivoIdRes = new ArrayList<Resolucion>();
+		this.motivoIdDocs = new ArrayList<Documento>();
 		
 	}
 	

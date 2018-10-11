@@ -1,11 +1,8 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Estado_documento")
@@ -15,12 +12,19 @@ public class EstadoDocumento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ESTADO_DOCUMENTO_ID")
 	private int estadoDocumentoId;
-	private String desc;
+
+	@Column(name = "NOMBRE")
+	private String nombre;
+
+	@Column(name = "GRUPO_ESTADOS")
 	private String grupoEstados;
+
+	@OneToMany(mappedBy = "estado_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Documento> estadoDocIds;
 	
 	public EstadoDocumento()
 	{
-		
+		this.estadoDocIds = new ArrayList<Documento>();
 	}
 
 	public int getEstadoDocumentoId() {
@@ -31,12 +35,12 @@ public class EstadoDocumento {
 		this.estadoDocumentoId = estadoDocumentoId;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public String getGrupoEstados() {

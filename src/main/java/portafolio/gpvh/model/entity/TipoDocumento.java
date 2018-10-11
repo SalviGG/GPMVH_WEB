@@ -1,11 +1,9 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tipo_documento")
@@ -15,10 +13,16 @@ public class TipoDocumento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TIPO_DOCUMENTO_ID")
 	private int tipoDocumentoId;
-	private String desc;
+
+	@Column(name = "NOMBRE")
+	private String nombre;
+
+	@OneToMany(mappedBy = "tipo_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Documento> tipoDocumentoIds;
 	
 	public TipoDocumento() {
-		
+
+		this.tipoDocumentoIds = new ArrayList<Documento>();
 	}
 
 	public int getTipoDocumentoId() {
@@ -29,12 +33,12 @@ public class TipoDocumento {
 		this.tipoDocumentoId = tipoDocumentoId;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 }

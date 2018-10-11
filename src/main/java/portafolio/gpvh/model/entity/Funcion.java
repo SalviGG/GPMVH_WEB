@@ -13,8 +13,14 @@ public class Funcion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FUNCION_ID")
 	private int funcionId;
+
+	@Column(name = "URL")
 	private String url;
-	private String desc;
+
+	@Column(name = "DESCRIPCION")
+	private String descripcion;
+
+	@Column(name = "NOMBRE")
 	private String nombre;
 
 	@ManyToMany(cascade = {CascadeType.ALL})
@@ -52,13 +58,13 @@ public class Funcion {
 	}
 
 
-	public String getDesc() {
-		return desc;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 

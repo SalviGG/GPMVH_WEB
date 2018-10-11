@@ -1,11 +1,8 @@
 package portafolio.gpvh.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "departamento")
@@ -15,13 +12,20 @@ public class Departamento {
 	@Column(name = "departamento_Id")
 	private int departamentoId;
 	
+	@Column(name = "NOMBRE")
 	private String nombre;
 	
 	@Column(name = "JEFE_DEPARTAMENTO_ID")
-	private Integer jefeDepartamentoId;
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinTable(name = "funcionario_id")
+	private Funcionario jefeDepartamentoId;
+
+	@OneToMany(mappedBy = "departamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Funcionario> departamentoIdfuncionarios;
 	
 	public Departamento() {
-		
+
+		this.departamentoIdfuncionarios = new ArrayList<Funcionario>();
 	}
 
 	public int getDepartamentoId() {
@@ -40,11 +44,11 @@ public class Departamento {
 		this.nombre = nombre;
 	}
 
-	public Integer getJefeDepartamentoId() {
+	public Funcionario getJefeDepartamentoId() {
 		return jefeDepartamentoId;
 	}
 
-	public void setJefeDepartamentoId(Integer jefeDepartamentoId) {
+	public void setJefeDepartamentoId(Funcionario jefeDepartamentoId) {
 		this.jefeDepartamentoId = jefeDepartamentoId;
 	}
 	
