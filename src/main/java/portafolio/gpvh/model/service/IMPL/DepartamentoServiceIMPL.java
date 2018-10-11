@@ -12,7 +12,6 @@ import portafolio.gpvh.model.service.DepartamentoService;
 
 @Service
 public class DepartamentoServiceIMPL implements DepartamentoService {
-
 	@Autowired
 	private IDepartamentoDao departDAO;
 
