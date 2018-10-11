@@ -2,7 +2,7 @@ package portafolio.gpvh.model.service.IMPL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import portafolio.gpvh.model.dao.ITipoDocumentoDAO;
+import portafolio.gpvh.model.dao.ITipoDocumentoDao;
 import portafolio.gpvh.model.entity.TipoDocumento;
 import portafolio.gpvh.model.service.TipoDocumentoService;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class TipoDocumentoServiceIMPL implements TipoDocumentoService {
 
     @Autowired
-    private ITipoDocumentoDAO tipodocDao;
+    private ITipoDocumentoDao tipodocDao;
 
     public List<TipoDocumento> findAll(){
 
