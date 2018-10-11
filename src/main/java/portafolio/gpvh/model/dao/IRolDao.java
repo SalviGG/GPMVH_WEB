@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import portafolio.gpvh.model.entity.Rol;
 
-public interface IRol extends CrudRepository <Rol, Integer> {
+public interface IRolDao extends CrudRepository <Rol, Integer> {
 
 }

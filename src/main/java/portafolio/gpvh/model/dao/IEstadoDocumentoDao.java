@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import portafolio.gpvh.model.entity.EstadoDocumento;
 
-public interface IEstadoDocumento extends CrudRepository<EstadoDocumento, Integer>{
+public interface IEstadoDocumentoDao extends CrudRepository<EstadoDocumento, Integer>{
 
 }

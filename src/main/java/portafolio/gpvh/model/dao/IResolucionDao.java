@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import portafolio.gpvh.model.entity.Resolucion;
 
-public interface IResolucion extends CrudRepository <Resolucion, Integer> {
+public interface IResolucionDao extends CrudRepository <Resolucion, Integer> {
 
 }

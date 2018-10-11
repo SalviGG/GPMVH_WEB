@@ -6,14 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import portafolio.gpvh.model.dao.IDepartamento;
+import portafolio.gpvh.model.dao.IDepartamentoDao;
 import portafolio.gpvh.model.entity.Departamento;
 import portafolio.gpvh.model.service.DepartamentoService;
 
 @Service
 public class DepartamentoServiceIMPL implements DepartamentoService {
+
 	@Autowired
-	private IDepartamento departDAO;
+	private IDepartamentoDao departDAO;
 
  
 	public List<Departamento> findAll() {
