@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:fragment="body">
+
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">GPMVH</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Inicio</a></li>
+                <li><a href="solicitud.html">Solicitud de permiso</a></li>
+                <li><a href="estado.html">Estado de permiso</a></li>
+                <li><a href="report.html">Reportes e informes</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Bienvenido, Pepe</a></li>
+                <li><a href="login.html">Salir</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<header id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h1><span aria-hidden="true"></span> Inicio <small>Gestor de permisos</small></h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="active">Inicio</li>
+        </ol>
+    </div>
+</section>
+</body>
+</html>

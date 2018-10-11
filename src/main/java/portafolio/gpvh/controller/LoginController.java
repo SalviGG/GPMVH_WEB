@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 //@RequestMapping("/")
 public class LoginController {
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+
+    @PostMapping("/login")
+    public String loginCorrecto(){
+        return "adminDashboard";
     }
 
 
