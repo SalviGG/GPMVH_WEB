@@ -2,7 +2,7 @@ package portafolio.gpvh.model.service.IMPL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import portafolio.gpvh.model.dao.IRolDAO;
+import portafolio.gpvh.model.dao.IRolDao;
 import portafolio.gpvh.model.entity.Rol;
 import portafolio.gpvh.model.service.RolService;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class RolServiceIMPL implements RolService {
 
     @Autowired
-    private IRolDAO rolDAO;
+    private IRolDao rolDAO;
 
     public List<Rol> findAll(){
 

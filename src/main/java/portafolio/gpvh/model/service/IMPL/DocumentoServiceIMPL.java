@@ -3,9 +3,9 @@ package portafolio.gpvh.model.service.IMPL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import portafolio.gpvh.model.dao.IDocumentoDAO;
+
+import portafolio.gpvh.model.dao.IDocumentoDao;
 import portafolio.gpvh.model.entity.Documento;
-import portafolio.gpvh.model.entity.EstadoDocumento;
 import portafolio.gpvh.model.service.DocumentoService;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class DocumentoServiceIMPL implements DocumentoService {
 
     @Autowired
-    private IDocumentoDAO docuDAO;
+    private IDocumentoDao docuDAO;
 
     public List<Documento> findAll()
     {

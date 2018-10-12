@@ -2,7 +2,8 @@ package portafolio.gpvh.model.service.IMPL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import portafolio.gpvh.model.dao.IMotivoDAO;
+
+import portafolio.gpvh.model.dao.IMotivoDao;
 import portafolio.gpvh.model.entity.Motivo;
 import portafolio.gpvh.model.service.MotivoService;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class MotivoServiceIMPL implements MotivoService {
 
     @Autowired
-    private IMotivoDAO motiDao;
+    private IMotivoDao motiDao;
 
     public List<Motivo> findAll(){
 

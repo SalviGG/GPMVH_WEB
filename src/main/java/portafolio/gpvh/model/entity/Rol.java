@@ -13,9 +13,7 @@ public class Rol {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ROL_ID")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ROL_ID")
-	private Rol rolId;
+	private int rolId;
 
 	@Column(name = "NOMBRE")
 	private String nombre;
@@ -23,10 +21,8 @@ public class Rol {
 	@OneToMany(mappedBy = "rolId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Funcionario> rolIdsFuncionario;
 
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Funcion> funciones = new HashSet<>();
-
-
 
 	public Rol()
 	{
@@ -34,11 +30,11 @@ public class Rol {
 		this.rolIdsFuncionario = new ArrayList<Funcionario>();
 	}
 
-	public Rol getRolId() {
+	public int getRolId() {
 		return rolId;
 	}
 
-	public void setRolId(Rol rolId) {
+	public void setRolId(int rolId) {
 		this.rolId = rolId;
 	}
 

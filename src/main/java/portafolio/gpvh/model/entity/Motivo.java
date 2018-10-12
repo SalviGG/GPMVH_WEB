@@ -19,10 +19,10 @@ public class Motivo {
 	@Column(name = "REQUIERO_DOC_ADJUC")
 	private String requiere;
 
-	@OneToMany(mappedBy = "motivo_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "motivoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Resolucion> motivoIdRes;
 
-	@OneToMany(mappedBy = "motivo_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "motivoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> motivoIdDocs;
 
 

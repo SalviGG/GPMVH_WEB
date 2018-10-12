@@ -16,23 +16,23 @@ public class Funcionario {
 	@Column(name = "rut", unique = true)
 	private int rut;
 
-	@Column(name = "ROL_ID")
+	//@Column(name = "ROL_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ROL_ID")
+	@JoinColumn(name = "rolId")
 	private Rol rolId;
 
-	@Column(name = "DEPARTAMENTO_ID")
+	//@Column(name = "DEPARTAMENTO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "DEPARTAMENTO_ID")
+	@JoinColumn(name = "departamentoId")
 	private Departamento departamentoId;
 
-	@OneToMany(mappedBy = "jefe_departamento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "jefeDepartamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Departamento> jefeDeptoIds;
 
-	@OneToMany(mappedBy = "funcionario_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionarioId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Resolucion> funcionarioIdRes;
 
-	@OneToMany(mappedBy = "funcionario_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "funcionarioId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> funcionarioIdDocs;
 
 

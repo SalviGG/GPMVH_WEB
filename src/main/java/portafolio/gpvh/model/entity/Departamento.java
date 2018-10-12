@@ -15,9 +15,9 @@ public class Departamento {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	@Column(name = "JEFE_DEPARTAMENTO_ID")
+	//@Column(name = "JEFE_DEPARTAMENTO_ID")
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionario_id")
+	@JoinTable(name = "funcionarioId")
 	private Funcionario jefeDepartamentoId;
 
 	@OneToMany(mappedBy = "departamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
