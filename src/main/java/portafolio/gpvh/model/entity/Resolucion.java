@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Resolucion")
+@Table(name = "resolucion")
 public class Resolucion {
 	
 	@Id
@@ -15,14 +15,14 @@ public class Resolucion {
 	@Column(name = "RESOLUCION_ID")
 	private int resolucionId;
 	
-	@Column(name = "FUNCIONARIO_ID")
+	//@Column(name = "FUNCIONARIO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "FUNCIONARIO_ID")
+	@JoinTable(name = "funcionarioId")
 	private Funcionario funcionarioId;
 	
-	@Column(name = "MOTIVO_ID")
+	//@Column(name = "MOTIVO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "motivo_id")
+	@JoinTable(name = "motivoId")
 	private Motivo motivoId;
 	
 	@Column(name = "FECHA_EMISION")
@@ -31,7 +31,7 @@ public class Resolucion {
 	@Column(name = "TITULO")
 	private String titulo;
 
-	@OneToMany(mappedBy = "resolucion_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "resolucionId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> resolucionIdDocs;
 	
 	public Resolucion() 

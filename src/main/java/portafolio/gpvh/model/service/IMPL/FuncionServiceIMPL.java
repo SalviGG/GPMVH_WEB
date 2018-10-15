@@ -3,6 +3,7 @@ package portafolio.gpvh.model.service.IMPL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import portafolio.gpvh.model.dao.IFuncionDao;
+import portafolio.gpvh.model.dao.IFuncionDao;
 import portafolio.gpvh.model.entity.Funcion;
 import portafolio.gpvh.model.service.FuncionService;
 

@@ -17,7 +17,7 @@ public class TipoDocumento {
 	@Column(name = "NOMBRE")
 	private String nombre;
 
-	@OneToMany(mappedBy = "tipo_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "tipoDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> tipoDocumentoIds;
 	
 	public TipoDocumento() {

@@ -19,7 +19,7 @@ public class EstadoDocumento {
 	@Column(name = "GRUPO_ESTADOS")
 	private String grupoEstados;
 
-	@OneToMany(mappedBy = "estado_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "estadoDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> estadoDocIds;
 	
 	public EstadoDocumento()

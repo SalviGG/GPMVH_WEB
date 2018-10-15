@@ -31,10 +31,9 @@ public class Funcion {
 	)
 	Set<Rol> roles = new HashSet<>();
 	
-	
 	public Funcion() {
-		
-		
+
+
 	}
 
 

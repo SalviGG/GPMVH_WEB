@@ -16,34 +16,34 @@ public class Documento {
 	@Column(name = "DOCUMENTO_ID")
 	private int documentoId;
 	
-	@Column(name = "FUNCIONARIO_ID")
+	//@Column(name = "FUNCIONARIO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionario_id")
+	@JoinTable(name = "funcionarioId")
 	private Funcionario funcionarioId;
 	
-	@Column(name = "RESOLUCION_ID")
+	//@Column(name = "RESOLUCION_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "resolucion_id")
+	@JoinTable(name = "resolucionId")
 	private Resolucion resolucionId;
 	
-	@Column(name = "MOTIVO_ID")
+	//@Column(name = "MOTIVO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "motivo_id")
+	@JoinTable(name = "motivoId")
 	private Motivo motivoId;
 	
-	@Column(name = "AFECTA_DOCUMENTO_ID")
+	//@Column(name = "AFECTA_DOCUMENTO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "TIPO_DOCUMENTO_ID")
+	@JoinTable(name = "afectaDocumentoId")
 	private Documento afectaDocumentoId;
 	
-	@Column(name = "TIPO_DOCUMENTO_ID")
+	//@Column(name = "TIPO_DOCUMENTO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "tipo_documento_id")
+	@JoinTable(name = "tipoDocumentoId")
 	private TipoDocumento tipoDocumentoId;
 	
-	@Column(name = "ESTADO_DOCUMENTO_ID")
+	//@Column(name = "ESTADO_DOCUMENTO_ID")
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinTable (name = "estado_documento_id")
+	@JoinTable (name = "estadoDocumentoId")
 	private EstadoDocumento estadoDocumentoId;
 	
 	@Column(name = "FECHA_SOLICITUD")
@@ -61,7 +61,7 @@ public class Documento {
 	@Column(name = "FECHA_TERMINO")
 	private Date fechaTermino;
 
-	@OneToMany(mappedBy = "afecta_documento_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "afectaDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> afectaDocIds;
 	
 	public Documento() 
