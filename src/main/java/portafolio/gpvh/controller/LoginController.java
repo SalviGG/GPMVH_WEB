@@ -16,7 +16,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginCorrecto(){
-        return "redirect:/adminDashboard";
+        return "redirect:/dashboard";
     }
 
 

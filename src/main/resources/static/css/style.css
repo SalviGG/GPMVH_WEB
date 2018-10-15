@@ -137,3 +137,7 @@ body{
     background-color: #c0392b;
   }
 }
+
+#main{
+    height: 100vh;
+}

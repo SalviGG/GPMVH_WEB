@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class AdminDashboardController {
+public class FormularioSolicitudesController {
 
-    @GetMapping("/dashboard")
-    public String dashboard(){
-        return "adminDashboard";
+    @GetMapping("/formularioSolicitudes")
+    public String formulario(){
+        return "formularioSolicitudes";
     }
 }
