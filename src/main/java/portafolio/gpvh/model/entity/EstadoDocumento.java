@@ -10,13 +10,13 @@ public class EstadoDocumento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ESTADO_DOCUMENTO_ID")
+	@Column(name = "estado_documento_id")
 	private int estadoDocumentoId;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 
-	@Column(name = "GRUPO_ESTADOS")
+	@Column(name = "grupo_estados")
 	private String grupoEstados;
 
 	@OneToMany(mappedBy = "estadoDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -50,6 +50,16 @@ public class EstadoDocumento {
 	public void setGrupoEstados(String grupoEstados) {
 		this.grupoEstados = grupoEstados;
 	}
-	
-	
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<Documento> getEstadoDocIds() {
+		return estadoDocIds;
+	}
+
+	public void setEstadoDocIds(List<Documento> estadoDocIds) {
+		this.estadoDocIds = estadoDocIds;
+	}
 }

@@ -11,16 +11,16 @@ public class Funcion {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FUNCION_ID")
+	@Column(name = "funcion_id")
 	private int funcionId;
 
-	@Column(name = "URL")
+	@Column(name = "url")
 	private String url;
 
-	@Column(name = "DESCRIPCION")
+	@Column(name = "descripcion")
 	private String descripcion;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 
 	@ManyToMany(cascade = {CascadeType.ALL})
@@ -76,6 +76,15 @@ public class Funcion {
 		this.nombre = nombre;
 	}
 
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-	
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
+	}
 }

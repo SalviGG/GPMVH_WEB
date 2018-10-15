@@ -10,20 +10,18 @@ public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FUNCIONARIO_ID")
+	@Column(name = "funcionario_id")
 	private int funcionarioId;
 
 	@Column(name = "rut", unique = true)
 	private int rut;
 
-	//@Column(name = "ROL_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rolId")
+	@JoinColumn(name = "rol_id")
 	private Rol rolId;
 
-	//@Column(name = "DEPARTAMENTO_ID")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "departamentoId")
+	@JoinColumn(name = "departamento_id")
 	private Departamento departamentoId;
 
 	@OneToMany(mappedBy = "jefeDepartamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -85,6 +83,28 @@ public class Funcionario {
 	public void setFirmaUrl(String firmaUrl) {
 		this.firmaUrl = firmaUrl;
 	}
-	
-	
+
+	public List<Departamento> getJefeDeptoIds() {
+		return jefeDeptoIds;
+	}
+
+	public void setJefeDeptoIds(List<Departamento> jefeDeptoIds) {
+		this.jefeDeptoIds = jefeDeptoIds;
+	}
+
+	public List<Resolucion> getFuncionarioIdRes() {
+		return funcionarioIdRes;
+	}
+
+	public void setFuncionarioIdRes(List<Resolucion> funcionarioIdRes) {
+		this.funcionarioIdRes = funcionarioIdRes;
+	}
+
+	public List<Documento> getFuncionarioIdDocs() {
+		return funcionarioIdDocs;
+	}
+
+	public void setFuncionarioIdDocs(List<Documento> funcionarioIdDocs) {
+		this.funcionarioIdDocs = funcionarioIdDocs;
+	}
 }
