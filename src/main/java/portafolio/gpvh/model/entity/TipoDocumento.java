@@ -11,10 +11,10 @@ public class TipoDocumento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TIPO_DOCUMENTO_ID")
+	@Column(name = "tipo_documento_id")
 	private int tipoDocumentoId;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 
 	@OneToMany(mappedBy = "tipoDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -40,5 +40,12 @@ public class TipoDocumento {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public List<Documento> getTipoDocumentoIds() {
+		return tipoDocumentoIds;
+	}
+
+	public void setTipoDocumentoIds(List<Documento> tipoDocumentoIds) {
+		this.tipoDocumentoIds = tipoDocumentoIds;
+	}
 }

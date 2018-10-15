@@ -10,14 +10,17 @@ public class Motivo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "MOTIVO_ID")
+	@Column(name = "motivo_id")
 	private int motivoId;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 	
-	@Column(name = "REQUIERO_DOC_ADJUC")
+	@Column(name = "requiere_doc_adjuc")
 	private String requiere;
+
+	@Column(name = "activo")
+	private String activo;
 
 	@OneToMany(mappedBy = "motivoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Resolucion> motivoIdRes;
@@ -52,6 +55,36 @@ public class Motivo {
 	public void setRequerimiento(String requiere) {
 		this.requiere = requiere;
 	}
-	
 
+	public String getRequiere() {
+		return requiere;
+	}
+
+	public void setRequiere(String requiere) {
+		this.requiere = requiere;
+	}
+
+	public List<Resolucion> getMotivoIdRes() {
+		return motivoIdRes;
+	}
+
+	public void setMotivoIdRes(List<Resolucion> motivoIdRes) {
+		this.motivoIdRes = motivoIdRes;
+	}
+
+	public List<Documento> getMotivoIdDocs() {
+		return motivoIdDocs;
+	}
+
+	public void setMotivoIdDocs(List<Documento> motivoIdDocs) {
+		this.motivoIdDocs = motivoIdDocs;
+	}
+
+	public String getActivo() {
+		return activo;
+	}
+
+	public void setActivo(String activo) {
+		this.activo = activo;
+	}
 }

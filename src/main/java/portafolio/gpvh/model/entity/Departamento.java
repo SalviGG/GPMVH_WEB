@@ -15,9 +15,9 @@ public class Departamento {
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	//@Column(name = "JEFE_DEPARTAMENTO_ID")
+
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionarioId")
+	@JoinColumn(name = "jefe_departamento_id")
 	private Funcionario jefeDepartamentoId;
 
 	@OneToMany(mappedBy = "departamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -51,6 +51,12 @@ public class Departamento {
 	public void setJefeDepartamentoId(Funcionario jefeDepartamentoId) {
 		this.jefeDepartamentoId = jefeDepartamentoId;
 	}
-	
-	
+
+	public List<Funcionario> getDepartamentoIdfuncionarios() {
+		return departamentoIdfuncionarios;
+	}
+
+	public void setDepartamentoIdfuncionarios(List<Funcionario> departamentoIdfuncionarios) {
+		this.departamentoIdfuncionarios = departamentoIdfuncionarios;
+	}
 }
