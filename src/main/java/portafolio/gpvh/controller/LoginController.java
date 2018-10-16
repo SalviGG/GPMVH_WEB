@@ -10,12 +10,14 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(){
+
         return "login";
     }
 
 
     @PostMapping("/login")
-    public String loginCorrecto(){
+    public String loginForm(){
+
         return "redirect:/dashboard";
     }
 
