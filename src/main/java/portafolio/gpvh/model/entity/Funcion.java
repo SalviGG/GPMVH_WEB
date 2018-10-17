@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "Funcion")
+@Table(name = "funcion")
 public class Funcion {
 
 	@Id

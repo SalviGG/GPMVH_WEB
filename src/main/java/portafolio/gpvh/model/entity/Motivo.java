@@ -27,8 +27,6 @@ public class Motivo {
 
 	@OneToMany(mappedBy = "motivoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> motivoIdDocs;
-
-
 	
 	public Motivo()
 	{

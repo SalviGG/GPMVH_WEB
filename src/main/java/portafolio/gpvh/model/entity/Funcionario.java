@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Funcionario")
+@Table(name = "funcionario")
 public class Funcionario {
 
 	@Id
@@ -24,6 +24,18 @@ public class Funcionario {
 	@JoinColumn(name = "departamento_id")
 	private Departamento departamentoId;
 
+	@Column(name = "firma_url")
+	private String firmaUrl;
+
+	@Column(name = "dia_vacaciones")
+	private int diaVacaciones;
+
+	@Column(name = "dia_vacaciones_usadas")
+	private int diaVacacionesUsadas;
+
+	@Column(name = "dias_administrativo_usados")
+	private int diasAdministrativoUsados;
+
 	@OneToMany(mappedBy = "jefeDepartamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Departamento> jefeDeptoIds;
 
@@ -34,8 +46,6 @@ public class Funcionario {
 	private List<Documento> funcionarioIdDocs;
 
 
-	private String firmaUrl;
-	
 	public Funcionario()
 	{
 		this.jefeDeptoIds = new ArrayList<Departamento>();
@@ -82,6 +92,30 @@ public class Funcionario {
 
 	public void setFirmaUrl(String firmaUrl) {
 		this.firmaUrl = firmaUrl;
+	}
+
+	public int getDiaVacaciones() {
+		return diaVacaciones;
+	}
+
+	public void setDiaVacaciones(int diaVacaciones) {
+		this.diaVacaciones = diaVacaciones;
+	}
+
+	public int getDiaVacacionesUsadas() {
+		return diaVacacionesUsadas;
+	}
+
+	public void setDiaVacacionesUsadas(int diaVacacionesUsadas) {
+		this.diaVacacionesUsadas = diaVacacionesUsadas;
+	}
+
+	public int getDiasAdministrativoUsados() {
+		return diasAdministrativoUsados;
+	}
+
+	public void setDiasAdministrativoUsados(int diasAdministrativoUsados) {
+		this.diasAdministrativoUsados = diasAdministrativoUsados;
 	}
 
 	public List<Departamento> getJefeDeptoIds() {
