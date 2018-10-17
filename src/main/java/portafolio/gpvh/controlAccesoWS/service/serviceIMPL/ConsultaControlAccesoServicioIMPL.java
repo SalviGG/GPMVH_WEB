@@ -3,10 +3,8 @@ package portafolio.gpvh.controlAccesoWS.service.serviceIMPL;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 
-import portafolio.gpvh.controlAccesoWS.mappingWsl.ConsultaControlAcceso;
-import portafolio.gpvh.controlAccesoWS.mappingWsl.ConsultaControlAcceso_Service;
-import portafolio.gpvh.controlAccesoWS.mappingWsl.Persona;
 import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
+import portafolio.gpvh.controlAccesoWS.mappingWsl.*;
 
 @Service
 public class ConsultaControlAccesoServicioIMPL implements ConsultaControlAccesoServicio {
