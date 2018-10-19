@@ -23,9 +23,10 @@
                       <th>Iniciar solicitud</th>
                   </thead>
                   <tbody>
-                      <tr>
-                        <th>nombre_solicitud</th>
-                        <th><form>
+                      <tr th:each="motivo : ${motivos}">
+                        <th th:text="${motivo.nombre}"></th>
+                        <th><form action="/formularioSolicitudes" method="post">
+                          <input name="motivoId" type="hidden" th:value="${motivo.motivoId}"  />
                           <button type="submit" class="btn btn-primary">Solicitar</button>
                         </form></th>
                       </tr>

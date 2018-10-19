@@ -28,13 +28,13 @@ public class Funcionario {
 	private String firmaUrl;
 
 	@Column(name = "dia_vacaciones")
-	private int diaVacaciones;
+	private Integer diaVacaciones;
 
 	@Column(name = "dia_vacaciones_usadas")
-	private int diaVacacionesUsadas;
+	private Integer diaVacacionesUsadas;
 
 	@Column(name = "dias_administrativo_usados")
-	private int diasAdministrativoUsados;
+	private Integer diasAdministrativoUsados;
 
 	@OneToMany(mappedBy = "jefeDepartamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Departamento> jefeDeptoIds;

@@ -27,6 +27,7 @@ public class ObjectFactory {
     private final static QName _AsistenciaPorRangoDeFecha_QNAME = new QName("http://controldeacceso.portafolio.com/", "AsistenciaPorRangoDeFecha");
     private final static QName _ConsumirHorasCompesadasResponse_QNAME = new QName("http://controldeacceso.portafolio.com/", "consumirHorasCompesadasResponse");
     private final static QName _ConsumirHorasCompesadas_QNAME = new QName("http://controldeacceso.portafolio.com/", "consumirHorasCompesadas");
+    private final static QName _PersonaPorRutResponse_QNAME = new QName("http://controldeacceso.portafolio.com/", "personaPorRutResponse");
     private final static QName _ExternalLogin_QNAME = new QName("http://controldeacceso.portafolio.com/", "externalLogin");
     private final static QName _BusquedaPersonas_QNAME = new QName("http://controldeacceso.portafolio.com/", "busquedaPersonas");
     private final static QName _DevolverHorasCompesadasResponse_QNAME = new QName("http://controldeacceso.portafolio.com/", "devolverHorasCompesadasResponse");
@@ -36,6 +37,7 @@ public class ObjectFactory {
     private final static QName _GenerarPersonaResponse_QNAME = new QName("http://controldeacceso.portafolio.com/", "generarPersonaResponse");
     private final static QName _ExternalLoginResponse_QNAME = new QName("http://controldeacceso.portafolio.com/", "externalLoginResponse");
     private final static QName _AsistenciaPorDia_QNAME = new QName("http://controldeacceso.portafolio.com/", "AsistenciaPorDia");
+    private final static QName _PersonaPorRut_QNAME = new QName("http://controldeacceso.portafolio.com/", "personaPorRut");
     private final static QName _DevolverHorasCompesadas_QNAME = new QName("http://controldeacceso.portafolio.com/", "devolverHorasCompesadas");
     private final static QName _GenerarPersona_QNAME = new QName("http://controldeacceso.portafolio.com/", "generarPersona");
 
@@ -87,6 +89,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PersonaPorRutResponse }
+     * 
+     */
+    public PersonaPorRutResponse createPersonaPorRutResponse() {
+        return new PersonaPorRutResponse();
+    }
+
+    /**
      * Create an instance of {@link ConsumirHorasCompesadasResponse }
      * 
      */
@@ -108,6 +118,14 @@ public class ObjectFactory {
      */
     public DevolverHorasCompesadas createDevolverHorasCompesadas() {
         return new DevolverHorasCompesadas();
+    }
+
+    /**
+     * Create an instance of {@link PersonaPorRut }
+     * 
+     */
+    public PersonaPorRut createPersonaPorRut() {
+        return new PersonaPorRut();
     }
 
     /**
@@ -202,6 +220,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PersonaPorRutResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://controldeacceso.portafolio.com/", name = "personaPorRutResponse")
+    public JAXBElement<PersonaPorRutResponse> createPersonaPorRutResponse(PersonaPorRutResponse value) {
+        return new JAXBElement<PersonaPorRutResponse>(_PersonaPorRutResponse_QNAME, PersonaPorRutResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ExternalLogin }{@code >}}
      * 
      */
@@ -280,6 +307,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://controldeacceso.portafolio.com/", name = "AsistenciaPorDia")
     public JAXBElement<AsistenciaPorDia> createAsistenciaPorDia(AsistenciaPorDia value) {
         return new JAXBElement<AsistenciaPorDia>(_AsistenciaPorDia_QNAME, AsistenciaPorDia.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link PersonaPorRut }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://controldeacceso.portafolio.com/", name = "personaPorRut")
+    public JAXBElement<PersonaPorRut> createPersonaPorRut(PersonaPorRut value) {
+        return new JAXBElement<PersonaPorRut>(_PersonaPorRut_QNAME, PersonaPorRut.class, null, value);
     }
 
     /**

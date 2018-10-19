@@ -25,7 +25,7 @@
                 <li><a href="report.html">Reportes e informes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Bienvenido, Pepe</a></li>
+                <li><a href="#" th:text="'Bienvenido,'+${session.persona.nombres}"> Pepe</a></li>
                 <li><a href="login.html">Salir</a></li>
             </ul>
         </div><!--/.nav-collapse -->

@@ -10,17 +10,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import portafolio.gpvh.controlAccesoWS.mappingWsl.Persona;
-import portafolio.gpvh.controlAccesoWS.service.serviceIMPL.ConsultaControlAccesoServicioIMPL;
+import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Component
 public class CustomAuthentication implements AuthenticationProvider {
 
     @Autowired
-    private ConsultaControlAccesoServicioIMPL consulta;
+    private ConsultaControlAccesoServicio consulta;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

@@ -97,6 +97,21 @@ public interface ConsultaControlAcceso {
 
     /**
      * 
+     * @param rut
+     * @return
+     *     returns portafolio.gpvh.controlAccesoWS.mappingWsl.Persona
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "personaPorRut", targetNamespace = "http://controldeacceso.portafolio.com/", className = "portafolio.gpvh.controlAccesoWS.mappingWsl.PersonaPorRut")
+    @ResponseWrapper(localName = "personaPorRutResponse", targetNamespace = "http://controldeacceso.portafolio.com/", className = "portafolio.gpvh.controlAccesoWS.mappingWsl.PersonaPorRutResponse")
+    @Action(input = "http://controldeacceso.portafolio.com/consultaControlAcceso/personaPorRutRequest", output = "http://controldeacceso.portafolio.com/consultaControlAcceso/personaPorRutResponse")
+    public Persona personaPorRut(
+        @WebParam(name = "rut", targetNamespace = "")
+        int rut);
+
+    /**
+     * 
      * @param hasta
      * @param persona
      * @param desde

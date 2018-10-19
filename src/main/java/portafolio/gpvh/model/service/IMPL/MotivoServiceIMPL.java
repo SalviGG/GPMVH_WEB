@@ -15,6 +15,11 @@ public class MotivoServiceIMPL implements MotivoService {
     @Autowired
     private IMotivoDao motiDao;
 
+    @Override
+    public List<Motivo> findAllActivo() {
+        return motiDao.findAllForActivo("S");
+    }
+
     public List<Motivo> findAll(){
 
         return (List<Motivo>) motiDao.findAll();

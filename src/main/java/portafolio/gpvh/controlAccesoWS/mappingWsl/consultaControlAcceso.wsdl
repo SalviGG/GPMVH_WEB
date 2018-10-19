@@ -28,6 +28,12 @@
 <message name="AsistenciaPorDiaResponse">
 <part name="parameters" element="tns:AsistenciaPorDiaResponse"/>
 </message>
+<message name="personaPorRut">
+<part name="parameters" element="tns:personaPorRut"/>
+</message>
+<message name="personaPorRutResponse">
+<part name="parameters" element="tns:personaPorRutResponse"/>
+</message>
 <message name="AsistenciaPorRangoDeFecha">
 <part name="parameters" element="tns:AsistenciaPorRangoDeFecha"/>
 </message>
@@ -62,6 +68,10 @@
 <operation name="AsistenciaPorDia">
 <input wsam:Action="http://controldeacceso.portafolio.com/consultaControlAcceso/AsistenciaPorDiaRequest" message="tns:AsistenciaPorDia"/>
 <output wsam:Action="http://controldeacceso.portafolio.com/consultaControlAcceso/AsistenciaPorDiaResponse" message="tns:AsistenciaPorDiaResponse"/>
+</operation>
+<operation name="personaPorRut">
+<input wsam:Action="http://controldeacceso.portafolio.com/consultaControlAcceso/personaPorRutRequest" message="tns:personaPorRut"/>
+<output wsam:Action="http://controldeacceso.portafolio.com/consultaControlAcceso/personaPorRutResponse" message="tns:personaPorRutResponse"/>
 </operation>
 <operation name="AsistenciaPorRangoDeFecha">
 <input wsam:Action="http://controldeacceso.portafolio.com/consultaControlAcceso/AsistenciaPorRangoDeFechaRequest" message="tns:AsistenciaPorRangoDeFecha"/>
@@ -106,6 +116,15 @@
 </output>
 </operation>
 <operation name="AsistenciaPorDia">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="personaPorRut">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

@@ -50,6 +50,7 @@
 
         $('input[name="numero_dias"]').daterangepicker({
             autoUpdateInput: false,
+            singleDatePicker: true,
             locale: {
                 cancelLabel: 'Clear'
             },
@@ -59,7 +60,7 @@
         });
 
         $('input[name="numero_dias"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            $(this).val(picker.startDate.format('MM/DD/YYYY') );
         });
 
         $('input[name="numero_dias"]').on('cancel.daterangepicker', function(ev, picker) {

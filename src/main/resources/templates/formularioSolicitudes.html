@@ -13,7 +13,8 @@
         <div class="row">
             <div th:include="fragments/opcionesRapidas :: opcionesRapidas"></div>
             <div class="col-md-9">
-                <div th:include="fragments/otros :: otros"></div>
+                <p th:text="${archivoForm}"></p>
+                <div th:include="${archivoForm} :: ${nombreFragmentForm}"></div>
             </div>
         </div>
     </div>
