@@ -21,11 +21,12 @@ public class Dashboard {
 
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, HttpSession httpSession){
+
         int rut = Integer.parseInt(authentication.getName());
 
         Persona persona = consultaControlAccesoServicio.busquedaPorRut(rut);
         httpSession.setAttribute("persona" ,persona);
-        httpSession.setAttribute("funcionrio",funcionarioService.buscarPorRut(rut));
+        httpSession.setAttribute("funcionario",funcionarioService.buscarPorRut(rut));
 
         return "dashboard";
     }

@@ -17,7 +17,11 @@ public class SolicitudController {
 
     @GetMapping("/solicitud")
     public String solicitud(Model model, HttpSession session){
-        System.out.println(((Persona)session.getAttribute("persona")).getNombres());
+        //Valida que el atributo motivos no este vacio
+        if (!model.containsAttribute("motivos")){
+            return "redirect:/dashboard";
+        }
+        //System.out.println(((Persona)session.getAttribute("persona")).getNombres());
         model.addAttribute("motivos",motivoService.findAllActivo());
         return "solicitud";
 

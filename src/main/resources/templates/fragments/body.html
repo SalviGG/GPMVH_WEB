@@ -30,6 +30,7 @@
                     <a>
                       <form action="/logout" method="post">
                           <input class="btn-default" type="submit" value="Logout"/>
+                          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                       </form>
                     </a>
                 </li>

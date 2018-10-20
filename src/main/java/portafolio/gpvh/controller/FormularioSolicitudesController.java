@@ -17,6 +17,10 @@ public class FormularioSolicitudesController {
 
     @GetMapping("/formularioSolicitudes")
     public String formulario(Model model){
+        //Valida que el atributo archivo no este vacio 
+        if (!model.containsAttribute("archivo")){
+            return "redirect:/solicitud";
+        }
         model.addAttribute("archivo","fragments/opcionesRapidas");
         model.addAttribute("nombreFragment","opcionesRapidas");
         return "formularioSolicitudes";
