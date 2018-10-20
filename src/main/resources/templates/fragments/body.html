@@ -26,7 +26,13 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" th:text="'Bienvenido,'+${session.persona.nombres}"> Pepe</a></li>
-                <li><a href="login.html">Salir</a></li>
+                <li>
+                    <a>
+                      <form action="/logout" method="post">
+                          <input class="btn-default" type="submit" value="Logout"/>
+                      </form>
+                    </a>
+                </li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

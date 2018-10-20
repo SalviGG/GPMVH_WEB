@@ -8,12 +8,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import portafolio.gpvh.controlAccesoWS.service.serviceIMPL.ConsultaControlAccesoServicioIMPL;
 import portafolio.gpvh.objetos.CustomAuthentication;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableWebSecurity
@@ -27,13 +30,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(customAuthentication);
     }
 
+
     @Override
     protected void configure(HttpSecurity http)throws Exception{
 
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**","/fonts/**","/images/**","/js/**","/vendor/**").permitAll()
-                .antMatchers("/dashboard").permitAll()//.hasAnyRole("ADMIN","USER")
+                .antMatchers("/dashboard").authenticated()//.permitAll()//.hasAnyRole("ADMIN","USER")
                 .antMatchers("/formularioSolicitudes").permitAll()//.hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -43,8 +47,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/login")
                 .permitAll();
-    }
 
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .maximumSessions(1)
+                .expiredUrl("/login");
+    }
 
 }
