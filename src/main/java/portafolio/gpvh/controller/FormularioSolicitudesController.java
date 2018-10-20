@@ -17,7 +17,7 @@ public class FormularioSolicitudesController {
 
     @GetMapping("/formularioSolicitudes")
     public String formulario(Model model){
-        //Valida que el atributo archivo no este vacio 
+        //Validación de session para evitar error de atributo null
         if (!model.containsAttribute("archivo")){
             return "redirect:/solicitud";
         }

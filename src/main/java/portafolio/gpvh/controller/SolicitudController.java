@@ -17,8 +17,9 @@ public class SolicitudController {
 
     @GetMapping("/solicitud")
     public String solicitud(Model model, HttpSession session){
-        //Valida que el atributo motivos no este vacio
-        if (!model.containsAttribute("motivos")){
+
+        //Validación de session para evitar error de atributo null
+        if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
         //System.out.println(((Persona)session.getAttribute("persona")).getNombres());
