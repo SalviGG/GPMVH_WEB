@@ -8,7 +8,8 @@ import java.util.*;
 public class Rol {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_ROL_ID")
+	@SequenceGenerator(name = "SQ_ROL_ID",allocationSize = 1,sequenceName = "SQ_ROL_ID")
 	@Column(name = "rol_id")
 	private int rolId;
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class EstadoDocumento {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_ESTADO_DOCUMENTO_ID")
+	@SequenceGenerator(name = "SQ_ESTADO_DOCUMENTO_ID",allocationSize = 1,sequenceName = "SQ_ESTADO_DOCUMENTO_ID")
 	@Column(name = "estado_documento_id")
 	private int estadoDocumentoId;
 

@@ -10,7 +10,8 @@ import java.util.Set;
 public class Funcion {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_FUNCION_ID")
+	@SequenceGenerator(name = "SQ_FUNCION_ID",allocationSize = 1,sequenceName = "SQ_FUNCION_ID")
 	@Column(name = "funcion_id")
 	private int funcionId;
 

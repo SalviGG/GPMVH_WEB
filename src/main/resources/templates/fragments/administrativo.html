@@ -18,28 +18,29 @@
             </thead>
             <tbody>
             <tr>
-                <th>num_dias_disponibles</th>
-                <th>num_dias_utilizados</th>
-                <th>num_dias_totales</th>
+                <th th:text="5-${session.funcionario.diasAdministrativoUsados}">num_dias_disponibles</th>
+                <th th:text="${session.funcionario.diasAdministrativoUsados}"></th>
+                <th>5</th>
             </tr>
             </tbody>
         </table>
         <br/>
-        <form method="post col-xs-4">
+        <!--/*@thymesVar id="documento" type="portafolio.gpvh.model.entity.Documento"*/-->
+        <form method="post col-xs-4" th:action="@{/GuardarDiaAdministrativo}" th:method="post">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
-                <select class="form-control" id="tipoDia">
-                    <option>Día administrativo</option>
-                    <option>Media mañana</option>
-                    <option>Media tarde</option>
+                <select class="form-control" id="periodo" name="periodo" required>
+                    <option th:value="1">Día administrativo</option>
+                    <option th:value="2" >Media mañana</option>
+                    <option th:value="3">Media tarde</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="numero_dias">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value=""/>
+                <input type="text" class="form-control" id="fecha" name="fecha"  value="" required/>
             </div>
             <div class="form-group col-xs-12">
-                <button type="button" class="btn btn-primary">Solicitar</button>
+                <button type="submit" class="btn btn-primary">Solicitar</button>
             </div>
         </form>
     </div>
@@ -48,7 +49,7 @@
 <script type="text/javascript">
     $(function() {
 
-        $('input[name="numero_dias"]').daterangepicker({
+        $('input[name="fecha"]').daterangepicker({
             autoUpdateInput: false,
             singleDatePicker: true,
             locale: {
@@ -59,11 +60,11 @@
             }
         });
 
-        $('input[name="numero_dias"]').on('apply.daterangepicker', function(ev, picker) {
+        $('input[name="fecha"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('MM/DD/YYYY') );
         });
 
-        $('input[name="numero_dias"]').on('cancel.daterangepicker', function(ev, picker) {
+        $('input[name="fecha"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
 

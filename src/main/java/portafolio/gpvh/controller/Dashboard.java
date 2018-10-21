@@ -25,7 +25,7 @@ public class Dashboard {
 
         Persona persona = consultaControlAccesoServicio.busquedaPorRut(rut);
         httpSession.setAttribute("persona" ,persona);
-        httpSession.setAttribute("funcionrio",funcionarioService.buscarPorRut(rut));
+        httpSession.setAttribute("funcionario",funcionarioService.buscarPorRut(rut));
 
         return "dashboard";
     }

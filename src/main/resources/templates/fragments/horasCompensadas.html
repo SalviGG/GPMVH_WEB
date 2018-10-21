@@ -13,35 +13,54 @@
         <table class="table">
             <thead>
             <th>Horas disponibles</th>
-            <th>Horas utilizadas</th>
-            <th>Saldo total de horas</th>
+
             </thead>
             <tbody>
             <tr>
-                <th>num_horas_disponibles</th>
-                <th>num_horas_utilizados</th>
-                <th>num_horas_totales</th>
+                <th th:text="${session.persona.horasCompensadas}"></th>
             </tr>
             </tbody>
         </table>
         <br/>
-        <form method="post" class="form col-xs-4" >
+        <form method="post" action="/GuardarHorasCompesadas" class="form col-xs-4" >
             <div class="form-group">
                 <label for="fecha">Fecha</label>
-                <input type="text" class="form-control" id="fecha" name="fecha">
-            </div>
+                <input type="text"
+                       class="form-control"
+                       id="fecha"
+                       name="fecha"
+                       />
+                       </div>
             <div class="form-group">
                 <label for="fecha">Hora de incio</label>
-                <input type="text" class="form-control" id="horasInicio">
+                <select class="form-control" onchange="calcularTermino(this)" id="inicio" name="inicio" required
+                        oninvalid="this.setCustomValidity('Este campo es obligatorio')">
+                    <option value="" >Hora inicio</option>
+                    <option value="08" >08</option>
+                    <option value="09" >09</option>
+                    <option value="10" >10</option>
+                    <option value="11" >11</option>
+                    <option value="12" >12</option>
+                    <option value="13" >13</option>
+                    <option value="14" >14</option>
+                    <option value="15" >15</option>
+                    <option value="16" >16</option>
+                    <option value="17" >17</option>
+                </select>
             </div>
+
             <div class="form-group">
                 <label for="fecha">Hora de incio</label>
-                <input type="text" class="form-control" id="horasTermino">
+                <select class="form-control" id="termino" name="termino" disabled required
+                        oninvalid="this.setCustomValidity('Este campo es obligatorio')">
+                        <option value="">Hora termino</option>
+                </select>
             </div>
             <div class="form-group col-xs-10">
-                <button type="button" class="btn btn-primary">Solicitar</button>
+                <button type="submit" class="btn btn-primary">Solicitar</button>
             </div>
         </form>
+        <input type="hidden" id="horasDisponiles" th:value="${session.persona.horasCompensadas}" >
     </div>
 </div>
 
@@ -61,13 +80,51 @@
 
         $('input[name="fecha"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('MM/DD/YYYY'));
+            $(this).oninput();
         });
 
         $('input[name="fecha"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
+            $(this).oninput();
         });
 
     });
+</script>
+<script>
+    
+    function cleanHoraTermino() {
+        var elementTermino = document.getElementById("termino");
+        alert(elementTermino.options.length);
+        for (i = elementTermino.options.length; i > 0;i--){
+            elementTermino.remove(i)
+        }
+    }
+    
+    function calcularTermino(element) {
+        var horaInicia = element.value;
+        alert(horaInicia);
+        var elementTermino = document.getElementById("termino");
+        if(horaInicia != ""){
+            document.getElementById("termino").disabled = false;
+            cleanHoraTermino();
+            var horasDisponible = parseInt( document.getElementById("horasDisponiles").value);
+            var horMaximas = parseInt(horaInicia)+horasDisponible;
+            if(horMaximas >= 18){
+                horMaximas =18
+            }
+            for (i = parseInt(horaInicia)+1; i <= horMaximas;i++){
+
+                var option = document.createElement("option");
+                option.text = i;
+                option.value = i ;
+                elementTermino.add(option);
+            }
+        }else{
+            document.getElementById("termino").disabled = true;
+            cleanHoraTermino();
+        }
+    }
+
 </script>
 
 </body>

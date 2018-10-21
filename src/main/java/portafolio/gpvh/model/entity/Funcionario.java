@@ -9,7 +9,8 @@ import java.util.List;
 public class Funcionario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_FUNCION_ID")
+	@SequenceGenerator(name = "SQ_FUNCION_ID",allocationSize = 1,sequenceName = "SQ_FUNCION_ID")
 	@Column(name = "funcionario_id")
 	private int funcionarioId;
 

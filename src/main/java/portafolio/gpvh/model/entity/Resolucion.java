@@ -11,7 +11,8 @@ import java.util.List;
 public class Resolucion {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_RESOLUCION_ID")
+	@SequenceGenerator(name = "SQ_RESOLUCION_ID",allocationSize = 1,sequenceName = "SQ_RESOLUCION_ID")
 	@Column(name = "resolucion_id")
 	private int resolucionId;
 

@@ -1,6 +1,6 @@
 package portafolio.gpvh.model.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +12,10 @@ import javax.print.Doc;
 public class Documento {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_DOCUMENTO_ID")
+	@SequenceGenerator(name = "SQ_DOCUMENTO_ID",allocationSize = 1,sequenceName = "SQ_DOCUMENTO_ID")
 	@Column(name = "documento_id")
-	private int documentoId;
+	private Integer documentoId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -69,11 +70,11 @@ public class Documento {
 		this.afectaDocIds = new ArrayList<Documento>();
 	}
 
-	public int getDocumentoId() {
+	public Integer getDocumentoId() {
 		return documentoId;
 	}
 
-	public void setDocumentoId(int documentoId) {
+	public void setDocumentoId(Integer documentoId) {
 		this.documentoId = documentoId;
 	}
 

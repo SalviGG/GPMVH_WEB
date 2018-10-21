@@ -9,7 +9,8 @@ import java.util.List;
 public class Motivo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_MOTIVO")
+	@SequenceGenerator(name = "SQ_MOTIVO",allocationSize = 1,sequenceName = "SQ_MOTIVO")
 	@Column(name = "motivo_id")
 	private int motivoId;
 
