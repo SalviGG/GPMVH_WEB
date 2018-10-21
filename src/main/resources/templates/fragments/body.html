@@ -22,7 +22,7 @@
                 <li class="active"><a href="index.html">Inicio</a></li>
                 <li><a th:href="@{../solicitud}">Solicitud de permiso</a></li>
                 <li><a href="estado.html">Estado de permiso</a></li>
-                <li><a href="report.html">Reportes e informes</a></li>
+                <li><a th:href="@{../consultasReportes}">Reportes e informes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:text="'Bienvenido,'+${session.persona.nombres}"> Pepe</a></li>

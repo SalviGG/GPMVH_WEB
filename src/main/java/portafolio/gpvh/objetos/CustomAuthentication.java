@@ -21,9 +21,20 @@ import java.util.List;
 @Component
 public class CustomAuthentication implements AuthenticationProvider {
 
+    /**
+     * Inyecta el la interfaz que maneja la implementación del webservice
+     */
     @Autowired
     private ConsultaControlAccesoServicio consulta;
 
+    /**
+     * Sobreescribe la autenticación de spring security para ser utilizada en el archivo de configuración de spring.
+     * Este metodo hace la validación contra el webservice y genera un token de autenticación, además entrega un rol
+     * al usuario que ha ingresado.
+     * @param authentication
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         int username = Integer.parseInt(authentication.getName());
@@ -39,7 +50,7 @@ public class CustomAuthentication implements AuthenticationProvider {
             //return new UsernamePasswordAuthenticationToken(username,password, Collections.emptyList());
         }else{
             throw new
-                    BadCredentialsException("External system authentication failed");
+                    BadCredentialsException("Autenticación fallida");
         }
     }
 
