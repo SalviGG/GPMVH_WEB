@@ -21,6 +21,7 @@ public class Dashboard {
 
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, HttpSession httpSession){
+
         int rut = Integer.parseInt(authentication.getName());
 
         Persona persona = consultaControlAccesoServicio.busquedaPorRut(rut);
