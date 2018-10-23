@@ -125,4 +125,5 @@ public class ConsultaControlAccesoServicioIMPL implements ConsultaControlAccesoS
 
         return getPort().personaPorRut(rut);
     }
+
 }

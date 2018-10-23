@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import portafolio.gpvh.model.dao.IDocumentoDao;
 import portafolio.gpvh.model.entity.Documento;
+import portafolio.gpvh.model.entity.Funcionario;
 import portafolio.gpvh.model.service.DocumentoService;
 
 import java.util.List;
@@ -16,26 +17,29 @@ public class DocumentoServiceIMPL implements DocumentoService {
     @Autowired
     private IDocumentoDao docuDAO;
 
-    public List<Documento> findAll()
-    {
+    public List<Documento> findAll() {
 
         return (List<Documento>) docuDAO.findAll();
     }
 
-    public void save (Documento documento){
+    public void save(Documento documento) {
 
         docuDAO.save(documento);
     }
 
-    public Documento findOne(int id){
+    public Documento findOne(int id) {
 
         return docuDAO.findById(id).orElse(null);
     }
 
-    public void delete (Documento documento){
+    public void delete(Documento documento) {
 
         docuDAO.delete(documento);
     }
 
+    public List<Documento> findAllByFuncionarioId(Funcionario funcionarioId) {
+
+       return (List<Documento> )docuDAO.findAllByFuncionarioId(funcionarioId);
+    }
 
 }

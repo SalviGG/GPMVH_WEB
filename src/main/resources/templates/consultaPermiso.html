@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: head">
+</head>
+
+<body>
+
+<div th:include="fragments/body :: body"></div>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div th:include="fragments/opcionesRapidas :: opcionesRapidas" th:fragment="opcionesRapidas"></div>
+            <div class="col-md-9">
+                <table class="table table-striped table-hover">
+                    <tr>
+                        <th>Documentos</th>
+                        <th>Motivo</th>
+                        <th>Fecha de solicitud</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha de termino</th>
+                        <th>
+                            Resolucion</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+
+                    <tr th:each="documento : ${listaDocumento}">
+                        <th th:text="${documento.documentoId}"></th>
+                        <th th:text="${documento.motivoId.nombre}"></th>
+                        <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyys ')}"></th>
+                        <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyys HH:mm')}"></th>
+                        <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyys HH:mm')}"></th>
+                        <th th:text="${documento.resolucionId}"></th>
+                        <th th:text="${documento.tipoDocumentoId.nombre}"></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

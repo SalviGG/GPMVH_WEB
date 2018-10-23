@@ -22,4 +22,5 @@ public interface ConsultaControlAccesoServicio {
     public Persona devolverHoras(Persona persona ,int horas);
     public Persona devolverHoras(int rut ,int horas);
     public Persona busquedaPorRut(int rut);
+
 }
