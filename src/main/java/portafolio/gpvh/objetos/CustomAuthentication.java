@@ -11,21 +11,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BeanPropertyBindingResult;
 import portafolio.gpvh.controlAccesoWS.mappingWsl.Persona;
 import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomAuthentication implements AuthenticationProvider {
+public class CustomAuthentication implements AuthenticationProvider  {
 
     /**
      * Inyecta el la interfaz que maneja la implementación del webservice
      */
     @Autowired
     private ConsultaControlAccesoServicio consulta;
+
+    @Autowired
+    private transient Validator validator;
 
     /**
      * Sobreescribe la autenticación de spring security para ser utilizada en el archivo de configuración de spring.
@@ -37,25 +43,53 @@ public class CustomAuthentication implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        int username = Integer.parseInt(authentication.getName());
-        String password = authentication.getCredentials().toString();
+        //int username = Integer.parseInt(authentication.getName());
+        if (tryParseInt(authentication.getName())){
+            int username = Integer.parseInt(authentication.getName());
 
-        Persona persona = consulta.externalLogin(username,password);
+            String password = authentication.getCredentials().toString();
 
-        if (persona != null){
-            List<GrantedAuthority> grantedAuths = new ArrayList<>();
-            grantedAuths.add(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
-            Authentication auth = new UsernamePasswordAuthenticationToken(username,password,grantedAuths);
-            return auth;
-            //return new UsernamePasswordAuthenticationToken(username,password, Collections.emptyList());
+            ValidacionLogin validacionLogin = new ValidacionLogin();
+            validacionLogin.setRut(username);
+            validacionLogin.setPassword(password);
+
+            BeanPropertyBindingResult errors = new BeanPropertyBindingResult(validacionLogin, "login");
+
+            if (errors.hasErrors()){
+                throw  new
+                        BadCredentialsException("Autenticación fallida");
+            }
+
+            Persona persona = consulta.externalLogin(username,password);
+
+            if (persona != null){
+                List<GrantedAuthority> grantedAuths = new ArrayList<>();
+                grantedAuths.add(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+                Authentication auth = new UsernamePasswordAuthenticationToken(username,password,grantedAuths);
+                return auth;
+                //return new UsernamePasswordAuthenticationToken(username,password, Collections.emptyList());
+            }else{
+                throw new
+                        BadCredentialsException("Autenticación fallida");
+            }
         }else{
-            throw new
+            throw  new
                     BadCredentialsException("Autenticación fallida");
         }
+
     }
 
     @Override
     public boolean supports(Class<?> auth) {
         return auth.equals(UsernamePasswordAuthenticationToken.class);
+    }
+
+    public boolean tryParseInt(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
