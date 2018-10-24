@@ -22,6 +22,10 @@ public class Dashboard {
     @GetMapping("/dashboard")
     public String dashboard(Authentication authentication, HttpSession httpSession){
         //Validación de session para evitar error de atributo null
+        if(authentication.getName()== null){
+
+            return "redirect:/login";
+        }
         int rut = Integer.parseInt(authentication.getName());
 
         Persona persona = consultaControlAccesoServicio.busquedaPorRut(rut);

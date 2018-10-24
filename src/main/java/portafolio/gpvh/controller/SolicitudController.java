@@ -17,7 +17,9 @@ public class SolicitudController {
 
     @GetMapping("/solicitud")
     public String solicitud(Model model, HttpSession session){
-
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
         model.addAttribute("motivos",motivoService.findAllActivo());
         return "solicitud";
 

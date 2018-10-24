@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ErrorController {
+
     @GetMapping("/error")
     public String error(HttpServletRequest httpRequest){
 
-        return "/login";
+        return "redirect:/dashboard";
     }
+
 }

@@ -36,6 +36,9 @@ public class FormularioSolicitudesController {
     @PostMapping("/GuardarHorasCompesadas")
     public String postGuardarHorasCompesadas(HttpSession session,@RequestParam("fecha") String fecha,@RequestParam("inicio") String inicio,@RequestParam("termino") String termino){
 
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date fechaDate;
@@ -60,6 +63,9 @@ public class FormularioSolicitudesController {
 
     @PostMapping("/GuardarDiaAdministrativo")
     public String postGuardarDiaAdministrativo(HttpSession session,@RequestParam("periodo") String periodo,@RequestParam("fecha") String fecha){
+
+
+
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date fechaDate;
@@ -111,6 +117,8 @@ public class FormularioSolicitudesController {
 
     @PostMapping("/formularioSolicitudes")
     public String postFormulario(Model model,@RequestParam("motivoId") String motivoId) {
+
+
 
         Motivo motivo = motivoService.findOne(Integer.parseInt(motivoId));
         model.addAttribute("motivo", motivo);
