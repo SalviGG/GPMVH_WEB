@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+
+</head>
+<body th:fragment="posNatalMadre">
+
+<div class="panel panel-default">
+    <div class="panel-heading main-color-bg">
+        <h3 class="panel-title">POST-NATAL MADRE</h3>
+    </div>
+    <div class="panel-body">
+        <form method="post" class="col-xs-4">
+            <div class="form-group">
+                <label for="tipoDia">Tipo de permiso</label>
+                <select class="form-control" id="tipoDia">
+                    <option>Matrimonio</option>
+                    <option>Post-Natal Padre</option>
+                    <option>Defunsión</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">Adjuntar archivo</label>
+                <input type="file" id="exampleInputFile">
+                <p class="help-block">Example block-level help text here.</p>
+            </div>
+            <div class="form-group">
+                <label for="numero_dias">Rango de días a solicitar</label>
+                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value=""/>
+            </div>
+            <div class="form-group col-xs-12">
+                <button type="button" class="btn btn-primary">Solicitar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+
+        $('input[name="numero_dias"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            },
+            isInvalidDate: function(date) {
+                return (date.day() == 0 || date.day() == 6);
+            }
+        });
+
+        $('input[name="numero_dias"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="numero_dias"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+    });
+</script>
+
+</body>
+</html>
