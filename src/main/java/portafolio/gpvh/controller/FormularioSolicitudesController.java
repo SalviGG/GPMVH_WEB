@@ -32,6 +32,16 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
+// buscar como llamar a parametro file, en spring controller
+    @PostMapping("/GuardarPermisosMatrimonio")
+    public String postGuardarPermisosMatrimonio(HttpSession session,@RequestParam("fecha_inicial") String fechaInicial){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+        return "redirect:/solicitudes";
+
+    }
 
     @PostMapping("/GuardarHorasCompesadas")
     public String postGuardarHorasCompesadas(HttpSession session,@RequestParam("fecha") String fecha,@RequestParam("inicio") String inicio,@RequestParam("termino") String termino){
@@ -135,6 +145,10 @@ public class FormularioSolicitudesController {
             case 3:
                 model.addAttribute("archivoForm", "fragments/vacaciones");
                 model.addAttribute("nombreFragmentForm", "vacaciones");
+                break;
+            case 13:
+                model.addAttribute("archivoForm", "fragments/matrimonio");
+                model.addAttribute("nombreFragmentForm", "matrimonio");
                 break;
             default:
                 model.addAttribute("archivoForm", "fragments/otros");

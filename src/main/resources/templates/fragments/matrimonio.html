@@ -3,30 +3,22 @@
 <head>
 
 </head>
-<body th:fragment="otros">
+<body th:fragment="matrimonio">
 
 <div class="panel panel-default">
     <div class="panel-heading main-color-bg">
-        <h3 class="panel-title">Solicitud de permisos especiales</h3>
+        <h3 class="panel-title">Solicitud de permisos Matrimoniales</h3>
     </div>
     <div class="panel-body">
-        <form method="post" class="col-xs-4">
-            <div class="form-group">
-                <label for="tipoDia">Tipo de permiso</label>
-                <select class="form-control" id="tipoDia">
-                    <option>Matrimonio</option>
-                    <option>Post-Natal Padre</option>
-                    <option>Defunsión</option>
-                </select>
-            </div>
+        <form method="post" action="" class="col-xs-4" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputFile">Adjuntar archivo</label>
-                <input type="file" id="exampleInputFile">
+                <input type="file" id="exampleInputFile" name="file">
                 <p class="help-block">Example block-level help text here.</p>
             </div>
             <div class="form-group">
-                <label for="numero_dias">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value=""/>
+                <label for="fecha_inicial">Rango de días a solicitar</label>
+                <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value=""/>
             </div>
             <div class="form-group col-xs-12">
                 <button type="button" class="btn btn-primary">Solicitar</button>
