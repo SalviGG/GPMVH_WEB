@@ -19,6 +19,7 @@ import portafolio.gpvh.model.service.TipoDocumentoService;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 @Controller
@@ -32,7 +33,7 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
-// buscar como llamar a parametro file, en spring controller
+// como llamar a parametro file, en spring controller segun guia
 
     @RequestMapping(value = "/ArchivoSubido", method = RequestMethod.POST)
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
@@ -50,6 +51,7 @@ public class FormularioSolicitudesController {
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date fecha;
+        Calendar calendar = Calendar.getInstance();
         Funcionario funcionario=(Funcionario) session.getAttribute("funcionario");
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(13));//id 13 = motivo matrimonio
@@ -61,6 +63,17 @@ public class FormularioSolicitudesController {
             fecha = formatter.parse(fechaInicial + " 00:00:00");
             documento.setFechaInicio(fecha);
             fecha = formatter.parse(fechaInicial);
+            calendar.setTime(fecha);
+            int diasPermiso = 5;
+            for (int i=0;i<diasPermiso;){
+                calendar.add(Calendar.DAY_OF_MONTH,1);
+                if (calendar.get(Calendar.DAY_OF_WEEK)<=5){
+                    i++;
+                }
+            }
+            fecha= calendar.getTime();
+            fecha=formatter.parse(fecha + " 00:00:00");
+            System.out.println(formatter.parse(String.valueOf(calendar)));
             documento.setFechaTermino(fecha);
         } catch (ParseException e) {
             e.printStackTrace();
