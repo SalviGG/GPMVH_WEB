@@ -3,10 +3,10 @@ package portafolio.gpvh.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import portafolio.gpvh.model.entity.Documento;
 
 import portafolio.gpvh.model.entity.Funcionario;
@@ -33,14 +33,42 @@ public class FormularioSolicitudesController {
     @Autowired
     private DocumentoService documentoService;
 // buscar como llamar a parametro file, en spring controller
+
+    @RequestMapping(value = "/ArchivoSubido", method = RequestMethod.POST)
+    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
+        modelMap.addAttribute("file", file);
+        return "fileUploadView";
+    }
+
     @PostMapping("/GuardarPermisosMatrimonio")
     public String postGuardarPermisosMatrimonio(HttpSession session,@RequestParam("fecha_inicial") String fechaInicial){
 
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
-        return "redirect:/solicitudes";
 
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date fecha;
+        Funcionario funcionario=(Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(13));//id 13 = motivo matrimonio
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));//id 4 = estado pendiente
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+        try {
+            fecha = formatter.parse(fechaInicial + " 00:00:00");
+            documento.setFechaInicio(fecha);
+            fecha = formatter.parse(fechaInicial);
+            documento.setFechaTermino(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        documentoService.save(documento);
+        System.out.println(documento.getFechaInicio());
+        System.out.println(documento.getFechaTermino());
+        return "redirect:/solicitud";
     }
 
     @PostMapping("/GuardarHorasCompesadas")
@@ -68,6 +96,7 @@ public class FormularioSolicitudesController {
             e.printStackTrace();
         }
         documentoService.save(documento);
+
         return "redirect:/solicitud";
     }
 

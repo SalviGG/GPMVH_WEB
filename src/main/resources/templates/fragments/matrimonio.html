@@ -9,16 +9,24 @@
     <div class="panel-heading main-color-bg">
         <h3 class="panel-title">Solicitud de permisos Matrimoniales</h3>
     </div>
+    <div>
+        <h2></br>¿Qué dice la ley? </h2>
+        <p class="help-block" p> </br> A contar del 18 de julio de 2014, fecha de publicación de la Ley Nº 20.764, todo trabajador(a) que contraiga matrimonio tiene derecho a cinco días hábiles continuos de permiso pagado, adicional al feriado anual, independientemente del tiempo de servicio.
+        Este permiso se puede utilizar, a elección del trabajador(a), en el día del matrimonio y en los días inmediatamente anteriores o posteriores al de su celebración.
+        Para hacer uso del beneficio el trabajador(a) debe dar aviso a su empleador con treinta días de anticipación y presentar dentro de los treinta días siguientes a la celebración el respectivo certificado de matrimonio del Servicio de Registro Civil e Identificación.
+        Los días de permiso por matrimonio del trabajador(a), pactados individual o colectivamente a la fecha de publicación de la ley, son imputables a ella.
+        Finalmente, cabe hacer presente que este beneficio también resulta aplicable a quienes celebran un acuerdo de unión civil por cuanto el texto del nuevo artículo 207 bis del Código del Trabajo (reemplazado por la Ley N°21.042, publicada en el Diario Oficial de fecha 08.11.2017), así lo establece.
+        </p>
+    </div>
     <div class="panel-body">
         <form method="post" action="" class="col-xs-4" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputFile">Adjuntar archivo</label>
                 <input type="file" id="exampleInputFile" name="file">
-                <p class="help-block">Example block-level help text here.</p>
             </div>
             <div class="form-group">
-                <label for="fecha_inicial">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value=""/>
+                <label for="fecha_inicial">Seleccione fecha de solicitud</label>
+                <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value="" placeholder="Click para seleccionar fecha"/>
             </div>
             <div class="form-group col-xs-12">
                 <button type="button" class="btn btn-primary">Solicitar</button>
@@ -30,21 +38,23 @@
 <script type="text/javascript">
     $(function() {
 
-        $('input[name="numero_dias"]').daterangepicker({
+        $('input[name="fecha_inicial"]').daterangepicker({
+            singleDatePicker: true,
             autoUpdateInput: false,
+            minDate: moment().add(30,'days'),
             locale: {
-                cancelLabel: 'Clear'
+                cancelLabel: 'Limpiar'
             },
             isInvalidDate: function(date) {
                 return (date.day() == 0 || date.day() == 6);
             }
         });
 
-        $('input[name="numero_dias"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        $('input[name="fecha_inicial"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.startDate.add(5,'days').format('MM/DD/YYYY'));
         });
 
-        $('input[name="numero_dias"]').on('cancel.daterangepicker', function(ev, picker) {
+        $('input[name="fecha_inicial"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
 
