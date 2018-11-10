@@ -33,13 +33,13 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
-// como llamar a parametro file, en spring controller segun guia
+// Ejemplo como llamar a parametro file, en spring controller segun guia
 
-    @RequestMapping(value = "/ArchivoSubido", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/ArchivoSubido", method = RequestMethod.POST)
     public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
         modelMap.addAttribute("file", file);
         return "fileUploadView";
-    }
+    }*/
 
     @PostMapping("/GuardarPermisosMatrimonio")
     public String postGuardarPermisosMatrimonio(HttpSession session,@RequestParam("fecha_inicial") String fechaInicial){
@@ -60,23 +60,22 @@ public class FormularioSolicitudesController {
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
         try {
-            fecha = formatter.parse(fechaInicial + " 00:00:00");
+            fecha = formatter.parse(fechaInicial);
             documento.setFechaInicio(fecha);
             fecha = formatter.parse(fechaInicial);
             calendar.setTime(fecha);
             int diasPermiso = 5;
-            for (int i=0;i<diasPermiso;){
+            for (int i=0;i<=diasPermiso;){
                 calendar.add(Calendar.DAY_OF_MONTH,1);
-                if (calendar.get(Calendar.DAY_OF_WEEK)<=5){
+                if (calendar.get(Calendar.DAY_OF_WEEK)!=1 || calendar.get(Calendar.DAY_OF_WEEK)!=7){
                     i++;
                 }
             }
             fecha= calendar.getTime();
-            fecha=formatter.parse(fecha + " 00:00:00");
-            System.out.println(formatter.parse(String.valueOf(calendar)));
             documento.setFechaTermino(fecha);
         } catch (ParseException e) {
             e.printStackTrace();
+            System.out.println(e.toString());
         }
         documentoService.save(documento);
         System.out.println(documento.getFechaInicio());
