@@ -41,6 +41,55 @@ public class FormularioSolicitudesController {
         return "fileUploadView";
     }*/
 
+    @PostMapping("/GuardarPermisosDefuncion")
+    public String postGuardarPermisosDefuncion(HttpSession session,@RequestParam("fecha_defuncion")String fechaDefuncion,@RequestParam("tipoDefuncion")String tipoDefuncion){
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date fecha;
+        Calendar calendar = Calendar.getInstance();
+        Funcionario funcionario=(Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(12));//id 12 = motivo defuncion
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));//id 1 = estado solicitado
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+
+        try {
+            fecha = formatter.parse(fechaDefuncion);
+            documento.setFechaInicio(fecha);
+            fecha = formatter.parse(fechaDefuncion);
+            calendar.setTime(fecha);
+            if (Integer.parseInt(tipoDefuncion)==1){
+
+                calendar.add(Calendar.DAY_OF_MONTH,6);
+            }else{
+
+                int diasPermiso = 3;
+                for (int i=0;i<=diasPermiso;){
+                    calendar.add(Calendar.DAY_OF_MONTH,1);
+                    if (calendar.get(Calendar.DAY_OF_WEEK)!=1 || calendar.get(Calendar.DAY_OF_WEEK)!=7){
+                        i++;
+                    }
+                }
+            }
+            fecha= calendar.getTime();
+            documento.setFechaTermino(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println(e.toString());
+        }
+        documentoService.save(documento);
+        System.out.println(documento.getFechaInicio());
+        System.out.println(documento.getFechaTermino());
+        return "redirect:/solicitud";
+    }
+
+
     @PostMapping("/GuardarPermisosMatrimonio")
     public String postGuardarPermisosMatrimonio(HttpSession session,@RequestParam("fecha_inicial") String fechaInicial){
 
@@ -190,6 +239,10 @@ public class FormularioSolicitudesController {
             case 13:
                 model.addAttribute("archivoForm", "fragments/matrimonio");
                 model.addAttribute("nombreFragmentForm", "matrimonio");
+                break;
+            case 12:
+                model.addAttribute("archivoForm", "fragments/defuncion");
+                model.addAttribute("nombreFragmentForm", "defuncion");
                 break;
             default:
                 model.addAttribute("archivoForm", "fragments/otros");
