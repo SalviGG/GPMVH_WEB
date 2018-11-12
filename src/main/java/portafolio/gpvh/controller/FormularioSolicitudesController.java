@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.spi.CalendarNameProvider;
 
 @Controller
 public class FormularioSolicitudesController {
@@ -69,10 +70,10 @@ public class FormularioSolicitudesController {
                 calendar.add(Calendar.DAY_OF_MONTH,6);
             }else{
 
-                int diasPermiso = 3;
-                for (int i=0;i<=diasPermiso;){
+                int diasPermiso = 2;
+                for (int i=0;i<diasPermiso;){
                     calendar.add(Calendar.DAY_OF_MONTH,1);
-                    if (calendar.get(Calendar.DAY_OF_WEEK)!=1 || calendar.get(Calendar.DAY_OF_WEEK)!=7){
+                    if (calendar.get(Calendar.DAY_OF_WEEK)>=Calendar.MONDAY && calendar.get(Calendar.DAY_OF_WEEK)<=Calendar.FRIDAY){
                         i++;
                     }
                 }
@@ -113,10 +114,10 @@ public class FormularioSolicitudesController {
             documento.setFechaInicio(fecha);
             fecha = formatter.parse(fechaInicial);
             calendar.setTime(fecha);
-            int diasPermiso = 5;
-            for (int i=0;i<=diasPermiso;){
+            int diasPermiso = 4;
+            for (int i=0;i<diasPermiso;){
                 calendar.add(Calendar.DAY_OF_MONTH,1);
-                if (calendar.get(Calendar.DAY_OF_WEEK)!=1 || calendar.get(Calendar.DAY_OF_WEEK)!=7){
+                if (calendar.get(Calendar.DAY_OF_WEEK)>=Calendar.MONDAY && calendar.get(Calendar.DAY_OF_WEEK)<=Calendar.FRIDAY){
                     i++;
                 }
             }
