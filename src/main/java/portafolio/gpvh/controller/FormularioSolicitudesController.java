@@ -3,10 +3,11 @@ package portafolio.gpvh.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import portafolio.gpvh.model.entity.Documento;
 
 import portafolio.gpvh.model.entity.Funcionario;
@@ -17,9 +18,15 @@ import portafolio.gpvh.model.service.MotivoService;
 import portafolio.gpvh.model.service.TipoDocumentoService;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.spi.CalendarNameProvider;
 
 @Controller
 public class FormularioSolicitudesController {
@@ -32,6 +39,126 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
+
+
+    @PostMapping("/GuardarPermisosDefuncion")
+    public String postGuardarPermisosDefuncion(HttpSession session,@RequestParam("fecha_defuncion")String fechaDefuncion,@RequestParam("tipoDefuncion")String tipoDefuncion, @RequestParam("file")MultipartFile archivo, RedirectAttributes flash){
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date fecha;
+        Calendar calendar = Calendar.getInstance();
+        Funcionario funcionario=(Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(12));//id 12 = motivo defuncion
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));//id 1 = estado solicitado
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+        documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
+
+        try {
+            fecha = formatter.parse(fechaDefuncion);
+            documento.setFechaInicio(fecha);
+            fecha = formatter.parse(fechaDefuncion);
+            calendar.setTime(fecha);
+            if (Integer.parseInt(tipoDefuncion)==1){
+
+                calendar.add(Calendar.DAY_OF_MONTH,6);
+            }else{
+
+                int diasPermiso = 2;
+                for (int i=0;i<diasPermiso;){
+                    calendar.add(Calendar.DAY_OF_MONTH,1);
+                    if (calendar.get(Calendar.DAY_OF_WEEK)>=Calendar.MONDAY && calendar.get(Calendar.DAY_OF_WEEK)<=Calendar.FRIDAY){
+                        i++;
+                    }
+                }
+            }
+            fecha= calendar.getTime();
+            documento.setFechaTermino(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println(e.toString());
+        }
+        documentoService.save(documento);
+        System.out.println(documento.getFechaInicio());
+        System.out.println(documento.getFechaTermino());
+        return "redirect:/solicitud";
+    }
+
+
+    @PostMapping("/GuardarPermisosMatrimonio")
+    public String postGuardarPermisosMatrimonio(HttpSession session, @RequestParam("fecha_inicial") String fechaInicial, @RequestParam("file")MultipartFile archivo, RedirectAttributes flash){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date fecha;
+        Calendar calendar = Calendar.getInstance();
+        Funcionario funcionario=(Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(13));//id 13 = motivo matrimonio
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));//id 4 = estado pendiente
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+        documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
+        try {
+            fecha = formatter.parse(fechaInicial);
+            documento.setFechaInicio(fecha);
+            fecha = formatter.parse(fechaInicial);
+            calendar.setTime(fecha);
+            int diasPermiso = 4;
+            for (int i=0;i<diasPermiso;){
+                calendar.add(Calendar.DAY_OF_MONTH,1);
+                if (calendar.get(Calendar.DAY_OF_WEEK)>=Calendar.MONDAY && calendar.get(Calendar.DAY_OF_WEEK)<=Calendar.FRIDAY){
+                    i++;
+                }
+            }
+            fecha= calendar.getTime();
+            documento.setFechaTermino(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println(e.toString());
+        }
+        documentoService.save(documento);
+        System.out.println(documento.getFechaInicio());
+        System.out.println(documento.getFechaTermino());
+        return "redirect:/solicitud";
+    }
 
     @PostMapping("/GuardarHorasCompesadas")
     public String postGuardarHorasCompesadas(HttpSession session,@RequestParam("fecha") String fecha,@RequestParam("inicio") String inicio,@RequestParam("termino") String termino){
@@ -58,6 +185,7 @@ public class FormularioSolicitudesController {
             e.printStackTrace();
         }
         documentoService.save(documento);
+
         return "redirect:/solicitud";
     }
 
@@ -135,6 +263,14 @@ public class FormularioSolicitudesController {
             case 3:
                 model.addAttribute("archivoForm", "fragments/vacaciones");
                 model.addAttribute("nombreFragmentForm", "vacaciones");
+                break;
+            case 13:
+                model.addAttribute("archivoForm", "fragments/matrimonio");
+                model.addAttribute("nombreFragmentForm", "matrimonio");
+                break;
+            case 12:
+                model.addAttribute("archivoForm", "fragments/defuncion");
+                model.addAttribute("nombreFragmentForm", "defuncion");
                 break;
             default:
                 model.addAttribute("archivoForm", "fragments/otros");
