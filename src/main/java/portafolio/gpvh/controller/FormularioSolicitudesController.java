@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import portafolio.gpvh.model.entity.Documento;
 
 import portafolio.gpvh.model.entity.Funcionario;
@@ -17,6 +18,10 @@ import portafolio.gpvh.model.service.MotivoService;
 import portafolio.gpvh.model.service.TipoDocumentoService;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,18 +39,25 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
-// Ejemplo como llamar a parametro file, en spring controller segun guia
 
-    /*@RequestMapping(value = "/ArchivoSubido", method = RequestMethod.POST)
-    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap) {
-        modelMap.addAttribute("file", file);
-        return "fileUploadView";
-    }*/
 
     @PostMapping("/GuardarPermisosDefuncion")
-    public String postGuardarPermisosDefuncion(HttpSession session,@RequestParam("fecha_defuncion")String fechaDefuncion,@RequestParam("tipoDefuncion")String tipoDefuncion){
+    public String postGuardarPermisosDefuncion(HttpSession session,@RequestParam("fecha_defuncion")String fechaDefuncion,@RequestParam("tipoDefuncion")String tipoDefuncion, @RequestParam("file")MultipartFile archivo, RedirectAttributes flash){
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
+        }
+
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Documento documento = new Documento();
@@ -59,6 +71,7 @@ public class FormularioSolicitudesController {
         documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));//id 1 = estado solicitado
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
+        documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
 
         try {
             fecha = formatter.parse(fechaDefuncion);
@@ -92,10 +105,23 @@ public class FormularioSolicitudesController {
 
 
     @PostMapping("/GuardarPermisosMatrimonio")
-    public String postGuardarPermisosMatrimonio(HttpSession session,@RequestParam("fecha_inicial") String fechaInicial){
+    public String postGuardarPermisosMatrimonio(HttpSession session, @RequestParam("fecha_inicial") String fechaInicial, @RequestParam("file")MultipartFile archivo, RedirectAttributes flash){
 
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
+        }
+
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Documento documento = new Documento();
@@ -109,6 +135,7 @@ public class FormularioSolicitudesController {
         documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));//id 4 = estado pendiente
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
+        documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
         try {
             fecha = formatter.parse(fechaInicial);
             documento.setFechaInicio(fecha);
