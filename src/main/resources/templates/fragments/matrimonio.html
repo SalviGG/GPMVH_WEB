@@ -19,14 +19,14 @@
         </p>
     </div>
     <div class="panel-body">
-        <form method="post" action="/GuardarPermisosMatrimonio" class="col-xs-4" enctype="multipart/form-data">
+        <form method="post" action="/GuardarPermisosMatrimonio" class="col-xs-5" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputFile">Adjuntar archivo</label>
-                <input type="file" id="exampleInputFile" name="file" class="form-control">
+                <input type="file" id="exampleInputFile" name="file" class="form-control" accept="image/*,.pdf" required>
             </div>
             <div class="form-group">
                 <label for="fecha_inicial">Seleccione fecha de solicitud</label>
-                <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value="" placeholder="Click para seleccionar fecha"/>
+                <input type="text" class="form-control" id="fecha_inicial" name="fecha_inicial" value="" placeholder="Click para seleccionar fecha" required/>
             </div>
             <div class="form-group col-xs-12">
                 <button type="submit" class="btn btn-primary">Solicitar</button>

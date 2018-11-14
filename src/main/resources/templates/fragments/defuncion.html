@@ -36,21 +36,21 @@
             podrán ser compensados en dinero.</p>
     </div>
     <div class="panel-body">
-        <form method="post" action="/GuardarPermisosDefuncion" class="col-xs-4" enctype="multipart/form-data">
+        <form method="post" action="/GuardarPermisosDefuncion" class="col-xs-5" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="exampleInputFile">Adjuntar archivo</label>
-                <input type="file" id="exampleInputFile" name="file" class="form-control">
+                <label for="exampleInputFile">Adjuntar archivo </label>
+                <input type="file" id="exampleInputFile" name="file" class="form-control" accept="image/*,.pdf" required>
             </div>
             <div class="form-group">
                 <label for="tipoDefuncion">Parentesco</label>
-                <select class="form-control" id="tipoDefuncion" name="tipoDefuncion">
+                <select class="form-control" id="tipoDefuncion" name="tipoDefuncion" required>
                     <option selected value=" +  1">Hijo / Cónyuge / Conviviente</option>
                     <option value="2">Padres/ Hijo en gestación</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="fecha_defuncion">Seleccione fecha de defunción</label>
-                <input type="text" class="form-control" id="fecha_defuncion" name="fecha_defuncion" value="" placeholder="Click para seleccionar fecha"/>
+                <input type="text" class="form-control" id="fecha_defuncion" name="fecha_defuncion" value="" placeholder="Click para seleccionar fecha" required/>
             </div>
             <div class="form-group col-xs-12">
                 <button type="submit" class="btn btn-primary">Solicitar</button>
@@ -65,7 +65,7 @@
         $('input[name="fecha_defuncion"]').daterangepicker({
             singleDatePicker: true,
             autoUpdateInput: false,
-            minDate: moment().subtract(7,'days'),
+            minDate: moment().subtract(3,'days'),
             maxDate:moment(),
             locale: {
                 cancelLabel: 'Limpiar'
