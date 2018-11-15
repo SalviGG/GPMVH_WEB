@@ -52,6 +52,7 @@
         $('input[name="fecha"]').daterangepicker({
             autoUpdateInput: false,
             singleDatePicker: true,
+            minDate:moment().add(1,'days'),
             locale: {
                 cancelLabel: 'Clear'
             },
