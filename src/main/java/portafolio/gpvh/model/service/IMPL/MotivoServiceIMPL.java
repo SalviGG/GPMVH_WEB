@@ -20,6 +20,11 @@ public class MotivoServiceIMPL implements MotivoService {
         return motiDao.findAllForActivo("S");
     }
 
+    @Override
+    public List<Motivo> findAllInactivo() {
+        return motiDao.findAllForActivo("S");
+    }
+
     public List<Motivo> findAll(){
 
         return (List<Motivo>) motiDao.findAll();
@@ -37,5 +42,11 @@ public class MotivoServiceIMPL implements MotivoService {
 
         motiDao.delete(motivo);
 
+    }
+
+    @Override
+    public List<Motivo> findAllOtros(List<Integer> list) {
+
+        return  motiDao.findAllForActivoOtros("S",list) ;
     }
 }

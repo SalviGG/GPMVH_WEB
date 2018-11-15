@@ -7,8 +7,10 @@ import java.util.List;
 public interface MotivoService {
 
     public List<Motivo> findAllActivo();
+    public List<Motivo> findAllInactivo();
     public List<Motivo> findAll();
     public void save(Motivo motivo);
     public Motivo findOne(int id);
     public void delete(Motivo motivo);
+    public List<Motivo> findAllOtros(List<Integer> list);
 }

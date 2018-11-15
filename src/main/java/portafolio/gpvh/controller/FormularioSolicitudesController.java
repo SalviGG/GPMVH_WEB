@@ -24,8 +24,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.spi.CalendarNameProvider;
 
 @Controller
@@ -273,6 +275,8 @@ public class FormularioSolicitudesController {
                 model.addAttribute("nombreFragmentForm", "defuncion");
                 break;
             default:
+                List<Motivo> otrosMotiv = otrosFormularios();
+                model.addAttribute("otrosMotiv", otrosMotiv);
                 model.addAttribute("archivoForm", "fragments/otros");
                 model.addAttribute("nombreFragmentForm", "otros");
                 break;
@@ -284,4 +288,11 @@ public class FormularioSolicitudesController {
 
         return "formularioSolicitudes";
     }
+
+
+    public List<Motivo> otrosFormularios(){
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        return  motivoService.findAllOtros(list);
+   }
 }
