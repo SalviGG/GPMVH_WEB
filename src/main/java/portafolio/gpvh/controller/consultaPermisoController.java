@@ -13,7 +13,7 @@ import portafolio.gpvh.model.service.FuncionarioService;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class consultaPermisoController {
+public class ConsultaPermisoController {
 
     @Autowired
     private FuncionarioService funcionarioService;

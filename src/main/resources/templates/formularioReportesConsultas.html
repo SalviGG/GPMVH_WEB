@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/header :: head">
+</head>
+
+<body>
+
+<div th:include="fragments/body :: body"></div>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div th:include="fragments/opcionesRapidas :: opcionesRapidas"></div>
+            <div class="col-md-9">
+                <!-- Website Overview -->
+                <div class="panel panel-default">
+                    <div class="panel-heading main-color-bg">
+                        <h3 class="panel-title">Consultas y Reportes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <th>
+                                    Tipo de consulta
+                                </th>
+                                <th>
+                                    Descripción
+                                </th>
+                                <th>
+
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        Consulta de resoluciones
+                                    </th>
+                                    <th>
+                                        Puede buscar, filtrar y obtener, información de resoluciones de permisos.
+                                    </th>
+                                    <th>
+                                        <a th:href="@{../consultaResoluciones}" class="btn btn-primary" role="button">Ver</a>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Reposter de permisos
+                                    </th>
+                                    <th>
+                                        Visualización y busqueda de permisos y estados de permisos.
+                                    </th>
+                                    <th>
+                                        <a th:href="@{../reportePermisos}" class="btn btn-primary" role="button">Ver</a>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
