@@ -1,0 +1,69 @@
+Estructura Informe
+
+
+I.-	Identificación del Proyecto.
+1.1.- Problemáticas, Necesidades y Alcance. (Salvador)
+
+1.2.- Objetivos del Proyecto (General y Específicos).(Salvador)
+1.3.- Acta de Constitución.(Salvador)
+
+
+II.-	Gestión de Requerimientos.
+ 2.1.- Modelamiento y Notación de Procesos de Negocios (BPMN).	(Salvador)
+
+2.2.- Especificación de Requerimientos de Software.(Nicola Yañez)
+
+2.3.- Diagrama de CU. (uno sólo, todas las funcionalidades, todos los actores).(Yonis)
+
+2.4.- Documentación de Casos de Uso (Textual detallado y diagrama de Actividad).(Roberto, revisado y actualizado por Miguel)
+Incluir Trazabilidad
+2.5.- Proceso de Producción para el Desarrollo del Software (metodología(s) ágil(es)).(Salvador)
+
+III.- Gestión de la Base de Datos.
+3.1.- Modelo Lógico (E/R y/o Clases).(Encargado principal: Yonis)  (Apoyo y revisión :Salvador, Nicolas, Roberto, Miguel)
+3.2.- Base de Datos. (Encargado principal: Yonis)  (Apoyo y revisión :Salvador, Nicolas, Roberto, Miguel)
+3.3.- Descripción de todos los Objetos de la BD. (Yonis)
+
+
+IV.- Implementación de la Solución.
+4.1.- Diagrama de Componentes o Arquitectura del Software.(Salvador)
+4.2.- Programas, Módulos, Rutinas y/o Componentes.(Salvador)
+4.3.- Diseño de Front-End.(Aplicación web: Salvador, Aplicación Escritorio Roberto)
+4.4.- Patrones y Framework Utilizados .(Salvador, Yonis)
+
+V.-	Gestión de Riesgos.
+5.1.- Matriz de Riesgos (8 riesgos del proyecto).(Nicolas)
+5.2.- Hojas de Información. (Nicolas)
+
+VI.- Gestión de la Calidad.
+6.1.- GCS (Administrar y Controlar Cambios para todos los Artefactos). (Miguel)
+6.2.- Estándares y Métricas de Calidad Asociados al Proyecto.(Miguel)
+6.3.- Plan de Inspecciones.(Miguel)
+6.4.- Plan de Pruebas a Aplicar.(Salvador, Nicolas,Yonis)
+
+VII.- Gestión del Proyecto.
+7.1.- Registro de Stakeholders.(Salvador)
+7.2.- Equipo de Trabajo (orgánica y responsabilidades).(Salvador)
+7.3.- Matriz de Asignación de Responsabilidades RACI. (Salvador, Nicolas)
+7.4.- Plan de Gestión de las Comunicaciones.(Salvador)
+7.5.- Matriz de Planificación General del Proyecto (incluir Gant).(Roberto)
+7.6.- Diagrama y Diccionario EDT.(Salvador)
+Salvador Gutierrez
+7.7.- Minutas de Reuniones.(Roberto)
+
+VIII.- Gestión de Recursos.
+8.1.- Recursos Humanos (rol, competencias y presupuesto).(Roberto ,Salvador)
+8.2.- Hardware y Software (especificaciones técnicas y presupuesto).(Roberto ,Salvador)
+8.3.- Presupuesto del Proyecto (por fase y por entregable).	(Roberto )
+8.4.- Presupuesto del Proyecto (por fase y por tipo de Recurso).	(Roberto )
+8.5.- Presupuesto por Semana. (Roberto )
+8.6.- Gráficos de Presupuestos.(Roberto )
+
+IX.- Gestión del Cierre del Proyecto
+
+9.1.- Plan de Implantación (Instalación o integración).(Miguel )
+9.2.- Plan de Soporte y Capacitación.(Nicolas)
+9.3.- Carta y Certificado de Aceptación y Cierre del Proyecto.(Salvador)
+ Conclusiones.(Salvador)
+Definiciones, Acrónimos, Abreviaturas y Referencias. (Yonis,Nicolas, Miguel,Roberto)
+Bibliografía. (Nicolas)
