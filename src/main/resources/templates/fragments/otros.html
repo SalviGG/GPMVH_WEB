@@ -13,12 +13,13 @@
         <form method="post" class="col-xs-4">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
-                <select class="form-control" id="tipoDia">
-                   <option th:each="motivo : ${otrosMotiv}" th:value="${motivo.motivoId}" th:text="${motivo.nombre}">
+                <select class="form-control" id="tipoDia" onchange="ShowSelected()">
+                    <option th:each="motivo : ${otrosMotiv}"   th:value="${motivo.motivoId}+'-'+${motivo.requiere}" th:text="${motivo.nombre}+'-'+${motivo.requiere}" >
                     </option>
                 </select>
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="Adjuntar" onload="ShowSelected()">
                 <label for="exampleInputFile">Adjuntar archivo</label>
                 <input type="file" id="exampleInputFile">
                 <p class="help-block">Example block-level help text here.</p>
@@ -56,6 +57,24 @@
         });
 
     });
+</script>
+<script type="text/javascript">
+function ShowSelected()
+{
+/* Para obtener el valor */
+var pal =$("#tipoDia").val(); // optiene el id
+
+var res = pal.split("-");
+var doc = res[1];
+
+if (doc ==="n" || doc==="N") {
+document.getElementById("Adjuntar").style.display="none";
+} else {
+document.getElementById("Adjuntar").style.display="inherit";
+}}
+</script>
+<script>
+window.onload=ShowSelected();
 </script>
 </body>
 </html>
