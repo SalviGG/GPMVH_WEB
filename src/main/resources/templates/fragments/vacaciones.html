@@ -18,30 +18,54 @@
             </thead>
             <tbody>
             <tr>
-                <th>num_dias_disponibles</th>
-                <th>num_dias_utilizados</th>
-                <th>num_dias_totales</th>
+                <th th:text="${session.funcionario.diaVacaciones}-${session.funcionario.diasAdministrativoUsados}" id="dias_disponibles" name="dias_disponibles">num_dias_disponibles</th>
+                <th th:text="${session.funcionario.diasAdministrativoUsados}">num_dias_utilizados</th>
+                <th th:text="${session.funcionario.diaVacaciones}">num_dias_totales</th>
             </tr>
             </tbody>
         </table>
         <br/>
-        <form method="post">
+        <form method="post" onsubmit="false">
             <div class="form-group col-xs-5">
                 <label for="numero_dias">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="">
+                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="" onchange="cuentaFindes()">
             </div>
             <div class="form-group col-xs-12">
-                <button type="button" class="btn btn-primary">Solicitar</button>
+                <button type="button" class="btn btn-primary" onclick="openModal()" >Solicitar</button>
             </div>
         </form>
     </div>
 </div>
+<!-- Modal -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Launch demo modal
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(function() {
 
         $('input[name="numero_dias"]').daterangepicker({
             autoUpdateInput: false,
+            minDate:moment().startOf('days').add(7, 'days'),
             locale: {
                 cancelLabel: 'Clear'
             },
@@ -59,6 +83,42 @@
         });
 
     });
+</script>
+<script type="text/javascript">
+    function cuentaFindes(){
+    var porId=document.getElementById("numero_dias").value;
+    var res = porId.split("-");//separar la fecha
+    var desde = res[0].trim();// desde
+    var hasta = res[1].trim();//hasta
+    var inicio = new Date(desde); //Fecha inicial
+    var fin = new Date(hasta); //Fecha final
+
+    var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
+    var cuentaFinde = 0; //Número de Sábados y Domingos
+    var array = new Array(diffDays);
+
+    for (var i=0; i < diffDays; i++)
+    {
+        //0 => Domingo - 6 => Sábado
+        if (inicio.getDay() != 0 && inicio.getDay() != 6) {
+            cuentaFinde++;
+        }
+        inicio.setDate(inicio.getDate() + 1);
+    }
+   var diasDisponibles = $("#dias_disponibles").text(); // optiene texto  el id
+
+    if (diasDisponibles < cuentaFinde) {//llamar a modal
+       alert(cuentaFinde+"  Cantidad de dias pedidos sobrepasa la cantidad de dias disponibles");
+     }
+     $('#exampleModal').modal('show');
+
+}
+function openModal(){
+alert("hola");
+    $('#myModal').modal('show');
+}
+
 </script>
 </body>
 </html>
