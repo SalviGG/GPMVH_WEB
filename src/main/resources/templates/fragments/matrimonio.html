@@ -7,16 +7,34 @@
 
 <div class="panel panel-default">
     <div class="panel-heading main-color-bg">
-        <h3 class="panel-title">Solicitud de permisos Matrimoniales</h3>
+        <h3 class="panel-title">Solicitud de permisos Matrimoniales  <button type="button" class="btns-info" data-toggle="modal" data-target="#modalInfo" i th:class="icos_info" >
+        </button></h3>
     </div>
     <div>
-        <h2></br>¿Qué dice la ley? </h2>
-        <p class="help-block" p> </br> A contar del 18 de julio de 2014, fecha de publicación de la Ley Nº 20.764, todo trabajador(a) que contraiga matrimonio tiene derecho a cinco días hábiles continuos de permiso pagado, adicional al feriado anual, independientemente del tiempo de servicio.
-        Este permiso se puede utilizar, a elección del trabajador(a), en el día del matrimonio y en los días inmediatamente anteriores o posteriores al de su celebración.
-        Para hacer uso del beneficio el trabajador(a) debe dar aviso a su empleador con treinta días de anticipación y presentar dentro de los treinta días siguientes a la celebración el respectivo certificado de matrimonio del Servicio de Registro Civil e Identificación.
-        Los días de permiso por matrimonio del trabajador(a), pactados individual o colectivamente a la fecha de publicación de la ley, son imputables a ella.
-        Finalmente, cabe hacer presente que este beneficio también resulta aplicable a quienes celebran un acuerdo de unión civil por cuanto el texto del nuevo artículo 207 bis del Código del Trabajo (reemplazado por la Ley N°21.042, publicada en el Diario Oficial de fecha 08.11.2017), así lo establece.
-        </p>
+        <!-- Modal -->
+        <div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalCenterTitle">¿Qué dice la ley? </h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="help-block" p> </br> A contar del 18 de julio de 2014, fecha de publicación de la Ley Nº 20.764, todo trabajador(a) que contraiga matrimonio tiene derecho a cinco días hábiles continuos de permiso pagado, adicional al feriado anual, independientemente del tiempo de servicio.
+                            Este permiso se puede utilizar, a elección del trabajador(a), en el día del matrimonio y en los días inmediatamente anteriores o posteriores al de su celebración.
+                            Para hacer uso del beneficio el trabajador(a) debe dar aviso a su empleador con treinta días de anticipación y presentar dentro de los treinta días siguientes a la celebración el respectivo certificado de matrimonio del Servicio de Registro Civil e Identificación.
+                            Los días de permiso por matrimonio del trabajador(a), pactados individual o colectivamente a la fecha de publicación de la ley, son imputables a ella.
+                            Finalmente, cabe hacer presente que este beneficio también resulta aplicable a quienes celebran un acuerdo de unión civil por cuanto el texto del nuevo artículo 207 bis del Código del Trabajo (reemplazado por la Ley N°21.042, publicada en el Diario Oficial de fecha 08.11.2017), así lo establece.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Entiendo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
         <form method="post" action="/GuardarPermisosMatrimonio" class="col-xs-5" enctype="multipart/form-data">

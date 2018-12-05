@@ -121,6 +121,26 @@ body{
   margin-top:30px;
 }
 
+/* infoButton */
+.btns-info {
+  background-color: #0063FF;
+  display:block;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+}
+
+.btns-info:hover {
+  background-color: RoyalBlue;
+}
+
+.icos_info::before, .ion-md-info::before {
+    max-height: 20px;
+    align-content: center;
+    vertical-align: center;
+    content: url('../images/icons/help.png');
+}
+
 
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
