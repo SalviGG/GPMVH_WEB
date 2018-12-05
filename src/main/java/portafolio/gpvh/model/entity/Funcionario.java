@@ -3,6 +3,7 @@ package portafolio.gpvh.model.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "funcionario")
@@ -27,6 +28,9 @@ public class Funcionario {
 
 	@Column(name = "firma_url")
 	private String firmaUrl;
+
+	@Column(name = "fecha_contratacion")
+	private Date fechaContratacion;
 
 	@Column(name = "dia_vacaciones")
 	private Integer diaVacaciones;
