@@ -25,8 +25,9 @@
             </tbody>
         </table>
         <br/>
-<form method="post" onsubmit="false"  action="/GuardarVacaciones">
-            <div class="form-group col-xs-5">
+    <form method="post"  action="/GuardarVacaciones">
+
+               <div class="form-group col-xs-5">
                 <label for="numero_dias">Rango de días a solicitar</label>
                 <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="" onchange="cuentaFindes()">
             </div>
@@ -49,8 +50,8 @@
                 <p id="myid_02">Español!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="enviar" name="enviar">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="enviar" name="enviar">Guardar</button>
             </div>
         </div>
     </div>
