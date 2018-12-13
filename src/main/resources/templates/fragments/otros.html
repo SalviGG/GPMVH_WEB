@@ -10,7 +10,7 @@
         <h3 class="panel-title">Solicitud de permisos especiales</h3>
     </div>
     <div class="panel-body">
-        <form method="post" class="col-xs-4">
+        <form method="post" class="col-xs-4" action="/GuardarOtros">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
                 <select class="form-control" id="tipoDia" onchange="ShowSelected()">
@@ -19,17 +19,16 @@
                 </select>
                 </select>
             </div>
-            <div class="form-group" id="Adjuntar" onload="ShowSelected()">
-                <label for="exampleInputFile">Adjuntar archivo</label>
-                <input type="file" id="exampleInputFile">
-                <p class="help-block">Example block-level help text here.</p>
+            <div class="form-group" id="Adjuntar" >
+                <label for="file">Adjuntar archivo</label>
+                <input type="file" id="file" name="file" class="form-control" accept="image/*,.pdf" >
             </div>
             <div class="form-group">
                 <label for="numero_dias">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value=""/>
+                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="" required/>
             </div>
             <div class="form-group col-xs-12">
-                <button type="button" class="btn btn-primary">Solicitar</button>
+                <button type="submit" class="btn btn-primary">Solicitar</button>
             </div>
         </form>
     </div>
@@ -71,8 +70,10 @@ var doc = res[1];
 
 if (doc ==="n" || doc==="N") {
 document.getElementById("Adjuntar").style.display="none";
+$("#file").removeAttr('required');
 } else {
 document.getElementById("Adjuntar").style.display="inherit";
+$("#file").attr('required', '');
 }}
 </script>
 <script>

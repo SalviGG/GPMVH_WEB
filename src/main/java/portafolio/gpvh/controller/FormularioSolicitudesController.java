@@ -234,6 +234,94 @@ public class FormularioSolicitudesController {
         return "redirect:/solicitud";
     }
 
+    @PostMapping("/GuardarVacaciones")
+    public String postGuardarVacaciones(HttpSession session,@RequestParam("numero_dias") String fechas){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+        //tranformo la fecha compuesta en 2 valores distintos
+        String[] parts = fechas.split("-");
+        String inicio = parts[0]; // fecha inicio
+        String termino = parts[1]; // fecha termino
+
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date fechaDate;
+        Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(3));
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+        try {
+            fechaDate = formatter.parse(inicio);
+            documento.setFechaInicio(fechaDate);
+            fechaDate = formatter.parse(termino);
+            documento.setFechaTermino(fechaDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        documentoService.save(documento);
+
+        return "redirect:/solicitud";
+    }
+
+    @PostMapping("/GuardarOtros")
+    public String postGuardarOtros(HttpSession session,@RequestParam("numero_dias") String fechas, @RequestParam("file")MultipartFile archivo, @RequestParam("tipoDia") String idTipo_nesesita,RedirectAttributes flash){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
+        //tranformo la fecha compuesta en 2 valores distintos
+        String[] parts = fechas.split("-");
+        String inicio = parts[0]; // fecha inicio
+        String termino = parts[1]; // fecha termino
+
+        //tranformo el id compuesto a id simple id primera posicion nesesita o no segunda posicion
+        String[] compuesto = idTipo_nesesita.split("-");
+        int idOtros =Integer.parseInt(compuesto[0]); // id del tipo seleccionado tranformo en id
+
+        // manejo el archivo seleccionado
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        Documento documento = new Documento();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        Date fechaDate;
+        Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
+        documento.setFuncionarioId(funcionario);
+        documento.setMotivoId(motivoService.findOne(idOtros));
+        documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
+        documento.setFechaSolicitud(new Date());
+        documento.setUltimaFechaModificacion(new Date());
+        documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
+        try {
+            fechaDate = formatter.parse(inicio);
+            documento.setFechaInicio(fechaDate);
+            fechaDate = formatter.parse(termino);
+            documento.setFechaTermino(fechaDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        documentoService.save(documento);
+
+        return "redirect:/solicitud";
+    }
+
     @GetMapping("/formularioSolicitudes")
     public String formulario(Model model){
         //Validación de session para evitar error de atributo null
@@ -293,6 +381,10 @@ public class FormularioSolicitudesController {
     public List<Motivo> otrosFormularios(){
         List<Integer> list = new ArrayList<Integer>();
         list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(12);
+        list.add(13);
         return  motivoService.findAllOtros(list);
    }
 }

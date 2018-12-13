@@ -51,7 +51,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" id="enviar" name="enviar">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="enviar" name="enviar">Solicitar</button>
             </div>
         </div>
     </div>
@@ -110,20 +110,20 @@
     if ((diasDisponibles+2) == cuentaFinde || (diasDisponibles+1) == cuentaFinde) {//llamar a modal
     document.getElementById('enviar').disabled = false;
     document.getElementById("myid_02").style.color = "blue";
-    document.getElementById("myid_02").innerHTML = "igual mas 2 o mas 1c";
+    document.getElementById("myid_02").innerHTML = "Dias Solicitados sobrepasa por 2 o menos dias los dias disponibles";
      $('#modalAlert').modal('show'); //llamar modal  modalAlert
        alert(cuentaFinde);
 
      } else if (diasDisponibles >= cuentaFinde) {
      document.getElementById('enviar').disabled = false;
      document.getElementById("myid_02").style.color = "orange";
-     document.getElementById("myid_02").innerHTML = "los dias esactos o menos";
+     document.getElementById("myid_02").innerHTML = "Dias Solicitados corresponden a los dias disponibles";
       $('#modalAlert').modal('show'); //llamar modal modalSusess
      alert(cuentaFinde);
     } else {
     document.getElementById('enviar').disabled = true;
     document.getElementById("myid_02").style.color = "red";
-    document.getElementById("myid_02").innerHTML = "no valido mas de dias mas 2";
+    document.getElementById("myid_02").innerHTML = "Dias Solicitados soblepasa el rango de dias  abilitados para solicitar";
      $('#modalAlert').modal('show'); //llamar modal modalFail
     alert(cuentaFinde);
     }
