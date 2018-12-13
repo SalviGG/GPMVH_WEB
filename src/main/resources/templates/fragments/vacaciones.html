@@ -112,20 +112,20 @@
     document.getElementById("myid_02").style.color = "blue";
     document.getElementById("myid_02").innerHTML = "Dias Solicitados sobrepasa por 2 o menos dias los dias disponibles";
      $('#modalAlert').modal('show'); //llamar modal  modalAlert
-       alert(cuentaFinde);
+     //  alert(cuentaFinde);
 
      } else if (diasDisponibles >= cuentaFinde) {
      document.getElementById('enviar').disabled = false;
      document.getElementById("myid_02").style.color = "orange";
      document.getElementById("myid_02").innerHTML = "Dias Solicitados corresponden a los dias disponibles";
       $('#modalAlert').modal('show'); //llamar modal modalSusess
-     alert(cuentaFinde);
+     //alert(cuentaFinde);
     } else {
     document.getElementById('enviar').disabled = true;
     document.getElementById("myid_02").style.color = "red";
     document.getElementById("myid_02").innerHTML = "Dias Solicitados soblepasa el rango de dias  abilitados para solicitar";
      $('#modalAlert').modal('show'); //llamar modal modalFail
-    alert(cuentaFinde);
+    //alert(cuentaFinde);
     }
 
 

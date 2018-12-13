@@ -10,18 +10,18 @@
         <h3 class="panel-title">Solicitud de permisos especiales</h3>
     </div>
     <div class="panel-body">
-        <form method="post" class="col-xs-4" action="/GuardarOtros">
+        <form method="post" class="col-xs-4" action="/GuardarOtros" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
-                <select class="form-control" id="tipoDia" onchange="ShowSelected()">
+                <select class="form-control" id="tipoDia" name="tipoDia" onchange="ShowSelected()">
                     <option th:each="motivo : ${otrosMotiv}"   th:value="${motivo.motivoId}+'-'+${motivo.requiere}" th:text="${motivo.nombre}+'-'+${motivo.requiere}" >
                     </option>
                 </select>
                 </select>
             </div>
             <div class="form-group" id="Adjuntar" >
-                <label for="file">Adjuntar archivo</label>
-                <input type="file" id="file" name="file" class="form-control" accept="image/*,.pdf" >
+                <label for="exampleInputFile">Adjuntar archivo</label>
+                <input type="file" id="exampleInputFile" name="file" class="form-control" accept="image/*,.pdf" required>
             </div>
             <div class="form-group">
                 <label for="numero_dias">Rango de días a solicitar</label>
