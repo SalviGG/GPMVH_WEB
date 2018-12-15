@@ -50,6 +50,8 @@ public class Funcionario {
 	@OneToMany(mappedBy = "funcionarioId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> funcionarioIdDocs;
 
+	@Column(name = "EMAIL")
+	private String email;
 
 	public Funcionario()
 	{
@@ -145,5 +147,13 @@ public class Funcionario {
 
 	public void setFuncionarioIdDocs(List<Documento> funcionarioIdDocs) {
 		this.funcionarioIdDocs = funcionarioIdDocs;
+	}
+
+	public Date getFechaContratacion() {
+		return fechaContratacion;
+	}
+
+	public void setFechaContratacion(Date fechaContratacion) {
+		this.fechaContratacion = fechaContratacion;
 	}
 }
