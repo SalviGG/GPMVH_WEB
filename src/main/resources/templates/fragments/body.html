@@ -25,7 +25,7 @@
                 <li><a th:href="@{../consultasReportes}">Reportes e informes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:text="'Bienvenido,'+${session.persona.nombres}"> Pepe</a></li>
+                <li><a th:text="'Bienvenido, '+${session.persona.nombres}"> Pepe</a></li>
                 <li>
                     <a>
                       <form action="/logout" method="post">

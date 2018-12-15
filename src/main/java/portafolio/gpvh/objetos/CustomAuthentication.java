@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import portafolio.gpvh.controlAccesoWS.mappingWsl.Persona;
 import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
+import portafolio.gpvh.model.entity.Funcionario;
+import portafolio.gpvh.model.service.FuncionarioService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -33,12 +35,15 @@ public class CustomAuthentication implements AuthenticationProvider  {
     @Autowired
     private transient Validator validator;
 
+    @Autowired
+    private FuncionarioService funcionario;
+
     /**
      * Sobreescribe la autenticación de spring security para ser utilizada en el archivo de configuración de spring.
      * Este metodo hace la validación contra el webservice y genera un token de autenticación, además entrega un rol
      * al usuario que ha ingresado.
      * @param authentication
-     * @return
+     * @return auth  retorna un token con la autenticación del usuario
      * @throws AuthenticationException
      */
     @Override
@@ -64,7 +69,9 @@ public class CustomAuthentication implements AuthenticationProvider  {
 
             if (persona != null){
                 List<GrantedAuthority> grantedAuths = new ArrayList<>();
-                grantedAuths.add(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+                int rut = persona.getRut();
+                String rol = (funcionario.buscarPorRut(rut).getRolId().getNombre()).toUpperCase();
+                grantedAuths.add(new SimpleGrantedAuthority("ROLE_"+rol));
                 Authentication auth = new UsernamePasswordAuthenticationToken(username,password,grantedAuths);
                 return auth;
                 //return new UsernamePasswordAuthenticationToken(username,password, Collections.emptyList());

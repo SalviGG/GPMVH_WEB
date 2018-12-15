@@ -18,7 +18,7 @@ public class Funcionario {
 	@Column(name = "rut", unique = true)
 	private int rut;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rol_id")
 	private Rol rolId;
 
