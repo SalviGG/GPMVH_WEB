@@ -36,10 +36,18 @@ public class ConsultaPermisoController {
         return "consultaPermiso";
     }
 
-   /* @GetMapping("/consultaPermiso")
-    public String consultaFormulario(Model model, HttpSession session){
-        Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
-        model.addAttribute("listaDocumento",documentoService.findAllByFuncionarioId(funcionario));
-        return "consultaPermiso";
-    }*/
+    @GetMapping("/consultaResoluciones")
+    public String consultasDeResoluciones(){
+
+
+        return "consultaResoluciones";
+    }
+
+    @GetMapping("/reportePermisos")
+    public String reporteDePermisos(){
+
+
+        return "reportePermisos";
+    }
+
 }

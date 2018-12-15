@@ -15,7 +15,7 @@ public class ConsultasReportesController {
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
-        return "formularioReportesConsultas";
+        return "consultasReportes";
     }
 
 }

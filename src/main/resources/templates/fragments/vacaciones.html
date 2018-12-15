@@ -18,9 +18,9 @@
             </thead>
             <tbody>
             <tr>
-                <th th:text="${session.funcionario.diaVacaciones}-${session.funcionario.diasAdministrativoUsados}" id="dias_disponibles" name="dias_disponibles">num_dias_disponibles</th>
-                <th th:text="${session.funcionario.diasAdministrativoUsados}">num_dias_utilizados</th>
-                <th th:text="${session.funcionario.diaVacaciones}">num_dias_totales</th>
+                <th th:text="${session.funcionario.getDiaVacaciones()}-${session.funcionario.getDiaVacacionesUsadas()}" id="dias_disponibles" name="dias_disponibles">num_dias_disponibles</th>
+                <th th:text="${session.funcionario.getDiaVacacionesUsadas()}">num_dias_utilizados</th>
+                <th th:text="${session.funcionario.getDiaVacaciones()}">num_dias_totales</th>
             </tr>
             </tbody>
         </table>
