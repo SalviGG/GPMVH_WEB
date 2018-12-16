@@ -12,5 +12,6 @@ public interface DocumentoService {
     public Documento findOne(int id);
     public void delete(Documento documento);
     public List<Documento> findAllByFuncionarioId(Funcionario funcionario);
+    public List<Documento> findAllByFuncionarioIdAndMotivoId(Funcionario funcionario);
 
 }

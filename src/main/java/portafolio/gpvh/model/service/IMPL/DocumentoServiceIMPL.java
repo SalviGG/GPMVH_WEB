@@ -42,4 +42,8 @@ public class DocumentoServiceIMPL implements DocumentoService {
        return (List<Documento> )docuDAO.findAllByFuncionarioId(funcionarioId);
     }
 
+    public List<Documento> findAllByFuncionarioIdAndMotivoId(Funcionario funcionario){
+        return (List<Documento> )docuDAO.findAllByFuncionarioIdAndMotivoId(funcionario);
+    }
+
 }

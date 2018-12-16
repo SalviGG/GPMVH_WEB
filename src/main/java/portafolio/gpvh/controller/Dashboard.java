@@ -39,8 +39,9 @@ public class Dashboard {
         httpSession.setAttribute("persona" ,persona);
         httpSession.setAttribute("funcionario",funcionario);
 
-        if (funcionario.getRolId().getNombre().equals("FUNCIONARIO")){
-            model.addAttribute("listadoPermisos",documentoService.findAllByFuncionarioId(funcionario));
+
+        if (funcionario.getRolId().getNombre().toUpperCase().equals("FUNCIONARIO")||funcionario.getRolId().getNombre().toUpperCase().equals("ADMINISTRADOR")){
+            model.addAttribute("listadoPermisos",documentoService.findAllByFuncionarioIdAndMotivoId(funcionario));
         }
 
         return "dashboard";

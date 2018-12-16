@@ -21,32 +21,32 @@
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive-sm">
-                        <table class="table table-bordered table-striped table-hover">
-                            <tr>
-                                <th>Id solicitud</th>
-                                <th>Motivo</th>
-                                <th>Fecha de solicitud</th>
-                                <th>Fecha de inicio</th>
-                                <th>Fecha de termino</th>
-                                <th>Resolucion</th>
-                                <th>Estado</th>
-                            </tr>
-                            <tr>
+                            <table class="table table-bordered table-striped table-hover">
+                                <tr>
+                                    <th>Id solicitud</th>
+                                    <th>Motivo</th>
+                                    <th>Fecha de solicitud</th>
+                                    <th>Fecha de inicio</th>
+                                    <th>Fecha de termino</th>
+                                    <th>Resolucion</th>
+                                    <th>Estado</th>
+                                </tr>
+                                <tr>
 
-                            <tr th:each="documento : ${listaDocumento}">
-                                <th th:text="${documento.documentoId}"></th>
-                                <th th:text="${documento.motivoId.nombre}"></th>
-                                <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
-                                <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy HH:mm')}"></th>
-                                <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy HH:mm')}"></th>
-                                <th >
-                                    <span th:if="${documento.resolucionId != null}"    th:text="${documento.resolucionId.titulo}" ></span>
-                                </th>
-                                <th th:text="${documento.estadoDocumentoId.nombre}"></th>
-                            </tr>
-                        </table>
-                    </div>
-                        <div th:include="fragments/consultaResoluciones :: consultaResoluciones" th:fragment="consultaResoluciones"></div>
+                                <tr th:each="documento : ${listaDocumento}">
+                                    <th th:text="${documento.documentoId}"></th>
+                                    <th th:text="${documento.motivoId.nombre}"></th>
+                                    <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
+                                    <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy HH:mm')}"></th>
+                                    <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy HH:mm')}"></th>
+                                    <th>
+                                        <span th:if="${documento.resolucionId != null}"
+                                              th:text="${documento.resolucionId.titulo}"></span>
+                                    </th>
+                                    <th th:text="${documento.estadoDocumentoId.nombre}"></th>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

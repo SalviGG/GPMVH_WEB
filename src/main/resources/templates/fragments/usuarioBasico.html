@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,8 +16,8 @@
                 <h3 class="panel-title">Sistema gestor de permisos Ilustre Municipalidad de Vista Hermosa</h3>
             </div>
             <div class="panel-body">
-                <p>Benvenido al gestor de permisos, acá podrá solicitar y gestionar todas sus solicitudes y revisar sus
-                    estados de aprobación</p>
+                <h3>Benvenido al gestor de permisos, acá podrá solicitar y gestionar todas sus solicitudes y revisar sus
+                    estados de aprobación</h3>
             </div>
         </div>
         <div class="panel panel-default">
@@ -36,8 +39,8 @@
                         <th th:text="${documento.documentoId}"></th>
                         <th th:text="${documento.motivoId.nombre}"></th>
                         <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
-                        <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy HH:mm')}"></th>
-                        <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy HH:mm')}"></th>
+                        <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy')}"></th>
+                        <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy')}"></th>
                         <th >
                             <span th:if="${documento.resolucionId != null}"    th:text="${documento.resolucionId.titulo}" ></span>
                         </th>
