@@ -38,7 +38,6 @@ public class FuncionarioServiceIMPL implements FuncionarioService {
     @Override
     public Funcionario buscarPorRut(int rut) {
 
-
         return funciDao.countFuncionarioByRut(rut);
     }
 }
