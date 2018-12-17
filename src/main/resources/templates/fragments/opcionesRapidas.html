@@ -6,7 +6,6 @@
     <title>Title</title>
 </head>
 <body>
-
 <div th:fragment="opcionesRapidas">
     <div class="col-md-3">
         <div class="list-group">
@@ -14,14 +13,21 @@
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Opciones rapidas
             </a>
             <form action="formularioSolicitudes" method="post">
-                <a class="list-group-item"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span> <button type="submit" name="motivoId" value="3" class="href">Solicitar vacaciones</button></a>
-                <a class="list-group-item"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> <button type="submit" name="motivoId" value="2" class="href">Solicitar día administrativo</button></a>
+                <a class="list-group-item"><span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                    <button type="submit" name="motivoId" value="3" class="href">Solicitar vacaciones</button>
+                </a>
+                <a class="list-group-item"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                    <button type="submit" name="motivoId" value="2" class="href">Solicitar día administrativo</button>
+                </a>
             </form>
-            <a sec:authorize="hasRole('RRHH')" href="AprobarRechazarPermisos" class="list-group-item"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Aprobar o rechazar documentación de permiso <span class="badge">5</span></a>
-            <a sec:authorize="hasRole('JEFE SUPERIOR') or hasRole('ALCALDE')" href="consultarEstadisticas" class="list-group-item"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Consulta de permisos <span class="badge">20</span></a>
+            <a sec:authorize="hasRole('RRHH')" href="rrhh" class="list-group-item"><span
+                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Aprobar documentación de
+                permiso <span class="badge">5</span></a>
+            <a sec:authorize="hasRole('JEFE SUPERIOR') or hasRole('ALCALDE')" href="consultarEstadisticas"
+               class="list-group-item"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Consulta de
+                permisos <span class="badge">20</span></a>
         </div>
     </div>
 </div>
-
 </body>
 </html>
