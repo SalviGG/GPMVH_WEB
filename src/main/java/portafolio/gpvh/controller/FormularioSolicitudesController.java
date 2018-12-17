@@ -242,11 +242,11 @@ public class FormularioSolicitudesController {
         }
         //tranformo la fecha compuesta en 2 valores distintos
         String[] parts = fechas.split("-");
-        String inicio = parts[0]; // fecha inicio
-        String termino = parts[1]; // fecha termino
+        String inicio = parts[0].trim(); // fecha inicio
+        String termino = parts[1].trim(); // fecha termino
 
         Documento documento = new Documento();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date fechaDate;
         Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
         documento.setFuncionarioId(funcionario);
