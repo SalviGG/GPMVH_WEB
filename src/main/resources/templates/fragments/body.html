@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -22,14 +25,15 @@
                 <li class="active"><a href="dashboard">Inicio</a></li>
                 <li><a th:href="@{../solicitud}">Solicitud de permiso</a></li>
                 <li><a th:href="@{../consultaPermiso}">Estado de permiso</a></li>
-                <li><a th:href="@{../consultasReportes}">Reportes e informes</a></li>
+                <li sec:authorize="hasRole('RRHH')"><a th:href="@{../consultaPermiso}">Revisar documentación de permisos</a></li>
+                <li sec:authorize="hasRole('JEFE SUPERIOR') or hasRole('ALCALDE')"><a th:href="@{../consultasReportes}">Reportes e informes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:text="'Bienvenido, '+${session.persona.nombres}"> Pepe</a></li>
                 <li>
                     <a>
                       <form action="/logout" method="post">
-                          <input class="btn-default" type="submit" value="Salir"/>
+                          <button class="href" type="submit" value="Salir">Salir</button>
                           <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                       </form>
                     </a>
@@ -43,7 +47,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h1><span aria-hidden="true"></span> Inicio <small>Gestor de permisos</small></h1>
+                <h1><span aria-hidden="true"><img th:src="@{../images/logo-main.png}" height="100" width="100"></span> GPMVH <small>Gestor de permisos</small></h1>
             </div>
         </div>
     </div>

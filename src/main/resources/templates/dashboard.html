@@ -14,7 +14,7 @@
         <div class="row">
             <div th:include="fragments/opcionesRapidas :: opcionesRapidas" th:fragment="opcionesRapidas"></div>
             <div class="col-md-9">
-                <div th:include="fragments/usuarioAvanzados :: usuarioAvanzados" th:fragment="usuarioAvanzados" sec:authorize="hasRole('JEFE SUPERIOR')"></div>
+                <div th:include="fragments/usuarioAvanzados :: usuarioAvanzados" th:fragment="usuarioAvanzados" sec:authorize="hasRole('JEFE SUPERIOR') or hasRole('ALCALDE')"></div>
             </div>
             <div class="col-md-9">
                 <div th:include="fragments/usuarioBasico :: usuarioBasico" th:fragment="usuarioBasico"  sec:authorize="hasRole('FUNCIONARIO') or hasRole('ADMINISTRADOR')"></div>
