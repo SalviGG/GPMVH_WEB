@@ -64,6 +64,9 @@ public class Documento {
 
 	@OneToMany(mappedBy = "afectaDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Documento> afectaDocIds;
+
+	@Column(name = "comentario")
+	private String comentario;
 	
 	public Documento() 
 	{
@@ -173,5 +176,9 @@ public class Documento {
 	public void setAfectaDocIds(List<Documento> afectaDocIds) {
 		this.afectaDocIds = afectaDocIds;
 	}
+
+	public String getComentario(){ return comentario;}
+
+	public  void  setComentario(String comentario){ this.comentario = comentario;}
 
 }

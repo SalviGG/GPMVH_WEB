@@ -6,7 +6,6 @@
 <head th:replace="fragments/header :: head">
 </head>
 <body>
-
 <div th:include="fragments/body :: body"></div>
 
 <section id="main">
@@ -20,6 +19,24 @@
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Id solicitud</th>
+                                <th>Motivo</th>
+                                <th>Fecha de solicitud</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha de termino</th>
+                                <th>Estado</th>
+                                <th>documentación</th>
+                            </tr>
+                            <tr th:each="documento : ${listaDocumento}">
+                                <th th:text="${documento.documentoId}"></th>
+                                <th th:text="${documento.motivoId.nombre}"></th>
+                                <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
+                                <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy')}"></th>
+                                <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy')}"></th>
+                                <th th:text="${documento.estadoDocumentoId.nombre}"></th>
+                                <th th:text="${documento.urlDocumentoAdjunto}"></th>
+                            </tr>
                         </table>
                     </div>
                 </div>
