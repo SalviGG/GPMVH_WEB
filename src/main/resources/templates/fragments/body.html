@@ -25,7 +25,7 @@
                 <li class="active"><a href="dashboard">Inicio</a></li>
                 <li><a th:href="@{../solicitud}">Solicitud de permiso</a></li>
                 <li><a th:href="@{../consultaPermiso}">Estado de permiso</a></li>
-                <li sec:authorize="hasRole('RRHH')"><a th:href="@{../consultaPermiso}">Revisar documentación de permisos</a></li>
+                <li sec:authorize="hasRole('RRHH')"><a th:href="@{../rrhh}">Revisar documentación de permisos</a></li>
                 <li sec:authorize="hasRole('JEFE SUPERIOR') or hasRole('ALCALDE')"><a th:href="@{../consultasReportes}">Reportes e informes</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
