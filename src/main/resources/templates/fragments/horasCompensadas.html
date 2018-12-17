@@ -22,7 +22,7 @@
             </tbody>
         </table>
         <br/>
-        <form method="post" action="/GuardarHorasCompesadas" class="form col-xs-4" >
+        <form method="post" id="fromSolicitud" action="/GuardarHorasCompesadas" class="form col-xs-4" >
             <div class="form-group">
                 <label for="fecha">Fecha</label>
                 <input type="text"
@@ -76,13 +76,13 @@
                 Está seguro de solicitar el permiso
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+                <button type="button" class="btn btn-primary" onclick="enviar();" data-dismiss="modal">Confirmar</button>
                 <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal Confirmacion-->
+<!-- Modal Mensaje-->
 <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -130,7 +130,10 @@
     });
 </script>
 <script>
+    function enviar(){
+        $("#fromSolicitud").submit();
 
+    }
     function mostarMensaje(mensaje){
         $("#conetnidoMensaje").html(mensaje);
         $("#modalMensaje").modal("show")

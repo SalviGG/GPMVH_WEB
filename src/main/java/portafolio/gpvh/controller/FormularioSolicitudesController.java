@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
 import portafolio.gpvh.model.entity.Documento;
 
 import portafolio.gpvh.model.entity.Funcionario;
@@ -41,6 +42,8 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
+    @Autowired
+    private ConsultaControlAccesoServicio consultaControlAccesoServicio;
 
 
     @PostMapping("/GuardarPermisosDefuncion")
@@ -168,6 +171,7 @@ public class FormularioSolicitudesController {
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
+
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date fechaDate;
@@ -186,9 +190,13 @@ public class FormularioSolicitudesController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        int ini = Integer.parseInt(inicio);
+        int fin = Integer.parseInt(termino);
+        int horas = fin - ini;
+        consultaControlAccesoServicio.consumirHoras(funcionario.getRut(),horas);
+        session.setAttribute("persona", consultaControlAccesoServicio.busquedaPorRut(funcionario.getRut()));
         documentoService.save(documento);
-
-        return "redirect:/solicitud";
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
     @PostMapping("/GuardarDiaAdministrativo")
