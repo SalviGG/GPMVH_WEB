@@ -26,10 +26,10 @@
         </table>
         <br/>
         <!--/*@thymesVar id="documento" type="portafolio.gpvh.model.entity.Documento"*/-->
-        <form method="post col-xs-4" th:action="@{/GuardarDiaAdministrativo}" th:method="post">
+        <form method="post col-xs-4" id="fromSolicitud" th:action="@{/GuardarDiaAdministrativo}" th:method="post">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
-                <select class="form-control" id="periodo" name="periodo" required>
+                <select class="form-control" id="periodo" name="periodo" >
                     <option th:value="1">Día administrativo</option>
                     <option th:value="2" >Media mañana</option>
                     <option th:value="3">Media tarde</option>
@@ -37,15 +37,54 @@
             </div>
             <div class="form-group">
                 <label for="numero_dias">Rango de días a solicitar</label>
-                <input type="text" class="form-control" id="fecha" name="fecha"  value="" required/>
+                <input type="text" class="form-control" id="fecha" name="fecha"  value="" />
             </div>
             <div class="form-group col-xs-12">
-                <button type="submit" class="btn btn-primary">Solicitar</button>
+                <input type="button" class="btn btn-primary" onclick="validar();" value="Solicitar" />
             </div>
         </form>
     </div>
 </div>
+<!-- Modal Confirmacion-->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalCenterTitle">Confirmar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="enviar();" data-dismiss="modal">Confirmar</button>
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Mensaje-->
+<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="MensajeModalCenterTitle"> Datos Pendientes a rellenar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="conetnidoMensaje">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
 
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(function() {
 
@@ -69,6 +108,56 @@
             $(this).val('');
         });
     });
+</script>
+<script>
+    function enviar(){
+        $("#fromSolicitud").submit();
+    }
+    function mostarMensaje(mensaje){
+        $("#conetnidoMensaje").html(mensaje);
+        $("#modalMensaje").modal("show")
+    }
+
+    function closeMensaje(){
+        $("#modalMensaje").modal("hide")
+    }
+
+
+    function validarFormatoFecha(campo) {
+        var fechaf = campo.split("/");
+        var d = fechaf[1];
+        var m = fechaf[0];
+        var y = fechaf[2];
+
+        return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
+    }
+    function existeFecha(fecha){
+        var fechaf = fecha.split("/");
+        var day = fechaf[0];
+        var month = fechaf[1];
+        var year = fechaf[2];
+        var date = new Date(year,month,'0');
+        if((day-0)>(date.getDate()-0)){
+            return false;
+        }
+        return true;
+    }
+    function validar(){
+        var fecha = $("#fecha").val();
+        if(validarFormatoFecha(fecha)){
+            openModal();
+        }else{
+            mostarMensaje("No ha ingresado la fecha o el formato de fecha es incorrecto")
+        }
+
+    }
+
+    function openModal(){
+        $("#modalInfo").modal("show");
+    }
+    function closeModal(){
+        $("#modalInfo").modal("hide");
+    }
 </script>
 </body>
 </html>

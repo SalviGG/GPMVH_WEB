@@ -17,7 +17,7 @@ public class SolicitudController {
     private MotivoService motivoService;
 
     @GetMapping("/solicitud")
-    public String solicitud(Model model, HttpSession session, @RequestParam(defaultValue = "null") String mensaje){
+    public String solicitud(Model model, HttpSession session, @RequestParam(name="mensaje",defaultValue = "null") String mensaje,@RequestParam(name="error",defaultValue = "null") String error){
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
@@ -27,6 +27,5 @@ public class SolicitudController {
         }
         model.addAttribute("motivos",motivoService.findAllActivo());
         return "solicitud";
-
     }
 }
