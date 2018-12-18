@@ -39,7 +39,7 @@ public class Funcionario {
 	private Integer diaVacacionesUsadas;
 
 	@Column(name = "dias_administrativo_usados")
-	private Integer diasAdministrativoUsados;
+	private Double diasAdministrativoUsados;
 
 	@OneToMany(mappedBy = "jefeDepartamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Departamento> jefeDeptoIds;
@@ -117,11 +117,11 @@ public class Funcionario {
 		this.diaVacacionesUsadas = diaVacacionesUsadas;
 	}
 
-	public int getDiasAdministrativoUsados() {
+	public Double getDiasAdministrativoUsados() {
 		return diasAdministrativoUsados;
 	}
 
-	public void setDiasAdministrativoUsados(int diasAdministrativoUsados) {
+	public void setDiasAdministrativoUsados(Double diasAdministrativoUsados) {
 		this.diasAdministrativoUsados = diasAdministrativoUsados;
 	}
 

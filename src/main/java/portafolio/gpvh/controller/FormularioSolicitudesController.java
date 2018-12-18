@@ -241,7 +241,12 @@ public class FormularioSolicitudesController {
             System.out.println(fecha);
         }
         documentoService.save(documento);
-        funcionario.setDiasAdministrativoUsados(funcionario.getDiaVacacionesUsadas()+1);
+        if(periodo.equals("1")){
+            funcionario.setDiasAdministrativoUsados(funcionario.getDiasAdministrativoUsados()+1);
+        }else{funcionario.setDiasAdministrativoUsados(
+                funcionario.getDiasAdministrativoUsados()+0.5);
+        }
+
         funcionarioService.save(funcionario);
         session.setAttribute("funcionario",funcionarioService.buscarPorRut(funcionario.getRut()));
 
@@ -342,7 +347,7 @@ public class FormularioSolicitudesController {
                 nameFile =documento.getDocumentoId()+"-"+documento.getFuncionarioId().getRut()+ nameFile.substring(nameFile.lastIndexOf("."));
                 documento.setUrlDocumentoAdjunto(nameFile);
                 documentoService.save(documento);
-                System.out.println(nameFile);
+
                 Path rutaCompleta = Paths.get(rootPath +"//" + nameFile);
                 Files.write(rutaCompleta, bytes);
                 flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
