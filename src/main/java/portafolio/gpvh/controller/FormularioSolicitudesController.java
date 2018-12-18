@@ -385,14 +385,14 @@ public class FormularioSolicitudesController {
                 model.addAttribute("nombreFragmentForm", "horasCompensadas");
                 break;
             case 2:
-                if(funcionario.getDiasAdministrativoUsados() == 5){
+                if(funcionario.getDiasAdministrativoUsados() >= 5){
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/administrativo");
                 model.addAttribute("nombreFragmentForm", "administrativo");
                 break;
             case 3:
-                if(funcionario.getDiaVacaciones() == funcionario.getDiaVacacionesUsadas()){
+                if(funcionario.getDiaVacaciones() <= funcionario.getDiaVacacionesUsadas()){
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/vacaciones");
