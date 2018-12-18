@@ -104,13 +104,12 @@
 <script>
     function buscarDocumento(id){
 
-        $.post( "pruebaYonis", { id: id, time: "2pm" }
+        $.post( "documentoPorID", { id: id, time: "2pm" }
         ,function (data) {
                 acignarDatos(data)
                 $("#formAnular").modal("show");
             }
         );
-
     }
     function acignarDatos(documento){
         $("#motivoNombre").html(documento.motivoId.nombre);
@@ -118,7 +117,6 @@
         $("#estado").html(documento.estadoDocumentoId.nombre);
         $("#fechaInicio").html(documento.fechaInicio);
         $("#fechaTermino").html(documento.fechaTermino);
-
         $("#formAnular").modal("show");
     }
 </script>
