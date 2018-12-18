@@ -1,5 +1,9 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
@@ -8,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "resolucion")
-public class Resolucion {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Resolucion implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_RESOLUCION_ID")
@@ -31,6 +36,7 @@ public class Resolucion {
 	private String titulo;
 
 	@OneToMany(mappedBy = "resolucionId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Documento> resolucionIdDocs;
 	
 	public Resolucion() 

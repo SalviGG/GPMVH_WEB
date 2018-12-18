@@ -1,13 +1,16 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "funcion")
-public class Funcion {
+public class Funcion implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_FUNCION_ID")
@@ -30,6 +33,7 @@ public class Funcion {
 			joinColumns = {@JoinColumn(name = "funcionId")},
 			inverseJoinColumns = {@JoinColumn(name = "rolId")}
 	)
+	@JsonIgnore
 	Set<Rol> roles = new HashSet<>();
 	
 	public Funcion() {

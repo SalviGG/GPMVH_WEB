@@ -30,6 +30,7 @@
                                     <th>Fecha de termino</th>
                                     <th>Resolucion</th>
                                     <th>Estado</th>
+                                    <th></th>
                                 </tr>
                                 <tr>
 
@@ -44,6 +45,11 @@
                                               th:text="${documento.resolucionId.titulo}"></span>
                                     </th>
                                     <th th:text="${documento.estadoDocumentoId.nombre}"></th>
+                                    <th>
+                                        <span th:if="${documento.estadoDocumentoId.estadoDocumentoId != 6 && documento.estadoDocumentoId.estadoDocumentoId != 7}" >
+                                            <input type="button" th:onclick="${'abrirFrom('+documento.documentoId+')'}" value="Anular" class="btn btn-primary" />
+                                        </span>
+                                    </th>
                                 </tr>
                             </table>
                         </div>

@@ -1,11 +1,16 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "rol")
-public class Rol {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Rol implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_ROL_ID")
@@ -20,6 +25,7 @@ public class Rol {
 	private List<Funcionario> rolIdFuncionario;
 
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Set<Funcion> funciones = new HashSet<>();
 
 	public Rol()
