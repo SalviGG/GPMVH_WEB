@@ -33,4 +33,8 @@ public class ResolucionServiceIMPL implements ResolucionService {
 
         resuDao.delete(resolucion);
     }
+
+    public int countResoluciones(){
+        return resuDao.countResoluciones();
+    }
 }

@@ -10,4 +10,5 @@ public interface ResolucionService {
     public void save(Resolucion resolucion);
     public Resolucion findOne(int id);
     public void delete(Resolucion resolucion);
+    public int countResoluciones();
 }

@@ -61,8 +61,8 @@
                 <form method="post" th:action="@{/rrhh}">
                     <div id="infoModal"></div>
                     </br>
-                    <button type="submit" value="aprobado" class="btn btn-primary">Aprobar documentación</button>
-                    <button type="submit" value="rechazado" class="btn btn-danger">Rechazar documentación</button>
+                    <button type="submit" value="aprobado" name="aprobacion" class="btn btn-primary">Aprobar documentación</button>
+                    <button type="submit" value="rechazado" name="aprobacion" class="btn btn-danger">Rechazar documentación</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -91,7 +91,7 @@
             var id = $(this).find("#id_solicitud").text();
             var motivo = $(this).find("#motivo").text();
             var docu = $(this).find("#documentacion").text();
-            $('#infoModal').html($('<b>Id solicitud: </b>' + '<input type="text" class="text" id="id" contenteditable="false" value="'+  id + '">' + '</br>' + '<b>Motivo de solicitud: </b>' + motivo + '</br>'
+            $('#infoModal').html($('<b>Id solicitud: </b>' + '<input type="text" class="text" name="id" contenteditable="false" value="'+  id + '"/>' + '</br>' + '<b>Motivo de solicitud: </b>' + motivo + '</br>'
                                 + '<b>Ver documentación: </b>' + '<a target="_blank" class="-external-link" href="/uploads/' + docu + ' ">Descargar documentación</a>' +'</br>'));
             $('#orderModal').modal('show');
 

@@ -306,10 +306,10 @@ public class FormularioSolicitudesController {
         String inicio = parts[0].trim(); // fecha inicio
         String termino = parts[1].trim(); // fecha termino
 
-        //tranformo el id compuesto a id simple id primera posicion nesesita o no segunda posicion
+        //tranformo el id compuesto a id simple id primera posicion necesita o no segunda posicion
         String[] compuesto = idTipo_nesesita.split("-");
         int idOtros =Integer.parseInt(compuesto[0]); // id del tipo seleccionado tranformo en id
-        String nesesita = compuesto[1]; // nesesota o no nesesita
+        String necesita = compuesto[1]; // nesesota o no necesita
 
 
 
@@ -324,7 +324,7 @@ public class FormularioSolicitudesController {
         documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
-        if (nesesita =="s" || nesesita=="S") {// si nenesita documento
+        if (necesita =="s" || necesita=="S") {// si nenesita documento
             documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
         }
         try {
@@ -337,8 +337,8 @@ public class FormularioSolicitudesController {
         }
         documentoService.save(documento);
         // manejo el archivo seleccionado
-        //si nesesita documento entra
-        if (nesesita =="s" || nesesita=="S") {
+        //si necesita documento entra
+        if (necesita =="s" || necesita=="S") {
             Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
             String rootPath = directorioRecursos.toFile().getAbsolutePath();
             try {

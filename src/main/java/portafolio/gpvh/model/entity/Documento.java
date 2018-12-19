@@ -20,7 +20,7 @@ public class Documento  implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_DOCUMENTO_ID")
 	@SequenceGenerator(name = "SQ_DOCUMENTO_ID",allocationSize = 1,sequenceName = "SQ_DOCUMENTO_ID")
 	@Column(name = "documento_id")
-	private Integer documentoId;
+	private int documentoId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -84,11 +84,11 @@ public class Documento  implements Serializable {
 		this.afectaDocIds = new ArrayList<Documento>();
 	}
 
-	public Integer getDocumentoId() {
+	public int getDocumentoId() {
 		return documentoId;
 	}
 
-	public void setDocumentoId(Integer documentoId) {
+	public void setDocumentoId(int documentoId) {
 		this.documentoId = documentoId;
 	}
 
