@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import portafolio.gpvh.controlAccesoWS.mappingWsl.Persona;
+import portafolio.gpvh.controlAccesoWS.service.ConsultaControlAccesoServicio;
 import portafolio.gpvh.model.entity.Documento;
 
 import portafolio.gpvh.model.entity.Funcionario;
 import portafolio.gpvh.model.entity.Motivo;
-import portafolio.gpvh.model.service.DocumentoService;
-import portafolio.gpvh.model.service.EstadoDocumentoService;
-import portafolio.gpvh.model.service.MotivoService;
-import portafolio.gpvh.model.service.TipoDocumentoService;
+import portafolio.gpvh.model.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -41,7 +40,10 @@ public class FormularioSolicitudesController {
     private EstadoDocumentoService estadoDocumentoService;
     @Autowired
     private DocumentoService documentoService;
-
+    @Autowired
+    private ConsultaControlAccesoServicio consultaControlAccesoServicio;
+    @Autowired
+    private FuncionarioService funcionarioService;
 
     @PostMapping("/GuardarPermisosDefuncion")
     public String postGuardarPermisosDefuncion(HttpSession session,@RequestParam("fecha_defuncion")String fechaDefuncion,@RequestParam("tipoDefuncion")String tipoDefuncion, @RequestParam("file")MultipartFile archivo, RedirectAttributes flash){
@@ -49,18 +51,7 @@ public class FormularioSolicitudesController {
             return "redirect:/dashboard";
         }
 
-        if(!archivo.isEmpty()){
-            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
-            String rootPath = directorioRecursos.toFile().getAbsolutePath();
-            try {
-                byte[] bytes = archivo.getBytes();
-                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
-                Files.write(rutaCompleta, bytes);
-                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
 
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -70,7 +61,7 @@ public class FormularioSolicitudesController {
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(12));//id 12 = motivo defuncion
         documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
-        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));//id 1 = estado solicitado
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(2));//id 1 = estado solicitado
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
         documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
@@ -100,9 +91,24 @@ public class FormularioSolicitudesController {
             System.out.println(e.toString());
         }
         documentoService.save(documento);
-        System.out.println(documento.getFechaInicio());
-        System.out.println(documento.getFechaTermino());
-        return "redirect:/solicitud";
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                String nameFile = archivo.getOriginalFilename();
+                nameFile =documento.getDocumentoId()+"-"+documento.getFuncionarioId().getRut()+ nameFile.substring(nameFile.lastIndexOf("."));
+                documento.setUrlDocumentoAdjunto(nameFile);
+                documentoService.save(documento);
+                System.out.println(nameFile);
+                Path rutaCompleta = Paths.get(rootPath +"//" + nameFile);
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
 
@@ -112,20 +118,6 @@ public class FormularioSolicitudesController {
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
-
-        if(!archivo.isEmpty()){
-            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
-            String rootPath = directorioRecursos.toFile().getAbsolutePath();
-            try {
-                byte[] bytes = archivo.getBytes();
-                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
-                Files.write(rutaCompleta, bytes);
-                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date fecha;
@@ -134,7 +126,7 @@ public class FormularioSolicitudesController {
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(13));//id 13 = motivo matrimonio
         documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));//id 1 = solicitud de permiso
-        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));//id 4 = estado pendiente
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(2));//id 4 = estado pendiente
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
         documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
@@ -157,9 +149,25 @@ public class FormularioSolicitudesController {
             System.out.println(e.toString());
         }
         documentoService.save(documento);
-        System.out.println(documento.getFechaInicio());
-        System.out.println(documento.getFechaTermino());
-        return "redirect:/solicitud";
+        if(!archivo.isEmpty()){
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                String nameFile = archivo.getOriginalFilename();
+                nameFile =documento.getDocumentoId()+"-"+documento.getFuncionarioId().getRut()+ nameFile.substring(nameFile.lastIndexOf("."));
+                documento.setUrlDocumentoAdjunto(nameFile);
+                documentoService.save(documento);
+                System.out.println(nameFile);
+                Path rutaCompleta = Paths.get(rootPath +"//" + nameFile);
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
     @PostMapping("/GuardarHorasCompesadas")
@@ -168,6 +176,7 @@ public class FormularioSolicitudesController {
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
+
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date fechaDate;
@@ -175,7 +184,7 @@ public class FormularioSolicitudesController {
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(1));
         documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));
-        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
         try {
@@ -186,9 +195,13 @@ public class FormularioSolicitudesController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        int ini = Integer.parseInt(inicio);
+        int fin = Integer.parseInt(termino);
+        int horas = fin - ini;
+        consultaControlAccesoServicio.consumirHoras(funcionario.getRut(),horas);
+        session.setAttribute("persona", consultaControlAccesoServicio.busquedaPorRut(funcionario.getRut()));
         documentoService.save(documento);
-
-        return "redirect:/solicitud";
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
     @PostMapping("/GuardarDiaAdministrativo")
@@ -203,7 +216,7 @@ public class FormularioSolicitudesController {
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(2));
         documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));
-        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));
         try {
 
             documento.setFechaSolicitud(new Date());
@@ -228,10 +241,17 @@ public class FormularioSolicitudesController {
             System.out.println(fecha);
         }
         documentoService.save(documento);
-        System.out.println(documento.getFechaInicio());
-        System.out.println(documento.getFechaTermino());
+        if(periodo.equals("1")){
+            funcionario.setDiasAdministrativoUsados(funcionario.getDiasAdministrativoUsados()+1);
+        }else{funcionario.setDiasAdministrativoUsados(
+                funcionario.getDiasAdministrativoUsados()+0.5);
+        }
 
-        return "redirect:/solicitud";
+        funcionarioService.save(funcionario);
+        session.setAttribute("funcionario",funcionarioService.buscarPorRut(funcionario.getRut()));
+
+
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
     @PostMapping("/GuardarVacaciones")
@@ -242,30 +262,37 @@ public class FormularioSolicitudesController {
         }
         //tranformo la fecha compuesta en 2 valores distintos
         String[] parts = fechas.split("-");
-        String inicio = parts[0]; // fecha inicio
-        String termino = parts[1]; // fecha termino
-
+        String inicio = parts[0].trim(); // fecha inicio
+        String termino = parts[1].trim(); // fecha termino
+        int cantidadDia = 0;
         Documento documento = new Documento();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date fechaDate;
         Funcionario funcionario = (Funcionario) session.getAttribute("funcionario");
         documento.setFuncionarioId(funcionario);
         documento.setMotivoId(motivoService.findOne(3));
         documento.setTipoDocumentoId(tipoDocumentoService.findOne(1));
-        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
+        documento.setEstadoDocumentoId(estadoDocumentoService.findOne(4));
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
         try {
             fechaDate = formatter.parse(inicio);
+
             documento.setFechaInicio(fechaDate);
+
             fechaDate = formatter.parse(termino);
+
             documento.setFechaTermino(fechaDate);
-        } catch (ParseException e) {
+            cantidadDia = (int) (( documento.getFechaTermino().getTime()-documento.getFechaInicio().getTime())/86400000);        } catch (ParseException e) {
             e.printStackTrace();
         }
+        funcionario.setDiaVacacionesUsadas(funcionario.getDiaVacacionesUsadas()+cantidadDia+1);
         documentoService.save(documento);
+        funcionarioService.save(funcionario);
 
-        return "redirect:/solicitud";
+
+        session.setAttribute("funcionario",funcionarioService.buscarPorRut(funcionario.getRut()));
+        return "redirect:/solicitud?mensaje="+documento.getDocumentoId();
     }
 
     @PostMapping("/GuardarOtros")
@@ -276,29 +303,15 @@ public class FormularioSolicitudesController {
         }
         //tranformo la fecha compuesta en 2 valores distintos
         String[] parts = fechas.split("-");
-        String inicio = parts[0]; // fecha inicio
-        String termino = parts[1]; // fecha termino
+        String inicio = parts[0].trim(); // fecha inicio
+        String termino = parts[1].trim(); // fecha termino
 
         //tranformo el id compuesto a id simple id primera posicion nesesita o no segunda posicion
         String[] compuesto = idTipo_nesesita.split("-");
         int idOtros =Integer.parseInt(compuesto[0]); // id del tipo seleccionado tranformo en id
         String nesesita = compuesto[1]; // nesesota o no nesesita
 
-        // manejo el archivo seleccionado
-        //si nesesita documento entra
-        if (nesesita =="s" || nesesita=="S") {
-        if(!archivo.isEmpty()){
-            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
-            String rootPath = directorioRecursos.toFile().getAbsolutePath();
-            try {
-                byte[] bytes = archivo.getBytes();
-                Path rutaCompleta = Paths.get(rootPath +"//" + archivo.getOriginalFilename());
-                Files.write(rutaCompleta, bytes);
-                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }}
+
 
 
         Documento documento = new Documento();
@@ -323,7 +336,25 @@ public class FormularioSolicitudesController {
             e.printStackTrace();
         }
         documentoService.save(documento);
+        // manejo el archivo seleccionado
+        //si nesesita documento entra
+        if (nesesita =="s" || nesesita=="S") {
+            Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
+            String rootPath = directorioRecursos.toFile().getAbsolutePath();
+            try {
+                byte[] bytes = archivo.getBytes();
+                String nameFile = archivo.getOriginalFilename();
+                nameFile =documento.getDocumentoId()+"-"+documento.getFuncionarioId().getRut()+ nameFile.substring(nameFile.lastIndexOf("."));
+                documento.setUrlDocumentoAdjunto(nameFile);
+                documentoService.save(documento);
 
+                Path rutaCompleta = Paths.get(rootPath +"//" + nameFile);
+                Files.write(rutaCompleta, bytes);
+                flash.addFlashAttribute("info", "Has subido correctamente '" + archivo.getOriginalFilename() + "'");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return "redirect:/solicitud";
     }
 
@@ -339,23 +370,31 @@ public class FormularioSolicitudesController {
     }
 
     @PostMapping("/formularioSolicitudes")
-    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId) {
+    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId,HttpSession session) {
 
-
-
+        Persona persona = (Persona) session.getAttribute("persona");
+        Funcionario funcionario = (Funcionario)session.getAttribute("funcionario");
         Motivo motivo = motivoService.findOne(Integer.parseInt(motivoId));
         model.addAttribute("motivo", motivo);
         switch (motivo.getMotivoId()) {
             case 1:
+                if(persona.getHorasCompensadas() <= 0){
+                    return "redirect:/solicitud";
+                }
                 model.addAttribute("archivoForm", "fragments/horasCompensadas");
                 model.addAttribute("nombreFragmentForm", "horasCompensadas");
                 break;
             case 2:
-
+                if(funcionario.getDiasAdministrativoUsados() >= 5){
+                    return "redirect:/solicitud";
+                }
                 model.addAttribute("archivoForm", "fragments/administrativo");
                 model.addAttribute("nombreFragmentForm", "administrativo");
                 break;
             case 3:
+                if(funcionario.getDiaVacaciones() <= funcionario.getDiaVacacionesUsadas()){
+                    return "redirect:/solicitud";
+                }
                 model.addAttribute("archivoForm", "fragments/vacaciones");
                 model.addAttribute("nombreFragmentForm", "vacaciones");
                 break;

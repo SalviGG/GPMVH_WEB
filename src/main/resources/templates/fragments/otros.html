@@ -10,7 +10,7 @@
         <h3 class="panel-title">Solicitud de permisos especiales</h3>
     </div>
     <div class="panel-body">
-        <form method="post" class="col-xs-4" action="/GuardarOtros" enctype="multipart/form-data">
+        <form method="post" id="fromSolicitud" class="col-xs-4" action="/GuardarOtros" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="tipoDia">Tipo de permiso</label>
                 <select class="form-control" id="tipoDia" name="tipoDia" onchange="ShowSelected()">
@@ -28,12 +28,51 @@
                 <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="" required/>
             </div>
             <div class="form-group col-xs-12">
-                <button type="submit" class="btn btn-primary">Solicitar</button>
+                <input type="button" class="btn btn-primary" onclick="validar()" value="Solicitar" />
             </div>
         </form>
     </div>
 </div>
+<!-- Modal Confirmacion-->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalCenterTitle">Confirmar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="enviar();" data-dismiss="modal">Confirmar</button>
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Mensaje-->
+<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="MensajeModalCenterTitle"> Datos Pendientes a rellenar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="conetnidoMensaje">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
 
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     $(function() {
 
@@ -58,23 +97,89 @@
     });
 </script>
 <script type="text/javascript">
-function ShowSelected()
-{
-/* Para obtener el valor */
-var pal =$("#tipoDia").val(); // optiene el id
+    function enviar(){
+        $("#fromSolicitud").submit();
+    }
+    function mostarMensaje(mensaje){
+        $("#conetnidoMensaje").html(mensaje);
+        $("#modalMensaje").modal("show")
+    }
 
-var res = pal.split("-");
-var doc = res[1];
+    function closeMensaje(){
+        $("#modalMensaje").modal("hide")
+    }
 
-//muestra u oculta cajon de adjuntar documento
 
-if (doc ==="n" || doc==="N") {
-document.getElementById("Adjuntar").style.display="none";
-$("#file").removeAttr('required');
-} else {
-document.getElementById("Adjuntar").style.display="inherit";
-$("#file").attr('required', '');
-}}
+    function validarFormatoFecha(campo) {
+        var fechaf = campo.split("/");
+        var d = fechaf[1];
+        var m = fechaf[0];
+        var y = fechaf[2];
+
+        return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
+    }
+    function existeFecha(fecha){
+        var fechaf = fecha.split("/");
+        var day = fechaf[0];
+        var month = fechaf[1];
+        var year = fechaf[2];
+        var date = new Date(year,month,'0');
+        if((day-0)>(date.getDate()-0)){
+            return false;
+        }
+        return true;
+    }
+    function validar(){
+        var fileAdjunto = $("#tipoDia").val();
+        fileAdjunto =fileAdjunto.split('-')[1];
+        var fecha = $("#numero_dias").val();
+        var files = $("#exampleInputFile");
+        var countFiles = files[0].files.length;
+        var extencionPrimero = "";
+        if(countFiles > 0){
+            var extencionPrimero = files[0].files[0].name;
+            extencionPrimero = extencionPrimero.substr( extencionPrimero.lastIndexOf(".")+1);
+        }
+
+        if((countFiles == 1 && (extencionPrimero == "pdf"
+            || extencionPrimero == "PDF"
+            || extencionPrimero == "png"
+            || extencionPrimero == "PNG"
+            || extencionPrimero == "jpg"
+            || extencionPrimero == "JPG"))
+            || fileAdjunto == "N"){
+
+            var fechas = fecha.split("-");
+            if(validarFormatoFecha(fechas[0].trim())){
+                openModal();
+            }else{
+                mostarMensaje("No ha ingresado la fecha o el formato de fecha es incorrecto")
+            }
+        }else{
+            mostarMensaje("Debe selecionar un archivo de Tipo PNG,PDF,JPG");
+        }
+    }
+
+    function openModal(){
+        $("#modalInfo").modal("show");
+    }
+    function closeModal(){
+        $("#modalInfo").modal("hide");
+    }
+    function ShowSelected(){
+        /* Para obtener el valor */
+        var pal =$("#tipoDia").val(); // optiene el id
+        var res = pal.split("-");
+        var doc = res[1];
+        //muestra u oculta cajon de adjuntar documento
+        if (doc ==="n" || doc==="N") {
+            document.getElementById("Adjuntar").style.display="none";
+            $("#file").removeAttr('required');
+        } else {
+            document.getElementById("Adjuntar").style.display="inherit";
+            $("#file").attr('required', '');
+        }
+    }
 </script>
 <script>
 window.onload=ShowSelected();

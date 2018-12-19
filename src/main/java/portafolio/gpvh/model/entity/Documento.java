@@ -1,5 +1,9 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +13,8 @@ import javax.print.Doc;
 
 @Entity
 @Table(name = "Documento")
-public class Documento {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Documento  implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_DOCUMENTO_ID")
@@ -20,26 +25,31 @@ public class Documento {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "funcionario_id")
+
 	private Funcionario funcionarioId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "resolucion_id")
+
 	private Resolucion resolucionId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "motivo_id")
+
 	private Motivo motivoId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "afecta_documento_id")
+
 	private Documento afectaDocumentoId;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "tipo_documento_id")
+
 	private TipoDocumento tipoDocumentoId;
 	
 
@@ -63,7 +73,11 @@ public class Documento {
 	private Date fechaTermino;
 
 	@OneToMany(mappedBy = "afectaDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Documento> afectaDocIds;
+
+	@Column(name = "comentario")
+	private String comentario;
 	
 	public Documento() 
 	{
@@ -173,5 +187,9 @@ public class Documento {
 	public void setAfectaDocIds(List<Documento> afectaDocIds) {
 		this.afectaDocIds = afectaDocIds;
 	}
+
+	public String getComentario(){ return comentario;}
+
+	public  void  setComentario(String comentario){ this.comentario = comentario;}
 
 }

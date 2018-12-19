@@ -13,5 +13,6 @@ public interface DocumentoService {
     public void delete(Documento documento);
     public List<Documento> findAllByFuncionarioId(Funcionario funcionario);
     public List<Documento> findAllByFuncionarioIdAndMotivoId(Funcionario funcionario);
+    public List<Documento> findAllConDocumento();
 
 }
