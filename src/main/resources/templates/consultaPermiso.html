@@ -106,13 +106,13 @@
 
         $.post( "pruebaYonis", { id: id, time: "2pm" }
         ,function (data) {
-                acignarDatos(data)
+                asignarDatos(data)
                 $("#formAnular").modal("show");
             }
         );
 
     }
-    function acignarDatos(documento){
+    function asignarDatos(documento){
         $("#motivoNombre").html(documento.motivoId.nombre);
         $("#fechaSolicitud").html(documento.fechaSolicitud);
         $("#estado").html(documento.estadoDocumentoId.nombre);
