@@ -62,15 +62,12 @@
                             <tr>
                                 <th>Id Resolucion</th>
                                 <th>Motivo</th>
-                                <th>Fecha de Emision</th>
-                                <th></th>
+                                <th>Rut responsable de emisión</th>
                             </tr>
-                            <tr>
-
-                            <tr th:each="documento : ${listaDocumento}">
-                                <th th:text="${documento.documentoId}"></th>
-                                <th th:text="${documento.motivoId.nombre}"></th>
-                                <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
+                            <tr th:each="resolucion : ${busquedaMotivo}">
+                                <td th:text="${resolucion.resolucionId}"></td>
+                                <td th:text="${resolucion.motivoId.nombre}"></td>
+                                <td th:text="${resolucion.funcionarioId.rut}"></td>
                             </tr>
                         </table>
                 </div>

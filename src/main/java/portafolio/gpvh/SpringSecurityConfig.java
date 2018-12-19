@@ -60,6 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").authenticated()//.permitAll()//.hasAnyRole("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()
+                .exceptionHandling().accessDeniedPage("/dashboard")
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard")

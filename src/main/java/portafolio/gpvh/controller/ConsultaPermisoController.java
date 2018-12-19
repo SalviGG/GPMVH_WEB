@@ -36,18 +36,4 @@ public class ConsultaPermisoController {
         return "consultaPermiso";
     }
 
-    @GetMapping("/consultaResoluciones")
-    public String consultasDeResoluciones(){
-
-
-        return "consultaResoluciones";
-    }
-
-    @GetMapping("/reportePermisos")
-    public String reporteDePermisos(){
-
-
-        return "reportePermisos";
-    }
-
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import portafolio.gpvh.model.entity.Departamento;
 import portafolio.gpvh.model.entity.Documento;
 import portafolio.gpvh.model.entity.EstadoDocumento;
+import portafolio.gpvh.model.entity.Motivo;
 import portafolio.gpvh.model.service.*;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,9 @@ public class ConsultasReportesController {
 
     @Autowired
     private DocumentoService documentoService;
+
+    @Autowired
+    private ResolucionService resolucionService;
 
     @GetMapping("/consultasReportes")
     public String consultaDeLosRepos(HttpSession session, Model model){
@@ -61,15 +65,11 @@ public class ConsultasReportesController {
         if(session.getAttribute("persona")==null){
             return "redirect:/dashboard";
         }
-        model.addAttribute("listadoDepto", departamentoService.findAll());
-        model.addAttribute("listadoMotivo", motivoService.findAll());
 
-
-
-        System.out.println(departamento);
-        System.out.println(motivo);
-        System.out.println(inputText);
-
+        if (motivo!=null){
+            Motivo motivoBuscado = motivoService.findOne(Integer.parseInt(motivo));
+            model.addAttribute("busquedaMotivo", resolucionService.findByMotivoId(motivoBuscado));
+        }
 
         return "consultaResoluciones";
     }
