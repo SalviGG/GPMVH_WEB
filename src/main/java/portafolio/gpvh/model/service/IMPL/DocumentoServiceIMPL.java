@@ -50,4 +50,23 @@ public class DocumentoServiceIMPL implements DocumentoService {
         return (List<Documento>)docuDAO.findAllConDocumento();
     }
 
+    public int countDocumentos(){
+        return  docuDAO.countDocumentos();
+    }
+
+    public int countDocumentosRevision(){
+        return  docuDAO.countDocumentosRevision();
+    }
+
+    public int countDocumentosAll(){
+        return  docuDAO.countDocumentosAll();
+    }
+
+    public List<Documento> findUltimosConDocumento(){
+        return (List<Documento>)docuDAO.findUltimosConDocumento();
+    }
+
+    public List<Documento> findUltimosPermisos(){
+        return (List<Documento>)docuDAO.findUltimosPermisos();
+    }
 }
