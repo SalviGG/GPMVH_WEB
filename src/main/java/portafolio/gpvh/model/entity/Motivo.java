@@ -28,6 +28,9 @@ public class Motivo implements Serializable {
 	@Column(name = "activo")
 	private String activo;
 
+	@Column(name ="TIPO_MOTIVO")
+	private String tipoMotivo;
+
 	@OneToMany(mappedBy = "motivoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Resolucion> motivoIdRes;
@@ -92,5 +95,13 @@ public class Motivo implements Serializable {
 
 	public void setActivo(String activo) {
 		this.activo = activo;
+	}
+
+	public String getTipoMotivo() {
+		return tipoMotivo;
+	}
+
+	public void setTipoMotivo(String tipoMotivo) {
+		this.tipoMotivo = tipoMotivo;
 	}
 }

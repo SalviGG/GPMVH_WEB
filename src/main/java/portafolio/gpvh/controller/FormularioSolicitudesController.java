@@ -50,9 +50,6 @@ public class FormularioSolicitudesController {
         if (session.getAttribute("persona")== null){
             return "redirect:/dashboard";
         }
-
-
-
         Documento documento = new Documento();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         Date fecha;
