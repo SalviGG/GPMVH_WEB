@@ -22,36 +22,34 @@
                     </div>
                     <div class="panel-body">
                         <form method="post" action="/cosultaResoluciones">
-                            <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
-                                <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
-                                <option value="rut">Rut</option>
-                                <option value="departamento">Departamento</option>
-                                <option value="motivo">Motivo</option>
-                            </select>
+                        <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
+                            <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
+                            <option value="rut">Rut</option>
+                            <option value="departamento">Departamento</option>
+                            <option value="motivo">Motivo</option>
+                        </select>
 
-                            <div id="other-div" style="display:none;">
-                                <label>Ingrese rut:
-                                    <input class="form-control" id="other-input" name="inputText"></input>
-                                </label>
-                            </div>
-
-
-                            <select class="form-control" id="deptoDiv" name="departamento" placeholder="Departamentos"
-                                    style="display:none;">
-                                <option th:each="departamento : ${listadoDepto}"
-                                        th:value="${departamento.departamentoId}"
-                                        th:text="${departamento.nombre}"
-                                        th:selected="false"></option>
-                            </select>
+                        <div id="other-div" style="display:none;">
+                            <label>Ingrese rut:
+                                <input class="form-control" id="other-input" name="inputText"></input>
+                            </label>
+                        </div>
 
 
-                            <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos"
-                                    style="display:none;">
-                                <option th:each="motivo : ${listadoMotivo}"
-                                        th:value="${motivo.motivoId}"
-                                        th:text="${motivo.nombre}"
-                                        th:selected="false"></option>
-                            </select>
+                        <select class="form-control" id="deptoDiv" name="departamento" placeholder="Departamentos" style="display:none;" >
+                            <option th:each="departamento : ${listadoDepto}"
+                                    th:value="${departamento.departamentoId}"
+                                    th:text="${departamento.nombre}"
+                                    th:selected="false"> </option>
+                        </select>
+
+
+                        <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos" style="display:none;">
+                            <option th:each="motivo : ${listadoMotivo}"
+                                    th:value="${motivo.motivoId}"
+                                    th:text="${motivo.nombre}"
+                                    th:selected="false"></option>
+                        </select>
 
                             <div class="form-group col-xs-12">
                                 <button type="submit" class="btn btn-primary">Solicitar</button>
@@ -59,45 +57,45 @@
                         </form>
                     </div>
                     <div class="panel-body" id="tablaBusqueda">
-                        <div class="table-responsive-sm">
-                            <table class="table table-bordered table-striped table-hover">
-                                <tr>
-                                    <th>Id Resolucion</th>
-                                    <th>Motivo</th>
-                                    <th>Rut responsable de emisión</th>
-                                </tr>
-                                <tr th:each="resolucion : ${busquedaMotivo}">
-                                    <td th:text="${resolucion.resolucionId}"></td>
-                                    <td th:text="${resolucion.motivoId.nombre}"></td>
-                                    <td th:text="${resolucion.funcionarioId.rut}"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table table-bordered table-striped table-hover">
+                            <tr>
+                                <th>Id Resolucion</th>
+                                <th>Motivo</th>
+                                <th>Rut responsable de emisión</th>
+                            </tr>
+                            <tr th:each="resolucion : ${busquedaMotivo}">
+                                <td th:text="${resolucion.resolucionId}"></td>
+                                <td th:text="${resolucion.motivoId.nombre}"></td>
+                                <td th:text="${resolucion.funcionarioId.rut}"></td>
+                            </tr>
+                        </table>
                 </div>
+                    </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <div th:replace="fragments/footer :: footer"></div>
 
 <script type="text/javascript">
-    function check(elem) {
-        document.getElementById("other-div").style.display = 'none';
-        document.getElementById("deptoDiv").style.display = 'none';
-        document.getElementById("motivoDiv").style.display = 'none';
+        function check(elem) {
+            document.getElementById("other-div").style.display = 'none';
+            document.getElementById("deptoDiv").style.display = 'none';
+            document.getElementById("motivoDiv").style.display = 'none';
 
-        if (elem.value == "rut") {
-            document.getElementById("other-div").style.display = 'block';
+             if (elem.value == "rut") {
+                document.getElementById("other-div").style.display = 'block';
 
-        } else if (elem.value == "departamento") {
-            document.getElementById("deptoDiv").style.display = 'block';
+            } else if (elem.value == "departamento") {
+                document.getElementById("deptoDiv").style.display = 'block';
 
-        } else if (elem.value == "motivo") {
-            document.getElementById("motivoDiv").style.display = 'block';
+            } else if (elem.value == "motivo") {
+                document.getElementById("motivoDiv").style.display = 'block';
+            }
         }
-    }
-</script>
+    </script>
 
 
 </body>
