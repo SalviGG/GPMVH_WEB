@@ -25,23 +25,16 @@
                         <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
                             <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
                             <option value="rut">Rut</option>
-                            <option value="departamento">Departamento</option>
+                            <option value="resId">Resolucion </option>
                             <option value="motivo">Motivo</option>
                         </select>
 
                         <div id="other-div" style="display:none;">
-                            <label>Ingrese rut:
+                            <label>Ingrese:
                                 <input class="form-control" id="other-input" name="inputText"></input>
                             </label>
                         </div>
 
-
-                        <select class="form-control" id="deptoDiv" name="departamento" placeholder="Departamentos" style="display:none;" >
-                            <option th:each="departamento : ${listadoDepto}"
-                                    th:value="${departamento.departamentoId}"
-                                    th:text="${departamento.nombre}"
-                                    th:selected="false"> </option>
-                        </select>
 
 
                         <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos" style="display:none;">
@@ -64,10 +57,11 @@
                                 <th>Motivo</th>
                                 <th>Rut responsable de emisión</th>
                             </tr>
-                            <tr th:each="resolucion : ${busquedaMotivo}">
-                                <td th:text="${resolucion.resolucionId}"></td>
-                                <td th:text="${resolucion.motivoId.nombre}"></td>
-                                <td th:text="${resolucion.funcionarioId.rut}"></td>
+                            <tr th:each="busquedaRes : ${busqueda}">
+                                <td th:text="${busquedaRes.resolucionId}"></td>
+                                <td th:text="${busquedaRes.motivoId.nombre}"></td>
+                                <td th:text="${busquedaRes.funcionarioId.rut}"></td>
+
                             </tr>
                         </table>
                 </div>
@@ -82,14 +76,13 @@
 <script type="text/javascript">
         function check(elem) {
             document.getElementById("other-div").style.display = 'none';
-            document.getElementById("deptoDiv").style.display = 'none';
             document.getElementById("motivoDiv").style.display = 'none';
 
              if (elem.value == "rut") {
                 document.getElementById("other-div").style.display = 'block';
 
-            } else if (elem.value == "departamento") {
-                document.getElementById("deptoDiv").style.display = 'block';
+            } else if (elem.value == "resId") {
+                document.getElementById("other-div").style.display = 'block';
 
             } else if (elem.value == "motivo") {
                 document.getElementById("motivoDiv").style.display = 'block';
