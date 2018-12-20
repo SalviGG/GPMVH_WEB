@@ -9,13 +9,19 @@
     <section id="main">
       <div class="container">
         <div class="row">
-            <div th:include="fragments/opcionesRapidas :: opcionesRapidas"></div>
+          <div th:include="fragments/opcionesRapidas :: opcionesRapidas"></div>
           <div class="col-md-9">
             <!-- Website Overview -->
             <div class="panel panel-default">
               <div class="panel-heading main-color-bg">
                 <h3 class="panel-title">Solicitudes</h3>
               </div>
+              <!--Alert-->
+              <div class="alert alert-warning alert-dismissible" role="alert" >
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>¡Oops!</strong> <p th:text="${alerta}"></p>
+              </div>
+              <!--Fin de alert-->
               <div class="panel-body">
                 <table class="table">
                   <thead>
@@ -59,12 +65,22 @@
       </div>
     </div>
   </div>
+
+
+
   <script th:if="${mensaje != null}" th:inline="javascript" >
     /*<![CDATA[*/
       $("#conetnidoMensaje").html(/*[[${mensaje}]]*/ 'nada');
       $("#modalMensaje").modal("show")
+
     /*]]>*/
   </script>
+
+  <script th:if="${alerta == null}">
+    $(".alert").hide();
+  </script>
+
+
   <div th:replace="fragments/footer :: footer"></div>
   </body>
 </html>

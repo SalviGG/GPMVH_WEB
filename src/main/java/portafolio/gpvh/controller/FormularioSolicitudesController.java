@@ -303,10 +303,10 @@ public class FormularioSolicitudesController {
         String inicio = parts[0].trim(); // fecha inicio
         String termino = parts[1].trim(); // fecha termino
 
-        //tranformo el id compuesto a id simple id primera posicion nesesita o no segunda posicion
+        //tranformo el id compuesto a id simple id primera posicion necesita o no segunda posicion
         String[] compuesto = idTipo_nesesita.split("-");
         int idOtros =Integer.parseInt(compuesto[0]); // id del tipo seleccionado tranformo en id
-        String nesesita = compuesto[1]; // nesesota o no nesesita
+        String necesita = compuesto[1]; // nesesota o no necesita
 
 
 
@@ -321,7 +321,7 @@ public class FormularioSolicitudesController {
         documento.setEstadoDocumentoId(estadoDocumentoService.findOne(1));
         documento.setFechaSolicitud(new Date());
         documento.setUltimaFechaModificacion(new Date());
-        if (nesesita =="s" || nesesita=="S") {// si nenesita documento
+        if (necesita =="s" || necesita=="S") {// si nenesita documento
             documento.setUrlDocumentoAdjunto(archivo.getOriginalFilename());
         }
         try {
@@ -334,8 +334,8 @@ public class FormularioSolicitudesController {
         }
         documentoService.save(documento);
         // manejo el archivo seleccionado
-        //si nesesita documento entra
-        if (nesesita =="s" || nesesita=="S") {
+        //si necesita documento entra
+        if (necesita =="s" || necesita=="S") {
             Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
             String rootPath = directorioRecursos.toFile().getAbsolutePath();
             try {
@@ -356,7 +356,11 @@ public class FormularioSolicitudesController {
     }
 
     @GetMapping("/formularioSolicitudes")
-    public String formulario(Model model){
+    public String formulario(Model model, HttpSession session){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
         //Validación de session para evitar error de atributo null
         if (!model.containsAttribute("archivo")){
             return "redirect:/solicitud";
@@ -367,15 +371,19 @@ public class FormularioSolicitudesController {
     }
 
     @PostMapping("/formularioSolicitudes")
-    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId,HttpSession session) {
+    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId,HttpSession session, RedirectAttributes redirectAttributes) {
+
 
         Persona persona = (Persona) session.getAttribute("persona");
         Funcionario funcionario = (Funcionario)session.getAttribute("funcionario");
         Motivo motivo = motivoService.findOne(Integer.parseInt(motivoId));
         model.addAttribute("motivo", motivo);
+        String alerta;
         switch (motivo.getMotivoId()) {
             case 1:
                 if(persona.getHorasCompensadas() <= 0){
+                    alerta = "Usted no cuenta con horas compensadas";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/horasCompensadas");
@@ -383,6 +391,8 @@ public class FormularioSolicitudesController {
                 break;
             case 2:
                 if(funcionario.getDiasAdministrativoUsados() >= 5){
+                    alerta = "Usted no cuenta con días administrativos";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/administrativo");
@@ -390,6 +400,8 @@ public class FormularioSolicitudesController {
                 break;
             case 3:
                 if(funcionario.getDiaVacaciones() <= funcionario.getDiaVacacionesUsadas()){
+                    alerta = "Usted no cuenta con días de vacaciones";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/vacaciones");

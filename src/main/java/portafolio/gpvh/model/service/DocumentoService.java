@@ -14,5 +14,10 @@ public interface DocumentoService {
     public List<Documento> findAllByFuncionarioId(Funcionario funcionario);
     public List<Documento> findAllByFuncionarioIdAndMotivoId(Funcionario funcionario);
     public List<Documento> findAllConDocumento();
+    public int countDocumentos();
+    public int countDocumentosRevision();
+    public int countDocumentosAll();
+    public List<Documento> findUltimosConDocumento();
+    public List<Documento> findUltimosPermisos();
 
 }
