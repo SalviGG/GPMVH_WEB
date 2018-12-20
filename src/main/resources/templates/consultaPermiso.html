@@ -46,7 +46,7 @@
                                     </th>
                                     <th th:text="${documento.estadoDocumentoId.nombre}"></th>
                                     <th>
-                                        <span th:if="${documento.estadoDocumentoId.estadoDocumentoId != 6 && documento.estadoDocumentoId.estadoDocumentoId != 7}" >
+                                        <span th:if="${documento.estadoDocumentoId.estadoDocumentoId != 6 && documento.estadoDocumentoId.estadoDocumentoId != 7 && fechaActual > documento.fechaInicio}" >
                                             <input type="button" th:onclick="${'buscarDocumento('+documento.documentoId+')'}" value="Anular" class="btn btn-primary" />
                                         </span>
                                     </th>
@@ -68,37 +68,77 @@
                 </div>
                 <div class="modal-body" style="overflow: hidden">
                     <p>
-                        <table class="col-lg-12">
-                            <tr>
-                                <td>Tipo Permiso </td>
-                                <td>:</td>
-                                <td id="motivoNombre"></td>
-                                <td>fecha de solicitud</td>
-                                <td>:</td>
-                                <td id="fechaSolicitud"></td>
-                                <td>Estado</td>
-                                <td>:</td>
-                                <td id="estado"></td>
-                            </tr>
-                            <tr>
-                                <td>Fecha Inicio</td>
-                                <td>:</td>
-                                <td id="fechaInicio" ></td>
-                                <td>Fecha Termino</td>
-                                <td>:</td>
-                                <td id="fechaTermino"></td>
-                            </tr>
+                        <form action="/anularPermiso" method="post" id="formAnularPermiso">
+                            <table class="col-lg-12">
+                                <tr>
+                                    <th>Tipo Permiso </th>
+                                    <td>:</td>
+                                    <td id="motivoNombre"></td>
+                                    <th>fecha de solicitud</th>
+                                    <td>:</td>
+                                    <td id="fechaSolicitud"></td>
+                                    <th>Estado</th>
+                                    <td>:</td>
+                                    <td id="estado"></td>
+                                </tr>
+                                <tr>
+                                    <th>Fecha Inicio</th>
+                                    <td>:</td>
+                                    <td id="fechaInicio" ></td>
+                                    <th>Fecha Termino</th>
+                                    <td>:</td>
+                                    <td id="fechaTermino"></td>
+                                </tr>
+                                <tr>
+                                    <td><br/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="alert" style="display:none" class="alert alert-danger alert-dismissible " role="alert">
+                                            <strong id="mesajeAlert" ></strong>
+                                            <button class="close" onclick="closeAlert()"><span aria-hidden="true">&times;</span></button>
+                                        </div>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="hidden" id="documentoId" name="documentoId" value=""  />
+                                            <label for="motivo">Motivo de Anulación:</label>
+                                            <select class="form-control" id="motivo" name="motivo">
+                                                <option th:value="0">Seleccione</option>
+                                                <option th:each="motivo : ${listMotivoAnulacion}"
+                                                        th:value="${motivo.motivoId}"
+                                                        th:text="${motivo.nombre}"
+                                                ></option>
 
-                        </table>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="form-group">
+                                            <label for="comment">Comentario:</label>
+                                            <textarea placeholder="Debe escribir un comentario" class="form-control" rows="5" id="comment" name="comentario"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </form>
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <input type="button" class="btn btn-primary" value="Anular Permiso" onclick="validar();" />
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 <div th:replace="fragments/footer :: footer"></div>
 <script>
@@ -106,18 +146,57 @@
 
         $.post( "documentoPorID", { id: id, time: "2pm" }
         ,function (data) {
-                acignarDatos(data)
-                $("#formAnular").modal("show");
+                acignarDatos(data);
             }
         );
     }
+    function recortarFecha(JsonFecha){
+
+        var  stringDate = JsonFecha.toString();
+        stringDate=stringDate.substr(0,19);
+
+        stringDate = stringDate.replace('T',' ');
+        var anstes = stringDate.substr(0,11);
+        var despuest = stringDate.substr(13);
+        var hora = parseInt(stringDate.substr(11,2));
+        hora = hora -3;
+        if(hora <0){
+            hora = 24 +hora;
+        }
+        stringDate = anstes+hora+despuest;
+        return stringDate;
+    }
     function acignarDatos(documento){
+        var fecha;
+
+        $("#documentoId").val(documento.documentoId);
         $("#motivoNombre").html(documento.motivoId.nombre);
-        $("#fechaSolicitud").html(documento.fechaSolicitud);
+        fecha =recortarFecha(documento.fechaSolicitud);
+        $("#fechaSolicitud").html(fecha);
         $("#estado").html(documento.estadoDocumentoId.nombre);
-        $("#fechaInicio").html(documento.fechaInicio);
-        $("#fechaTermino").html(documento.fechaTermino);
+        fecha =recortarFecha(documento.fechaInicio);
+        $("#fechaInicio").html(fecha);
+        fecha =recortarFecha(documento.fechaTermino);
+        $("#fechaTermino").html(fecha);
         $("#formAnular").modal("show");
+    }
+    function validar(){
+        var motivo = $("#motivo").val();
+        if(motivo > 0){
+            var textArea = $("#comment").val();
+            if(textArea.trim() != ""){
+                $("#formAnularPermiso").submit();
+            }else{
+                $("#mesajeAlert").html("Debe debe escribir un comentario");
+                $("#alert").show();
+            }
+        }else{
+            $("#mesajeAlert").html("Debe Selecionar un Motivo");
+            $("#alert").show();
+        }
+    }
+    function closeAlert(){
+        $("#alert").hide();
     }
 </script>
 </body>
