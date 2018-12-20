@@ -20,4 +20,5 @@ public interface IResolucionDao extends CrudRepository <Resolucion, Integer> {
     @Query("SELECT r FROM Resolucion r WHERE r.funcionarioId = ?1")
     List<Resolucion> findByFuncionarioId(Funcionario funcionario);
 
+
 }

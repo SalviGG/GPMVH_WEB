@@ -13,6 +13,9 @@ public interface IDocumentoDao extends CrudRepository<Documento, Integer>{
     @Query ("SELECT d FROM Documento d WHERE d.funcionarioId = ?1")
     List<Documento> findAllByFuncionarioId(Funcionario funcionario);
 
+    @Query ("SELECT d FROM Documento d WHERE d.documentoId = ?1")
+    List<Documento> findAllByDocumentoId(Documento documento);
+
     @Query ("SELECT d FROM Documento d WHERE d.funcionarioId = ?1 AND d.estadoDocumentoId = 4")
     List<Documento> findAllByFuncionarioIdAndMotivoId(Funcionario funcionario);
 

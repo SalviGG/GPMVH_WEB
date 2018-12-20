@@ -47,4 +47,6 @@ public class ResolucionServiceIMPL implements ResolucionService {
     public List<Resolucion> findByFuncionarioId(Funcionario funcionario){
         return resuDao.findByFuncionarioId(funcionario);
     }
+
+
 }

@@ -16,4 +16,5 @@ public interface ResolucionService {
     public List<Resolucion> findByMotivoId(Motivo motivo);
     public List<Resolucion> findByFuncionarioId(Funcionario funcionario);
 
+
 }
