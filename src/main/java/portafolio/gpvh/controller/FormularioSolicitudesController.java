@@ -359,7 +359,11 @@ public class FormularioSolicitudesController {
     }
 
     @GetMapping("/formularioSolicitudes")
-    public String formulario(Model model){
+    public String formulario(Model model, HttpSession session){
+
+        if (session.getAttribute("persona")== null){
+            return "redirect:/dashboard";
+        }
         //Validación de session para evitar error de atributo null
         if (!model.containsAttribute("archivo")){
             return "redirect:/solicitud";
@@ -370,15 +374,19 @@ public class FormularioSolicitudesController {
     }
 
     @PostMapping("/formularioSolicitudes")
-    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId,HttpSession session) {
+    public String postFormulario(Model model,@RequestParam("motivoId") String motivoId,HttpSession session, RedirectAttributes redirectAttributes) {
+
 
         Persona persona = (Persona) session.getAttribute("persona");
         Funcionario funcionario = (Funcionario)session.getAttribute("funcionario");
         Motivo motivo = motivoService.findOne(Integer.parseInt(motivoId));
         model.addAttribute("motivo", motivo);
+        String alerta;
         switch (motivo.getMotivoId()) {
             case 1:
                 if(persona.getHorasCompensadas() <= 0){
+                    alerta = "Usted no cuenta con horas compensadas";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/horasCompensadas");
@@ -386,6 +394,8 @@ public class FormularioSolicitudesController {
                 break;
             case 2:
                 if(funcionario.getDiasAdministrativoUsados() >= 5){
+                    alerta = "Usted no cuenta con días administrativos";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/administrativo");
@@ -393,6 +403,8 @@ public class FormularioSolicitudesController {
                 break;
             case 3:
                 if(funcionario.getDiaVacaciones() <= funcionario.getDiaVacacionesUsadas()){
+                    alerta = "Usted no cuenta con días de vacaciones";
+                    redirectAttributes.addFlashAttribute("alerta",alerta);
                     return "redirect:/solicitud";
                 }
                 model.addAttribute("archivoForm", "fragments/vacaciones");
