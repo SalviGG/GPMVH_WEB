@@ -120,14 +120,19 @@ public class ConsultasReportesController {
 
     }
 
-    @PostMapping("/InfomePermisos")
+    @PostMapping("/InformePermisos")
     public String PostBusquedaInformes(Model model, @RequestParam("busqueda") String busqueda,
                                        @RequestParam("campoTexto") String campoTexto,
                                        @RequestParam("motivoSel") String motivo,
                                        @RequestParam("estadoSel") String estado) {
 
+        System.out.println(busqueda);
+        System.out.println(campoTexto);
+        System.out.println(motivo);
+        System.out.println(estado);
 
-        ValidacionLogin validador = new ValidacionLogin();
+
+       ValidacionLogin validador = new ValidacionLogin();
 
         if (busqueda.equals("seleccion")){
             String mensaje = "Debe seleccionar un parametro de busqueda";
@@ -135,7 +140,7 @@ public class ConsultasReportesController {
             model.addAttribute("listadoMotivo", motivoService.findAll());
             model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
 
-            return "informePermiso";
+            return "informePermisos";
         }else if (campoTexto == null || validador.tryParseInt(campoTexto) == false){
 
             String mensaje = "Ha ingresado un valor de busqueda no númerico, \n incorrecto o no ha ingresado valor";
@@ -143,10 +148,8 @@ public class ConsultasReportesController {
             model.addAttribute("listadoMotivo", motivoService.findAll());
             model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
 
-            return "informePermiso";
+            return "informePermisos";
         }
-
-
         if(busqueda.equals("rutSel")){
             Funcionario funcionarioBusqueda = funcionarioService.buscarPorRut(Integer.parseInt(campoTexto.trim()));
             model.addAttribute("busqueda", documentoService.findAllByFuncionarioId(funcionarioBusqueda));
