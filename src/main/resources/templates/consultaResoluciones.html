@@ -20,75 +20,142 @@
                     <div class="panel-heading main-color-bg">
                         <h3 class="panel-title">Consulta de resoluciones</h3>
                     </div>
+                    <!--Alert-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" >
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>¡Error!:</strong> <p th:text="${mensaje}"></p>
+                    </div>
+                    <!--Fin de alert-->
                     <div class="panel-body">
-                        <form method="post" action="/cosultaResoluciones">
-                        <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
-                            <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
-                            <option value="rut">Rut</option>
-                            <option value="resId">Resolucion </option>
-                            <option value="motivo">Motivo</option>
-                        </select>
+                        <form method="post" action="/cosultaResoluciones" >
+                            <div class="form-group">
+                                <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
+                                    <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
+                                    <option value="rut">Rut emisor</option>
+                                    <option value="resId">Resolucion</option>
+                                    <option value="motivo">Motivo</option>
+                                </select>
+                            </div>
 
-                        <div id="other-div" style="display:none;">
-                            <label>Ingrese:
-                                <input class="form-control" id="other-input" name="inputText"></input>
-                            </label>
-                        </div>
+                            <div id="other-div" class="form-group">
+                                <label for="other-input">Ingrese parametro de busqueda:
+                                    <input class="form-control" id="other-input" name="inputText" placeholder="Ingreser solo números">
+                                </label>
+                            </div>
 
-
-
-                        <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos" style="display:none;">
-                            <option th:each="motivo : ${listadoMotivo}"
-                                    th:value="${motivo.motivoId}"
-                                    th:text="${motivo.nombre}"
-                                    th:selected="false"></option>
-                        </select>
+                            <div class="form-group">
+                                <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos"
+                                        style="display:none;">
+                                    <option th:each="motivo : ${listadoMotivo}"
+                                            th:value="${motivo.motivoId}"
+                                            th:text="${motivo.nombre}"
+                                            th:selected="false"></option>
+                                </select>
+                            </div>
 
                             <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-primary">Solicitar</button>
+                                <button type="submit" class="btn btn-primary">Buscar</button>
                             </div>
                         </form>
                     </div>
                     <div class="panel-body" id="tablaBusqueda">
-                    <div class="table-responsive-sm" th:if="${busqueda !=null}">
-                        <table class="table table-bordered table-striped table-hover">
-                            <tr>
-                                <th>Id Resolucion</th>
-                                <th>Motivo</th>
-                                <th>Rut responsable de emisión</th>
-                            </tr>
-                            <tr th:each="busquedaRes : ${busqueda}">
-                                <td th:text="${busquedaRes.resolucionId}"></td>
-                                <td th:text="${busquedaRes.motivoId.nombre}"></td>
-                                <td th:text="${busquedaRes.funcionarioId.rut}"></td>
-
-                            </tr>
-                        </table>
-                </div>
+                        <div class="table-responsive-sm" th:if="${busqueda !=null}">
+                            <table class="table table-bordered table-striped table-hover">
+                                <tr>
+                                    <th>Id Resolucion</th>
+                                    <th>Motivo</th>
+                                    <th>Rut responsable de emisión</th>
+                                </tr>
+                                <tr th:each="busquedaRes : ${busqueda}" data-toggle="modal"
+                                    data-target="#myModal" class="fila">
+                                    <td th:text="${busquedaRes.resolucionId}" id="id"></td>
+                                    <td th:text="${busquedaRes.motivoId.nombre}" id="motivo"></td>
+                                    <td th:text="${busquedaRes.funcionarioId.rut}" id="rut"></td>
+                                    <td th:text="${busquedaRes.fecha}" hidden="true" id="emision"></td>
+                                    <td th:text="${busquedaRes.titulo}" hidden="true" id="titulo"></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 <div th:replace="fragments/footer :: footer"></div>
 
+<!-- Modal de revisión de archivos -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Detalle  de permiso</h4>
+            </div>
+            <div class="modal-body" id="detalleModal">
+                    <div id="infoModal"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+
 <script type="text/javascript">
-        function check(elem) {
-            document.getElementById("other-div").style.display = 'none';
-            document.getElementById("motivoDiv").style.display = 'none';
+    $(function () {
+        $('#myModal').modal({
+            keyboard: true,
+            backdrop: "static",
+            show: false,
 
-             if (elem.value == "rut") {
-                document.getElementById("other-div").style.display = 'block';
+        }).on('show', function () {
 
-            } else if (elem.value == "resId") {
-                document.getElementById("other-div").style.display = 'block';
+        });
 
-            } else if (elem.value == "motivo") {
-                document.getElementById("motivoDiv").style.display = 'block';
-            }
+        $(".fila").on('click', function () {
+            //debugger;
+
+            //do all your operation populate the modal and open the modal now. DOnt need to use show event of modal again
+            var id = $(this).find("#id").text();
+            var motivo = $(this).find("#motivo").text();
+            var rut = $(this).find("#rut").text();
+            var emision = $(this).find("#emision").text();
+            var titulo = $(this).find("titulo").text();
+            $('#infoModal').html($('<b>Id solicitud: </b>' + '<input type="text" class="text" name="id" contenteditable="false" value="'+  id + '"/>' + '</br>' + '<b>Motivo de solicitud: </b>' + motivo + '</br>'
+                + '<b>Rut Jefe Interno: </b>' + rut +'</br>'+ '<b>Fecha de emisión de resolución: </b>'+ emision + '</br>' + '<b>Título de resolución</b>' + titulo +'</br>'));
+            $('#orderModal').modal('show');
+
+
+
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    function check(elem) {
+        document.getElementById("other-div").style.display = 'none';
+        document.getElementById("motivoDiv").style.display = 'none';
+
+        if (elem.value == "rut") {
+            document.getElementById("other-div").style.display = 'block';
+
+        } else if (elem.value == "resId") {
+            document.getElementById("other-div").style.display = 'block';
+
+        } else if (elem.value == "motivo") {
+            document.getElementById("motivoDiv").style.display = 'block';
         }
-    </script>
+    }
+</script>
+
+<script th:if="${mensaje == null}">
+    $(".alert").hide();
+</script>
 
 
 </body>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import portafolio.gpvh.model.entity.*;
 import portafolio.gpvh.model.service.*;
+import portafolio.gpvh.objetos.ValidacionLogin;
 
 import javax.servlet.http.HttpSession;
 import java.awt.*;
@@ -65,6 +66,22 @@ public class ConsultasReportesController {
             return "redirect:/dashboard";
         }
 
+        ValidacionLogin validador = new ValidacionLogin();
+
+        if (busqueda.equals("seleccion")){
+            String mensaje = "Debe seleccionar un parametro de busqueda";
+            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("listadoMotivo", motivoService.findAll());
+
+            return "consultaResoluciones";
+        }else if (inputText == null || validador.tryParseInt(inputText) == false){
+
+            String mensaje = "Ha ingresado un valor de busqueda no númerico, \n incorrecto o no ha ingresado valor";
+            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("listadoMotivo", motivoService.findAll());
+
+            return "consultaResoluciones";
+        }
 
         if (busqueda.equals("motivo")) {
             Motivo motivoBuscado = motivoService.findOne(Integer.parseInt(motivo));
@@ -110,7 +127,7 @@ public class ConsultasReportesController {
 
     }
 
-    @PostMapping("/InfomePermisos")
+    @PostMapping("/infomePermisos")
     public String PostBusquedaInformes(Model model, @RequestParam("busqueda") String rut,
                                        @RequestParam("inputText") String inputText,
                                        @RequestParam("departamento") String departamento,

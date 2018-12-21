@@ -29,4 +29,13 @@ public class ValidacionLogin {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean tryParseInt(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
