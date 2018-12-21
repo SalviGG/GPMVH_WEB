@@ -124,7 +124,9 @@
     </div>
 </div>
 <!--End Modal-->
-
+<script th:if="${#lists.isEmpty(listaDocumento) }">
+    $("#modalInfo").modal("show");
+</script>
 <script >
 
     $(document).ready(function () {
