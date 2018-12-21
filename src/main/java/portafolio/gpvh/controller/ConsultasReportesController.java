@@ -34,6 +34,9 @@ public class ConsultasReportesController {
     @Autowired
     private ResolucionService resolucionService;
 
+    @Autowired
+    private DocumentoService documentoService;
+
     @GetMapping("/consultasReportes")
     public String consultaDeLosRepos(HttpSession session, Model model) {
 
@@ -98,16 +101,7 @@ public class ConsultasReportesController {
             reso.add(resolucionBusqueda);
             model.addAttribute("busqueda", reso);
         }
-       /* if (motivo!=null){
-            Motivo motivoBuscado = motivoService.findOne(Integer.parseInt(motivo));
-            model.addAttribute("busquedaMotivo", resolucionService.findByMotivoId(motivoBuscado));
-        } else if (inputText!=null){
-            Funcionario funcionarioBusqueda = funcionarioService.findOne(Integer.parseInt(inputText));
-            model.addAttribute("busquedaRut", resolucionService.findByFuncionarioId(funcionarioBusqueda));
-        }*/
         model.addAttribute("listadoMotivo", motivoService.findAll());
-
-
         return "consultaResoluciones";
     }
 
@@ -118,30 +112,59 @@ public class ConsultasReportesController {
         //Validación de session para evitar error de atributo null
         if (session.getAttribute("persona") == null) {
             return "redirect:/dashboard";
-
         }
-        model.addAttribute("listadoDepto", departamentoService.findAll());
+
         model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
         model.addAttribute("listadoMotivo", motivoService.findAll());
         return "informePermisos";
 
     }
 
-    @PostMapping("/infomePermisos")
-    public String PostBusquedaInformes(Model model, @RequestParam("busqueda") String rut,
-                                       @RequestParam("inputText") String inputText,
-                                       @RequestParam("departamento") String departamento,
-                                       @RequestParam("motivo") String motivo,
-                                       @RequestParam("estado") String estado) {
+    @PostMapping("/InfomePermisos")
+    public String PostBusquedaInformes(Model model, @RequestParam("busqueda") String busqueda,
+                                       @RequestParam("campoTexto") String campoTexto,
+                                       @RequestParam("motivoSel") String motivo,
+                                       @RequestParam("estadoSel") String estado) {
 
-        model.addAttribute("listadoDepto", departamentoService.findAll());
+
+        ValidacionLogin validador = new ValidacionLogin();
+
+        if (busqueda.equals("seleccion")){
+            String mensaje = "Debe seleccionar un parametro de busqueda";
+            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("listadoMotivo", motivoService.findAll());
+            model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
+
+            return "informePermiso";
+        }else if (campoTexto == null || validador.tryParseInt(campoTexto) == false){
+
+            String mensaje = "Ha ingresado un valor de busqueda no númerico, \n incorrecto o no ha ingresado valor";
+            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("listadoMotivo", motivoService.findAll());
+            model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
+
+            return "informePermiso";
+        }
+
+
+        if(busqueda.equals("rutSel")){
+            Funcionario funcionarioBusqueda = funcionarioService.buscarPorRut(Integer.parseInt(campoTexto.trim()));
+            model.addAttribute("busqueda", documentoService.findAllByFuncionarioId(funcionarioBusqueda));
+        }else if (busqueda.equals("motivoSel")){
+            Motivo motivoBusqueda = motivoService.findOne(Integer.parseInt(motivo));
+            model.addAttribute("busqueda", documentoService.findByMotivoId(motivoBusqueda));
+        } else if(busqueda.equals("documentoSel")){
+            Documento documentoBusqueda = documentoService.findOne(Integer.parseInt(campoTexto.trim()));
+            List<Documento> docu = new ArrayList<Documento>();
+            docu.add(documentoBusqueda);
+            model.addAttribute("busqueda", docu);
+        } else if (busqueda.equals("estadoSel")){
+            EstadoDocumento estadoBusqueda = estadoDocumentoService.findOne(Integer.parseInt(estado));
+            model.addAttribute("busqueda", documentoService.findByEstadoDocumentoId(estadoBusqueda));
+        }
+
         model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
         model.addAttribute("listadoMotivo", motivoService.findAll());
-
-        System.out.println(inputText);
-        System.out.println(departamento);
-        System.out.println(motivo);
-        System.out.println(estado);
 
         return "informePermisos";
     }

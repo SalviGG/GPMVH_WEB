@@ -8,6 +8,8 @@ import portafolio.gpvh.model.dao.IDocumentoDao;
 import portafolio.gpvh.model.entity.Documento;
 import portafolio.gpvh.model.entity.Funcionario;
 import portafolio.gpvh.model.service.DocumentoService;
+import portafolio.gpvh.model.entity.Motivo;
+import portafolio.gpvh.model.entity.EstadoDocumento;
 
 import java.util.List;
 
@@ -68,5 +70,17 @@ public class DocumentoServiceIMPL implements DocumentoService {
 
     public List<Documento> findUltimosPermisos(){
         return (List<Documento>)docuDAO.findUltimosPermisos();
+    }
+    public List<Documento> findAllByDocumentoId(Documento documento){
+        return (List<Documento>)docuDAO.findAllByDocumentoId(documento);
+    }
+
+    public List<Documento>  findByMotivoId(Motivo motivo){
+        return (List<Documento>)docuDAO.findByMotivoId(motivo);
+    }
+
+    public List <Documento>findByEstadoDocumentoId(EstadoDocumento estadoDocumento){
+
+        return (List<Documento>)docuDAO.findByEstadoDocumentoId(estadoDocumento);
     }
 }

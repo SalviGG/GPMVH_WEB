@@ -10,7 +10,6 @@
 
 <div th:include="fragments/body :: body"></div>
 
-
 <section id="main">
     <div class="container">
         <div class="row">
@@ -20,67 +19,68 @@
                     <div class="panel-heading main-color-bg">
                         <h3 class="panel-title">Reportes de permisos</h3>
                     </div>
+                    <!--Alert-->
+                    <div class="alert alert-danger alert-dismissible" role="alert" >
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>¡Error!:</strong> <p th:text="${mensaje}"></p>
+                    </div>
+                    <!--Fin de alert-->
                     <div class="panel-body">
-                        <form method="post" action="/cosultaResoluciones">
+                        <form method="post" action="/InfomePermisos">
+                            <div class="form-group">
                             <select class="form-control" id="seleccion" name="busqueda" onchange="check(this)">
                                 <option value="seleccion" selected="seleccion">Seleccione busqueda</option>
-                                <option value="rut">Rut</option>
-                                <option value="departamento">Departamento</option>
-                                <option value="estado">Estado del documento</option>
-                                <option value="motivo">Motivo</option>
+                                <option value="rutSel">Rut</option>
+                                <option value="documentoSel">Id del Documento</option>
+                                <option value="motivoSel">Motivo</option>
+                                <option value="estadoSel">Estado</option>
                             </select>
+                            </div>
 
-                            <div id="other-div" style="display:none;">
-                                <label>Ingrese rut:
-                                    <input class="form-control" id="other-input" name="inputText"></input>
+                            <div id="campoTexto" class="form-group" style="display:none;">
+                                <label for="other-input">Ingrese parametro de busqueda:
+                                    <input class="form-control" id="other-input" name="inputText" placeholder="Ingreser solo números">
                                 </label>
                             </div>
 
-
-                            <select class="form-control" id="deptoDiv" name="departamento" placeholder="Departamentos" style="display:none;" >
-                                <option th:each="departamento : ${listadoDepto}"
-                                        th:value="${departamento.departamentoId}"
-                                        th:text="${departamento.nombre}"
-                                        th:selected="false"> </option>
-                            </select>
-
-
-                            <select class="form-control" id="motivoDiv" name="motivo" placeholder="Motivos" style="display:none;">
+                            <div class="form-group">
+                            <select class="form-control" id="motivoSel" name="motivoSel" placeholder="Motivos" style="display:none;">
                                 <option th:each="motivo : ${listadoMotivo}"
                                         th:value="${motivo.motivoId}"
                                         th:text="${motivo.nombre}"
                                         th:selected="false"></option>
                             </select>
+                            </div>
 
-                            <select class="form-control" id="estadoDiv" name="estado" placeholder="Estado de documento" style="display:none;">
+                            <div class="form-group">
+                            <select class="form-control" id="estadoSel" name="estadoSel" placeholder="Estado de documento" style="display:none;">
                                 <option th:each="estadoDoc : ${listadoDoc}"
                                         th:value="${estadoDoc.estadoDocumentoId}"
                                         th:text="${estadoDoc.nombre}"
                                         th:selected="false"></option>
                             </select>
-
+                            </div>
 
                             <div class="form-group col-xs-12">
-                                <button type="submit" class="btn btn-primary">Solicitar</button>
+                                <button type="submit" class="btn btn-primary">Buscar</button>
                             </div>
                         </form>
                     </div>
-                    <div class="panel-body" id="tablaBusqueda">
-                        <div class="table-responsive-sm">
+
+                    <div class="panel-body" id="tablaBusqueda" th:if="${busqueda !=null}">
+                        <div class="table-responsive-sm" >
                             <table class="table table-bordered table-striped table-hover">
                                 <tr>
-                                    <th>Id solicitud</th>
+                                    <th>Id del documento</th>
+                                    <th>Rut funcionario</th>
                                     <th>Motivo</th>
-                                    <th>Fecha de solicitud</th>
-                                    <th>Fecha de inicio</th>
                                 </tr>
-                                <tr>
-
-                                <tr th:each="documento : ${listaDocumento}">
+                                <tr th:each="documento : ${busqueda}">
                                     <th th:text="${documento.documentoId}"></th>
+                                    <th th:text="${documento.funcionarioId.rut}"></th>
                                     <th th:text="${documento.motivoId.nombre}"></th>
-                                    <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
-                                    <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy HH:mm')}"></th>
+
+
                                 </tr>
                             </table>
                         </div>
@@ -94,26 +94,25 @@
 
 <script type="text/javascript">
     function check(elem) {
-        document.getElementById("other-div").style.display = 'none';
-        document.getElementById("deptoDiv").style.display = 'none';
-        document.getElementById("motivoDiv").style.display = 'none';
-        document.getElementById("estadoDiv").style.display = 'none';
+        document.getElementById("campoTexto").style.display = 'none';
+        document.getElementById("motivoSel").style.display = 'none';
+        document.getElementById("estadoSel").style.display = 'none';
 
-        if (elem.value == "rut") {
-            document.getElementById("other-div").style.display = 'block';
 
-        } else if (elem.value == "departamento") {
-            document.getElementById("deptoDiv").style.display = 'block';
-
-        } else if (elem.value == "motivo") {
-            document.getElementById("motivoDiv").style.display = 'block';
-
-        } else if (elem.value == "estado") {
-            document.getElementById("estadoDiv").style.display = 'block';
+        if (elem.value == "rutSel") {
+            document.getElementById("campoTexto").style.display = 'block';
+        } else if (elem.value == "documentoSel") {
+            document.getElementById("campoTexto").style.display = 'block';
+        }  else if (elem.value == "motivoSel") {
+            document.getElementById("motivoSel").style.display = 'block';
+        }else if (elem.value == "estadoSel") {
+            document.getElementById("estadoSel").style.display = 'block';
         }
     }
 </script>
-
+<script th:if="${mensaje == null}">
+    $(".alert").hide();
+</script>
 
 </body>
 </html>
