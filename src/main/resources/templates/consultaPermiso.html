@@ -20,8 +20,8 @@
                         <h3 class="panel-title">Consultas y Reportes</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="table-responsive-sm">
-                            <table class="table table-bordered table-striped table-hover">
+                        <div class="table-responsive-sm" >
+                            <table class="table table-bordered table-striped table-hover" id="tablaTh">
                                 <tr>
                                     <th>Id solicitud</th>
                                     <th>Motivo</th>
@@ -30,7 +30,6 @@
                                     <th>Fecha de termino</th>
                                     <th>Resolucion</th>
                                     <th>Estado</th>
-                                    <th></th>
                                 </tr>
                                 <tr>
 
@@ -101,17 +100,48 @@
     </div>
 </section>
 <div th:replace="fragments/footer :: footer"></div>
+
+<!-- Modal de revisión de archivos -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modal1">Consultas de permisos realizados</h4>
+            </div>
+            <div class="modal-body" id="detalleModal">
+                <div id="infoModal"><p><strong>Ups! Aun no hay nada aqui</strong></p></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+
 <script>
+
+    $(document).ready(function(){
+
+        if( $("#tablaTh").length > 0 ){
+
+            $("#myModal").modal('show');
+        }
+
+    });
     function buscarDocumento(id){
 
         $.post( "pruebaYonis", { id: id, time: "2pm" }
         ,function (data) {
-                acignarDatos(data);
+                asignarDatos(data);
             }
-        );
+        )
 
     }
-    function acignarDatos(documento){
+    function asignarDatos(documento){
         var fecha;
 
         $("#documentoId").val(documento.documentoId);
@@ -124,5 +154,7 @@
         $("#formAnular").modal("show");
     }
 </script>
+
+
 </body>
 </html>

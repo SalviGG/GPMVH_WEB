@@ -131,7 +131,7 @@ public class ConsultasReportesController {
 
         if (busqueda.equals("seleccion")){
             String mensaje = "Debe seleccionar un parametro de busqueda";
-            model.addAttribute("mensaje",mensaje);
+            model.addAttribute("mensaje", mensaje);
             model.addAttribute("listadoMotivo", motivoService.findAll());
             model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
 

@@ -75,11 +75,15 @@
                                     <th>Rut funcionario</th>
                                     <th>Motivo</th>
                                 </tr>
-                                <tr th:each="documento : ${busqueda}">
-                                    <th th:text="${documento.documentoId}"></th>
-                                    <th th:text="${documento.funcionarioId.rut}"></th>
-                                    <th th:text="${documento.motivoId.nombre}"></th>
-
+                                <tr th:each="documento : ${busqueda}" data-toggle="modal"
+                                    data-target="#myModal" class="fila">
+                                    <th th:text="${documento.documentoId}" id="docId"></th>
+                                    <th th:text="${documento.funcionarioId.rut}" id="funId"></th>
+                                    <th th:text="${documento.motivoId.nombre}" id="motId"></th>
+                                    <th th:text="${documento.resolucionId}" idden="true" id="resId"></th>
+                                    <th th:text="${documento.fechaSolicitud}" idden="true" id="fechaSol"></th>
+                                    <th th:text="${documento.fechaInicio}" idden="true" id="fechaIni"></th>
+                                    <th th:text="${documento.fechaTermino}" idden="true" id="fechaTer"></th>
 
                                 </tr>
                             </table>
@@ -91,6 +95,63 @@
     </div>
 </section>
 <div th:replace="fragments/footer :: footer"></div>
+
+<!-- Modal de revisión de archivos -->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Detalle de Informe</h4>
+            </div>
+            <div class="modal-body" id="detalleModal">
+                <div id="infoModal"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<script type="text/javascript">
+    $(function () {
+        $('#myModal').modal({
+            keyboard: true,
+            backdrop: "static",
+            show: false,
+
+        }).on('show', function () {
+
+        });
+
+        $(".fila").on('click', function () {
+            //debugger;
+
+            //do all your operation populate the modal and open the modal now. DOnt need to use show event of modal again
+            var idDoc = $(this).find("#docId").text();
+            var idFun = $(this).find("#funId").text();
+            var motivo = $(this).find("#motId").text();
+            var resolucion = $(this).find("#resId").text();
+            var fechaSolicitu = $(this).find("#fechaSol").text();
+            var fechaInicio = $(this).find("#fechaIni").text();
+            var fechaTermino = $(this).find("#fechaTer").text();
+
+            $('#infoModal').html($('<b>Id docuemto: </b>'
+                +  idDoc + '"/>' + '</br>' + '<b>Rut Funcioanrio: </b>' + idFun + '</br>'
+                + '<b>Motivo: </b>' + motivo +'</br>'+ '<b>Resolucion: </b>'+ resolucion
+                + '</br>' + '<b>Fecha de solicitud</b>' + fechaSol +'</br>' + '<b>Fecha de inicio: </b>'+ fechaInicio
+                + '</br>' + '<b>Fecha de termino: </b>'+ fechaTermino
+                + '</br>'));
+            $('#orderModal').modal('show');
+
+
+
+        });
+    });
+</script>
 
 <script type="text/javascript">
     function check(elem) {

@@ -125,7 +125,7 @@
             var rut = $(this).find("#rut").text();
             var emision = $(this).find("#emision").text();
             var titulo = $(this).find("titulo").text();
-            $('#infoModal').html($('<b>Id solicitud: </b>' + '<input type="text" class="text" name="id" contenteditable="false" value="'+  id + '"/>' + '</br>' + '<b>Motivo de solicitud: </b>' + motivo + '</br>'
+            $('#infoModal').html($('<b>Id solicitud: </b>' +  id + '"/>' + '</br>' + '<b>Motivo de solicitud: </b>' + motivo + '</br>'
                 + '<b>Rut Jefe Interno: </b>' + rut +'</br>'+ '<b>Fecha de emisión de resolución: </b>'+ emision + '</br>' + '<b>Título de resolución</b>' + titulo +'</br>'));
             $('#orderModal').modal('show');
 

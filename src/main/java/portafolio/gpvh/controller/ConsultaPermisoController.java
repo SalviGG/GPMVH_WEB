@@ -33,6 +33,7 @@ public class ConsultaPermisoController {
         model.addAttribute("listaDocumento",documentoService.findAllByFuncionarioId(funcionario));
 
 
+
         return "consultaPermiso";
     }
 
