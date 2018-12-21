@@ -141,7 +141,12 @@ public class ConsultasReportesController {
             model.addAttribute("listadoDoc", estadoDocumentoService.findAll());
 
             return "informePermisos";
-        }else if (campoTexto == null || validador.tryParseInt(campoTexto) == false){
+        }else if ((busqueda.equals("seleccion") && campoTexto == null) ||
+                (busqueda.equals("seleccion") && validador.tryParseInt(campoTexto) == false)
+                ||(busqueda.equals("rutSel") && campoTexto == null) ||
+                (busqueda.equals("rutSel") && validador.tryParseInt(campoTexto) == false)
+                ||(busqueda.equals("documentoSel") && campoTexto == null) ||
+                (busqueda.equals("documentoSel") && validador.tryParseInt(campoTexto) == false)){
 
             String mensaje = "Ha ingresado un valor de busqueda no númerico, \n incorrecto o no ha ingresado valor";
             model.addAttribute("mensaje",mensaje);
