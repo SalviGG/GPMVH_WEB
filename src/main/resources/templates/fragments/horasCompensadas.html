@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+
+</head>
+<body th:fragment="horasCompensadas">
+
+<div class="panel panel-default">
+    <div class="panel-heading main-color-bg">
+        <h3 class="panel-title">Solicitud de horas compensadas</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <th>Horas disponibles</th>
+
+            </thead>
+            <tbody>
+            <tr>
+                <th th:text="${session.persona.horasCompensadas}"></th>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <form method="post" id="fromSolicitud" action="/GuardarHorasCompesadas" class="form col-xs-4" >
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="text"
+                       class="form-control"
+                       id="fecha"
+                       name="fecha"
+                       readonly="readonly"
+                       />
+                       </div>
+            <div class="form-group">
+                <label for="fecha">Hora de incio</label>
+                <select class="form-control" onchange="calcularTermino(this)" id="inicio" name="inicio"                         oninvalid="this.setCustomValidity('Este campo es obligatorio')">
+                    <option value="" >Hora inicio</option>
+                    <option value="08" >08</option>
+                    <option value="09" >09</option>
+                    <option value="10" >10</option>
+                    <option value="11" >11</option>
+                    <option value="12" >12</option>
+                    <option value="13" >13</option>
+                    <option value="14" >14</option>
+                    <option value="15" >15</option>
+                    <option value="16" >16</option>
+                    <option value="17" >17</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha">Hora de termino</label>
+                <select class="form-control" id="termino" name="termino" disabled
+                        >
+                        <option value="">Hora termino</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-10">
+                <input type="button" class="btn btn-primary" value="Solicitar" onclick="validar();"/>
+            </div>
+        </form>
+        <input type="hidden" id="horasDisponiles" th:value="${session.persona.horasCompensadas}" >
+    </div>
+</div>
+<!-- Modal Confirmacion-->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalCenterTitle">Confirmar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="enviar();" data-dismiss="modal">Confirmar</button>
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Mensaje-->
+<div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="MensajeModalCenterTitle"> Datos Pendientes a rellenar </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="conetnidoMensaje">
+                Está seguro de solicitar el permiso
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn " data-dismiss="modal" onclick="closeModal();">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function() {
+
+        $('input[name="fecha"]').daterangepicker({
+            autoUpdateInput: false,
+            minDate:moment(),
+            singleDatePicker: true,
+            locale: {
+                cancelLabel: 'Clear'
+            },
+            isInvalidDate: function(date) {
+                return (date.day() == 0 || date.day() == 6);
+            }
+        });
+
+        $('input[name="fecha"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY'));
+            $(this).oninput();
+        });
+
+        $('input[name="fecha"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+            $(this).oninput();
+        });
+
+    });
+</script>
+<script>
+    function enviar(){
+        $("#fromSolicitud").submit();
+
+    }
+    function mostarMensaje(mensaje){
+        $("#conetnidoMensaje").html(mensaje);
+        $("#modalMensaje").modal("show")
+    }
+
+    function closeMensaje(){
+        $("#modalMensaje").modal("hide")
+    }
+
+
+    function validarFormatoFecha(campo) {
+        var fechaf = campo.split("/");
+        var d = fechaf[1];
+        var m = fechaf[0];
+        var y = fechaf[2];
+
+        return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
+    }
+    function existeFecha(fecha){
+        var fechaf = fecha.split("/");
+        var day = fechaf[0];
+        var month = fechaf[1];
+        var year = fechaf[2];
+        var date = new Date(year,month,'0');
+        if((day-0)>(date.getDate()-0)){
+            return false;
+        }
+        return true;
+    }
+    function validar(){
+        var fecha = $("#fecha").val();
+        if(validarFormatoFecha(fecha)){
+            var inicio = $("#inicio").val();
+
+            if(typeof inicio !=="undefined" &&  inicio.trim() != "" ){
+                var fin = $("#termino").val();
+                if(typeof fin !=="undefined" && fin.trim() != ""){
+                    openModal();
+                }else{
+                    mostarMensaje("Debe seleccionar hora de termino")
+                }
+            }else{
+                mostarMensaje("Debe seleccionar hora de inicio");
+            }
+        }else{
+            mostarMensaje("No ha ingresado la fecha o el formato de fecha es incorrecto")
+        }
+
+    }
+
+    function openModal(){
+        $("#modalInfo").modal("show");
+    }
+    function closeModal(){
+        $("#modalInfo").modal("hide");
+    }
+    function cleanHoraTermino() {
+        var elementTermino = document.getElementById("termino");
+        for (i = elementTermino.options.length; i > 0;i--){
+            elementTermino.remove(i)
+        }
+    }
+    
+    function calcularTermino(element) {
+        var horaInicia = element.value;
+
+        var elementTermino = document.getElementById("termino");
+        if(horaInicia != ""){
+            document.getElementById("termino").disabled = false;
+            cleanHoraTermino();
+            var horasDisponible = parseInt( document.getElementById("horasDisponiles").value);
+            var horMaximas = parseInt(horaInicia)+horasDisponible;
+            if(horMaximas >= 18){
+                horMaximas =18
+            }
+            for (i = parseInt(horaInicia)+1; i <= horMaximas;i++){
+
+                var option = document.createElement("option");
+                option.text = i;
+                option.value = i ;
+                elementTermino.add(option);
+            }
+        }else{
+            document.getElementById("termino").disabled = true;
+            cleanHoraTermino();
+        }
+    }
+
+</script>
+
+</body>
+</html>

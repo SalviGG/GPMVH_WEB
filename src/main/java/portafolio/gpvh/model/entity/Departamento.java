@@ -1,26 +1,34 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "departamento")
-public class Departamento {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Departamento implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_DEPARTAMENTO_ID")
+	@SequenceGenerator(name = "SQ_DEPARTAMENTO_ID",allocationSize = 1,sequenceName = "SQ_DEPARTAMENTO_ID")
 	@Column(name = "departamento_Id")
 	private int departamentoId;
 	
 	@Column(name = "NOMBRE")
 	private String nombre;
 	
-	//@Column(name = "JEFE_DEPARTAMENTO_ID")
+
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionarioId")
+	@JoinColumn(name = "jefe_departamento_id")
+
 	private Funcionario jefeDepartamentoId;
 
 	@OneToMany(mappedBy = "departamentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Funcionario> departamentoIdfuncionarios;
 	
 	public Departamento() {
@@ -51,6 +59,12 @@ public class Departamento {
 	public void setJefeDepartamentoId(Funcionario jefeDepartamentoId) {
 		this.jefeDepartamentoId = jefeDepartamentoId;
 	}
-	
-	
+
+	public List<Funcionario> getDepartamentoIdfuncionarios() {
+		return departamentoIdfuncionarios;
+	}
+
+	public void setDepartamentoIdfuncionarios(List<Funcionario> departamentoIdfuncionarios) {
+		this.departamentoIdfuncionarios = departamentoIdfuncionarios;
+	}
 }

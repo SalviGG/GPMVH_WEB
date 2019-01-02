@@ -394,3 +394,9 @@ iframe {
     padding-right: 15px;
   }
 }
+
+.login-logo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

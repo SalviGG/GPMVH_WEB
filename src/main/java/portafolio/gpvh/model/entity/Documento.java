@@ -1,6 +1,10 @@
 package portafolio.gpvh.model.entity;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,60 +13,71 @@ import javax.print.Doc;
 
 @Entity
 @Table(name = "Documento")
-public class Documento {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Documento  implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "DOCUMENTO_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_DOCUMENTO_ID")
+	@SequenceGenerator(name = "SQ_DOCUMENTO_ID",allocationSize = 1,sequenceName = "SQ_DOCUMENTO_ID")
+	@Column(name = "documento_id")
 	private int documentoId;
 	
-	//@Column(name = "FUNCIONARIO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionarioId")
+	@JoinColumn(name = "funcionario_id")
+
 	private Funcionario funcionarioId;
 	
-	//@Column(name = "RESOLUCION_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "resolucionId")
+	@JoinColumn(name = "resolucion_id")
+
 	private Resolucion resolucionId;
 	
-	//@Column(name = "MOTIVO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "motivoId")
+	@JoinColumn(name = "motivo_id")
+
 	private Motivo motivoId;
 	
-	//@Column(name = "AFECTA_DOCUMENTO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "afectaDocumentoId")
+	@JoinColumn(name = "afecta_documento_id")
+
 	private Documento afectaDocumentoId;
 	
-	//@Column(name = "TIPO_DOCUMENTO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "tipoDocumentoId")
+	@JoinColumn(name = "tipo_documento_id")
+
 	private TipoDocumento tipoDocumentoId;
 	
-	//@Column(name = "ESTADO_DOCUMENTO_ID")
+
 	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinTable (name = "estadoDocumentoId")
+	@JoinColumn (name = "estado_documento_id")
 	private EstadoDocumento estadoDocumentoId;
 	
-	@Column(name = "FECHA_SOLICITUD")
+	@Column(name = "fecha_solicitud")
 	private Date fechaSolicitud;
 	
-	@Column(name = "ULTIMA_FECHA_MODIFICACION")
+	@Column(name = "ultima_fecha_modificacion")
 	private Date ultimaFechaModificacion;
 	
-	@Column(name = "URL_DOCUMENTO_ADJUNTO")
+	@Column(name = "url_documento_adjunto")
 	private String urlDocumentoAdjunto;
 	
-	@Column(name = "FECHA_INICIO")
+	@Column(name = "fecha_inicio")
 	private Date fechaInicio;
 	
-	@Column(name = "FECHA_TERMINO")
+	@Column(name = "fecha_termino")
 	private Date fechaTermino;
 
 	@OneToMany(mappedBy = "afectaDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Documento> afectaDocIds;
+
+	@Column(name = "comentario")
+	private String comentario;
 	
 	public Documento() 
 	{
@@ -164,7 +179,18 @@ public class Documento {
 	public void setFechaTermino(Date fechaTermino) {
 		this.fechaTermino = fechaTermino;
 	}
-	
-	
+
+	public List<Documento> getAfectaDocIds() {
+		return afectaDocIds;
+	}
+
+	public void setAfectaDocIds(List<Documento> afectaDocIds) {
+		this.afectaDocIds = afectaDocIds;
+	}
+
+	public String getComentario(){ return comentario;}
+
+	public  void  setComentario(String comentario){ this.comentario = comentario;}
+
 
 }

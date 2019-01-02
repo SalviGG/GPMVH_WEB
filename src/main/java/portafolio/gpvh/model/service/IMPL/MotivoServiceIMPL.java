@@ -15,9 +15,28 @@ public class MotivoServiceIMPL implements MotivoService {
     @Autowired
     private IMotivoDao motiDao;
 
+    @Override
+    public List<Motivo> findAllActivo() {
+        return motiDao.findAllForActivo("S","P");
+    }
+
+    @Override
+    public List<Motivo> findAllActivoAnulacion() {
+        return motiDao.findAllForActivo("S","A");
+    }
+
+    @Override
+    public List<Motivo> findAllInactivo() {
+        return motiDao.findAllForActivo("N","P");
+    }
+
     public List<Motivo> findAll(){
 
-        return (List<Motivo>) motiDao.findAll();
+        return (List<Motivo>) motiDao.findMotivosByTipoMotivo("P");
+    }
+    public List<Motivo> findAllAnulacion(){
+
+        return (List<Motivo>) motiDao.findMotivosByTipoMotivo("A");
     }
 
     public void save (Motivo motivo){
@@ -32,5 +51,11 @@ public class MotivoServiceIMPL implements MotivoService {
 
         motiDao.delete(motivo);
 
+    }
+
+    @Override
+    public List<Motivo> findAllOtros(List<Integer> list) {
+
+        return  motiDao.findAllForActivoOtros("S",list,"P") ;
     }
 }

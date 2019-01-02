@@ -1,26 +1,30 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "Funcion")
-public class Funcion {
+@Table(name = "funcion")
+public class Funcion implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FUNCION_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_FUNCION_ID")
+	@SequenceGenerator(name = "SQ_FUNCION_ID",allocationSize = 1,sequenceName = "SQ_FUNCION_ID")
+	@Column(name = "funcion_id")
 	private int funcionId;
 
-	@Column(name = "URL")
+	@Column(name = "url")
 	private String url;
 
-	@Column(name = "DESCRIPCION")
+	@Column(name = "descripcion")
 	private String descripcion;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 
 	@ManyToMany(cascade = {CascadeType.ALL})
@@ -29,6 +33,7 @@ public class Funcion {
 			joinColumns = {@JoinColumn(name = "funcionId")},
 			inverseJoinColumns = {@JoinColumn(name = "rolId")}
 	)
+	@JsonIgnore
 	Set<Rol> roles = new HashSet<>();
 	
 	public Funcion() {
@@ -76,6 +81,15 @@ public class Funcion {
 		this.nombre = nombre;
 	}
 
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-	
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
+	}
 }

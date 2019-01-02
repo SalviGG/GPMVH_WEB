@@ -1,5 +1,9 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
@@ -8,30 +12,31 @@ import java.util.List;
 
 @Entity
 @Table(name = "resolucion")
-public class Resolucion {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Resolucion implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "RESOLUCION_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_RESOLUCION_ID")
+	@SequenceGenerator(name = "SQ_RESOLUCION_ID",allocationSize = 1,sequenceName = "SQ_RESOLUCION_ID")
+	@Column(name = "resolucion_id")
 	private int resolucionId;
-	
-	//@Column(name = "FUNCIONARIO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "funcionarioId")
+	@JoinColumn(name = "funcionario_id")
 	private Funcionario funcionarioId;
-	
-	//@Column(name = "MOTIVO_ID")
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "motivoId")
+	@JoinColumn(name = "motivo_id")
 	private Motivo motivoId;
 	
-	@Column(name = "FECHA_EMISION")
+	@Column(name = "fecha_emision")
 	private Date fecha;
 
-	@Column(name = "TITULO")
+	@Column(name = "titulo")
 	private String titulo;
 
 	@OneToMany(mappedBy = "resolucionId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Documento> resolucionIdDocs;
 	
 	public Resolucion() 
@@ -78,6 +83,16 @@ public class Resolucion {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	
-	
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public List<Documento> getResolucionIdDocs() {
+		return resolucionIdDocs;
+	}
+
+	public void setResolucionIdDocs(List<Documento> resolucionIdDocs) {
+		this.resolucionIdDocs = resolucionIdDocs;
+	}
 }

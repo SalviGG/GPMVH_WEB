@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: head">
+
+</head>
+<body>
+
+<div th:include="fragments/body :: body"></div>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div th:include="fragments/opcionesRapidas :: opcionesRapidas"></div>
+            <div class="col-md-9">
+
+               <!--- <div th:include="${archivoForm} :: ${nombreFragmentForm(otrosMotiv)}"></div>-->
+
+                <div th:include="${archivoForm} :: ${nombreFragmentForm}(otrosMotiv=${otrosMotiv})"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

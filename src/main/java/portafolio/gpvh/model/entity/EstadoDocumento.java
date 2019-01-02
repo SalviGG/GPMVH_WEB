@@ -1,30 +1,37 @@
 package portafolio.gpvh.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
 @Entity
-@Table(name = "Estado_documento")
-public class EstadoDocumento {
+@Table(name = "estado_documento")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class EstadoDocumento implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ESTADO_DOCUMENTO_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "SQ_ESTADO_DOCUMENTO_ID")
+	@SequenceGenerator(name = "SQ_ESTADO_DOCUMENTO_ID",allocationSize = 1,sequenceName = "SQ_ESTADO_DOCUMENTO_ID")
+	@Column(name = "estado_documento_id")
 	private int estadoDocumentoId;
 
-	@Column(name = "NOMBRE")
+	@Column(name = "nombre")
 	private String nombre;
 
-	@Column(name = "GRUPO_ESTADOS")
+	@Column(name = "grupo_estados")
 	private String grupoEstados;
 
 	@OneToMany(mappedBy = "estadoDocumentoId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Documento> estadoDocIds;
 	
 	public EstadoDocumento()
 	{
-		this.estadoDocIds = new ArrayList<Documento>();
+
 	}
 
 	public int getEstadoDocumentoId() {
@@ -50,6 +57,16 @@ public class EstadoDocumento {
 	public void setGrupoEstados(String grupoEstados) {
 		this.grupoEstados = grupoEstados;
 	}
-	
-	
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public List<Documento> getEstadoDocIds() {
+		return estadoDocIds;
+	}
+
+	public void setEstadoDocIds(List<Documento> estadoDocIds) {
+		this.estadoDocIds = estadoDocIds;
+	}
 }

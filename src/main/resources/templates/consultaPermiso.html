@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/header :: head">
+</head>
+
+<body>
+
+<div th:include="fragments/body :: body"></div>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div th:include="fragments/opcionesRapidas :: opcionesRapidas" th:fragment="opcionesRapidas"></div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading main-color-bg">
+                        <h3 class="panel-title">Consultas y Reportes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive-sm">
+                            <table class="table table-bordered table-striped table-hover" id="tablaTh">
+                                <tr>
+                                    <th>Id solicitud</th>
+                                    <th>Motivo</th>
+                                    <th>Fecha de solicitud</th>
+                                    <th>Fecha de inicio</th>
+                                    <th>Fecha de termino</th>
+                                    <th>Resolución</th>
+                                    <th>Estado</th>
+                                </tr>
+                                <tr>
+
+                                <tr th:each="documento : ${listaDocumento}">
+                                    <th th:text="${documento.documentoId}"></th>
+                                    <th th:text="${documento.motivoId.nombre}"></th>
+                                    <th th:text="${#dates.format(documento.fechaSolicitud, 'dd-MM-yyyy')}"></th>
+                                    <th th:text="${#dates.format(documento.fechaInicio, 'dd-MM-yyyy HH:mm')}"></th>
+                                    <th th:text="${#dates.format(documento.fechaTermino, 'dd-MM-yyyy HH:mm')}"></th>
+                                    <th>
+                                        <span th:if="${documento.resolucionId != null}"
+                                              th:text="${documento.resolucionId.titulo}"></span>
+                                    </th>
+                                    <th th:text="${documento.estadoDocumentoId.nombre}"></th>
+                                    <th>
+                                        <span th:if="${documento.estadoDocumentoId.estadoDocumentoId != 6 && documento.estadoDocumentoId.estadoDocumentoId != 7}">
+                                            <input type="button"
+                                                   th:onclick="${'buscarDocumento('+documento.documentoId+')'}"
+                                                   value="Anular" class="btn btn-primary"/>
+                                        </span>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade " id="formAnular" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Formulario de anulación</h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <p>
+                    <table class="col-lg-12">
+                        <tr>
+                            <td>Tipo Permiso</td>
+                            <td>:</td>
+                            <td id="motivoNombre"></td>
+                            <td>fecha de solicitud</td>
+                            <td>:</td>
+                            <td id="fechaSolicitud"></td>
+                            <td>Estado</td>
+                            <td>:</td>
+                            <td id="estado"></td>
+                        </tr>
+                        <tr>
+                            <td>Fecha Inicio</td>
+                            <td>:</td>
+                            <td id="fechaInicio"></td>
+                            <td>Fecha Termino</td>
+                            <td>:</td>
+                            <td id="fechaTermino"></td>
+                        </tr>
+
+                    </table>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Modal de revisión de archivos -->
+<!-- Modal -->
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modal1">Consultas de permisos realizados</h4>
+            </div>
+            <div class="modal-body" id="detalleModal">
+                <div id="infoModal"><p><strong>¡Oops!</strong>No tiene permisos solicitados.</p></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Modal-->
+<script th:if="${#lists.isEmpty(listaDocumento) }">
+    $("#modalInfo").modal("show");
+</script>
+<script >
+
+    $(document).ready(function () {
+
+        if ($("#tablaTh").length > 0) {
+
+            $("#myModal").modal('show');
+        }
+
+    });
+
+    function buscarDocumento(id) {
+
+        $.post("pruebaYonis", {id: id, time: "2pm"}
+            , function (data) {
+                asignarDatos(data);
+            }
+        )
+
+    }
+
+    function asignarDatos(documento) {
+        var fecha;
+
+        $("#documentoId").val(documento.documentoId);
+        $("#motivoNombre").html(documento.motivoId.nombre);
+        $("#fechaSolicitud").html(documento.fechaSolicitud);
+        $("#estado").html(documento.estadoDocumentoId.nombre);
+        $("#fechaInicio").html(documento.fechaInicio);
+        $("#fechaTermino").html(documento.fechaTermino);
+
+        $("#formAnular").modal("show");
+    }
+</script>
+
+<script th:if="${listaDocumento == null}" type="text/javascript">
+
+        $(function () {
+            $('#modalInfo').modal({
+                keyboard: true,
+                backdrop: "static",
+                show: true,
+
+            })
+
+
+
+        });
+
+</script>
+
+
+</body>
+</html>

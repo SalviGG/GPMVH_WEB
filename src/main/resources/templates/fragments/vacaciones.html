@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+
+</head>
+<body th:fragment="vacaciones">
+
+<div class="panel panel-default">
+    <div class="panel-heading main-color-bg">
+        <h3 class="panel-title">Solicitud de vacaciones</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <th>Dias disponibles</th>
+            <th>Días utilizados</th>
+            <th>Total de dias</th>
+            </thead>
+            <tbody>
+            <tr>
+                <th th:text="${session.funcionario.getDiaVacaciones()}-${session.funcionario.getDiaVacacionesUsadas()}" id="dias_disponibles" name="dias_disponibles">num_dias_disponibles</th>
+                <th th:text="${session.funcionario.getDiaVacacionesUsadas()}">num_dias_utilizados</th>
+                <th th:text="${session.funcionario.getDiaVacaciones()}">num_dias_totales</th>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    <form method="post"  action="/GuardarVacaciones">
+
+               <div class="form-group col-xs-5">
+                <label for="numero_dias">Rango de días a solicitar</label>
+                <input type="text" class="form-control" id="numero_dias" name="numero_dias" value="" onchange="cuentaFindes()" readonly="readonly">
+            </div>
+            <div class="form-group col-xs-12">
+                <button type="button" class="btn btn-primary" onclick="cuentaFindes()" >Solicitar</button>
+            </div>
+
+
+
+    <!-- Modal -->
+    <!-- ModalAlert-->
+    <div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel1">ALERT</h4>
+            </div>
+            <div class="modal-body">
+                <p id="myid_02">Español!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="enviar" name="enviar">Solicitar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+    $(function() {
+
+        $('input[name="numero_dias"]').daterangepicker({
+            autoUpdateInput: false,
+            minDate:moment().startOf('days').add(7, 'days'),
+            locale: {
+                cancelLabel: 'Clear'
+            },
+            isInvalidDate: function(date) {
+                return (date.day() == 0 || date.day() == 6);
+            }
+        });
+
+        $('input[name="numero_dias"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="numero_dias"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    function cuentaFindes(){
+    var porId=document.getElementById("numero_dias").value;
+    var res = porId.split("-");//separar la fecha
+    var desde = res[0].trim();// desde
+    var hasta = res[1].trim();//hasta
+    var inicio = new Date(desde); //Fecha inicial
+    var fin = new Date(hasta); //Fecha final
+
+    var timeDiff = Math.abs(fin.getTime() - inicio.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); //Días entre las dos fechas
+    var cuentaFinde = 0; //Número de Sábados y Domingos
+    var array = new Array(diffDays);
+
+    for (var i=0; i < diffDays; i++)
+    {
+        //0 => Domingo - 6 => Sábado
+        if (inicio.getDay() != 0 && inicio.getDay() != 6) {
+            cuentaFinde++;
+        }
+        inicio.setDate(inicio.getDate() + 1);
+    }
+   var diasDisponibles =parseInt($("#dias_disponibles").text()); // optiene texto  el id
+
+    if ((diasDisponibles+2) == cuentaFinde || (diasDisponibles+1) == cuentaFinde) {//llamar a modal
+    document.getElementById('enviar').disabled = false;
+    document.getElementById("myid_02").style.color = "blue";
+    document.getElementById("myid_02").innerHTML = "Dias Solicitados sobrepasa por 2 o menos dias los dias disponibles";
+     $('#modalAlert').modal('show'); //llamar modal  modalAlert
+     //  alert(cuentaFinde);
+
+     } else if (diasDisponibles >= cuentaFinde) {
+     document.getElementById('enviar').disabled = false;
+     document.getElementById("myid_02").style.color = "orange";
+     document.getElementById("myid_02").innerHTML = "Dias Solicitados corresponden a los dias disponibles";
+      $('#modalAlert').modal('show'); //llamar modal modalSusess
+     //alert(cuentaFinde);
+    } else {
+    document.getElementById('enviar').disabled = true;
+    document.getElementById("myid_02").style.color = "red";
+    document.getElementById("myid_02").innerHTML = "Dias Solicitados soblepasa el rango de dias  abilitados para solicitar";
+     $('#modalAlert').modal('show'); //llamar modal modalFail
+    //alert(cuentaFinde);
+    }
+
+
+
+}
+function openModal(){
+alert("hola");
+    $("#cambiame").val("videotutoriales.es");
+    $('#myModal').modal('show');
+}
+
+</script>
+</body>
+</html>

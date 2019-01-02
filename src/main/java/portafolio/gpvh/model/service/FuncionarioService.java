@@ -10,4 +10,5 @@ public interface FuncionarioService {
     public void save(Funcionario funcionario);
     public Funcionario findOne(int id);
     public void delete(Funcionario funcionario);
+    public Funcionario buscarPorRut(int rut);
 }
