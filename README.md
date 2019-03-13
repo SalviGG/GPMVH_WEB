@@ -25,3 +25,12 @@ Las indicaciones a continuación te ayudaran a descargar, instalar y ejecutar la
 ## (En proceso de construcción)
 
 
+## Colaboradores
+Este proyecto fue construido por un equipo de estudiantes de DuocUC como proyecto de portafolio de titulo.
+
+Integrantes:
+Salvador Gutiérrez
+Yonis Vergara
+Nicolas Yañez
+Miguel Contreras
+Roberto Vega
