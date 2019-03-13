@@ -30,7 +30,11 @@ Este proyecto fue construido por un equipo de estudiantes de DuocUC como proyect
 
 Integrantes:
 Salvador Gutiérrez
+
 Yonis Vergara
+
 Nicolas Yañez
+
 Miguel Contreras
+
 Roberto Vega
